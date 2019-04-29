@@ -49,7 +49,7 @@ namespace Application_layer
 
         public List<Workteam> GetAllWorkteams()
         {
-            throw new NotImplementedException();
+            return workteams;
         }
 
         public void Reschedule(DateTime date)
