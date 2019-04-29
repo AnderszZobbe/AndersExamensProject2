@@ -71,11 +71,11 @@ namespace Application_layer
         public void DeleteWorkteam(Workteam workteam)
         {
             //ToDo add DBconnector method
-            if (workteams.Contains(workteam))
+            if (!workteams.Remove(workteam))
             {
-                workteams.Remove(workteam);
+                //ToDo add DBconnector method
+
             }
-            
         }
     }
 }
