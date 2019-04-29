@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Assignment
+    public class Assignment
     {
         private Workform workform;
         private int duration;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Workteam
+    public class Workteam
     {
         private string foreman;
         private List<Offday> offdays;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Offday
+    public class Offday
     {
         private OffdayReason reason;
         private DateTime startDate;

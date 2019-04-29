@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    enum OffdayReason
+    public enum OffdayReason
     {
         Weekend,
         FridayFree,

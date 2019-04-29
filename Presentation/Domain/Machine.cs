@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Machine
+    public class Machine
     {
         private string name;
     }

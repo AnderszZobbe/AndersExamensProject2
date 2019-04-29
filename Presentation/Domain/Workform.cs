@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    enum Workform
+    public enum Workform
     {
         Day,
         Night,

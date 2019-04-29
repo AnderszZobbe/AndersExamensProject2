@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    class Order
+    public class Order
     {
         private int orderNumber;
         private string address;
