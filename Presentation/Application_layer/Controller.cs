@@ -48,11 +48,13 @@ namespace Application_layer
         {
             throw new NotImplementedException();
         }
+
         public void EditForeman(string foremanName, Workteam workteam)
         {
             //ToDo add DBconnector method
             workteam.EditForman(foremanName);
         }
+
         public void DeleteWorkteam(Workteam workteam)
         {
             //ToDo add DBconnector method
