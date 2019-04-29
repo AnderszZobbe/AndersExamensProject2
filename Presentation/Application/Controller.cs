@@ -27,7 +27,8 @@ namespace Application
 
         public void SaveWorkteam(Workteam workteam)
         {
-            throw new NotImplementedException();
+            //ToDo Add DBconnector method
+            workteams.Add(workteam);
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration)
