@@ -95,9 +95,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj">
+    <ProjectReference Include="..\Application_layer\Application_layer.csproj">
       <Project>{4f026cf0-cbd5-45c2-800f-008ebc454024}</Project>
-      <Name>Application</Name>
+      <Name>Application_layer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{8b624c47-632e-4668-8a51-6390a08a326e}</Project>
