@@ -15,5 +15,9 @@ namespace Domain
         {
             throw new NotImplementedException();
         }
+        public void EditForman(string Name)
+        {
+            foreman = Name;
+        }
     }
 }

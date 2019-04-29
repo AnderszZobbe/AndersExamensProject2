@@ -46,5 +46,9 @@ namespace Application_layer
         {
             throw new NotImplementedException();
         }
+        public void EditForeman(string foremanName, Workteam workteam)
+        {
+            workteam.EditForman(foremanName);
+        }
     }
 }
