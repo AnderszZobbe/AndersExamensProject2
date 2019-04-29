@@ -20,5 +20,10 @@ namespace Domain
         {
             offdays.Add(offday);
         }
+
+        public void EditForman(string Name)
+        {
+            foreman = Name;
+        }
     }
 }
