@@ -11,9 +11,16 @@ namespace Domain
         private string foreman;
         private List<Offday> offdays;
 
-        private bool IsAnOffday()
+        private bool IsAnOffday(DateTime date)
         {
-            throw new NotImplementedException();
+            foreach(Offday i in offdays)
+            {
+                if (i.IsDate(date))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void AddOffDay(Offday offday)

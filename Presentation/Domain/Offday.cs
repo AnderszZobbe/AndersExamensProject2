@@ -18,5 +18,13 @@ namespace Domain
             this.startDate = startDate;
             this.duration = duration;
         }
+        public bool IsDate(DateTime date)
+        {
+            if(startDate < date && date < startDate.AddDays(duration))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
