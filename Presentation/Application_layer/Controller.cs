@@ -19,12 +19,9 @@ namespace Application_layer
 
         public static Controller Instance { get; } = new Controller();
 
-        public void DeleteOrder(Order order)
+        public bool DeleteOrder(Order order)
         {
-            if (!orders.Remove(order))
-            {
-                //ToDo throw exception
-            }
+            return orders.Remove(order);
         }
 
         public void SaveOrder(Order order)
@@ -68,14 +65,9 @@ namespace Application_layer
             workteam.EditForman(foremanName);
         }
 
-        public void DeleteWorkteam(Workteam workteam)
+        public bool DeleteWorkteam(Workteam workteam)
         {
-            //ToDo add DBconnector method
-            if (!workteams.Remove(workteam))
-            {
-                //ToDo add DBconnector method
-
-            }
+            return workteams.Remove(workteam);
         }
     }
 }
