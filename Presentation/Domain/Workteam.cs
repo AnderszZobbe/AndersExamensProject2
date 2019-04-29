@@ -8,5 +8,12 @@ namespace Domain
 {
     class Workteam
     {
+        private string foreman;
+        private List<Offday> offdays;
+
+        private bool IsAnOffday()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

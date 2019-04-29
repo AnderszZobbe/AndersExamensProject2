@@ -8,5 +8,6 @@ namespace Domain
 {
     class Customer
     {
+        private string name;
     }
 }

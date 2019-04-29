@@ -8,5 +8,15 @@ namespace Domain
 {
     class Offday
     {
+        private OffdayReason reason;
+        private DateTime startDate;
+        private int duration;
+
+        public Offday(OffdayReason reason, DateTime startDate, int duration)
+        {
+            this.reason = reason;
+            this.startDate = startDate;
+            this.duration = duration;
+        }
     }
 }

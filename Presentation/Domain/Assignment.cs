@@ -8,5 +8,7 @@ namespace Domain
 {
     class Assignment
     {
+        private Workform workform;
+        private int duration;
     }
 }

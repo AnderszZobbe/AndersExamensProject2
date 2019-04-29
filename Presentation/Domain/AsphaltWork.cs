@@ -8,5 +8,6 @@ namespace Domain
 {
     class AsphaltWork
     {
+        private string name;
     }
 }

@@ -8,5 +8,6 @@ namespace Domain
 {
     class Machine
     {
+        private string name;
     }
 }
