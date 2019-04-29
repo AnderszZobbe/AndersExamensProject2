@@ -22,12 +22,13 @@ namespace Application
 
         public void SaveOrder(Order order)
         {
-            throw new NotImplementedException();
+            //ToDo add DBconnector method
+            orders.Add(order);
         }
 
         public void SaveWorkteam(Workteam workteam)
         {
-            //ToDo Add DBconnector method
+            //ToDo add DBconnector method
             workteams.Add(workteam);
         }
 
