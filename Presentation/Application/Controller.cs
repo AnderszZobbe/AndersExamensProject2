@@ -22,12 +22,14 @@ namespace Application
 
         public void SaveOrder(Order order)
         {
-            throw new NotImplementedException();
+            //ToDo add DBconnector method
+            orders.Add(order);
         }
 
         public void SaveWorkteam(Workteam workteam)
         {
-            throw new NotImplementedException();
+            //ToDo add DBconnector method
+            workteams.Add(workteam);
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration)
