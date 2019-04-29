@@ -8,18 +8,19 @@ namespace Domain
 {
     public class Order
     {
-        private int orderNumber;
-        private string address;
-        private string remark;
-        private int area;
-        private int amount;
-        private string prescription;
-        private DateTime deadline;
-        private Customer customer;
-        private AsphaltWork asphaltWork;
-        private Machine machine;
+        public int OrderNumber { get; set; }
+        public string Adress { get; set; }
+        public string Remark { get; set; }
+        public int Area { get; set; }
+        public int Amount { get; set; }
+        public string perscription { get; set; }
+        public DateTime Deadline { get; set; }
+        public Customer Customer { get; set; }
+        public AsphaltWork AsphaltWork { get; set; }
+        public Machine Machine { get; set; }
+        public DateTime StartDate { get; set; }
+
         private List<Assignment> assignments;
-        public DateTime startDate;
 
         private DateTime GetStartDate()
         {
