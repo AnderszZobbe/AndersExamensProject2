@@ -19,6 +19,14 @@ namespace Application_layer
 
         public static Controller Instance { get; } = new Controller();
 
+        public void DeleteOrder(Order order)
+        {
+            if (!orders.Remove(order))
+            {
+                //ToDo throw exception
+            }
+        }
+
         public void SaveOrder(Order order)
         {
             //ToDo add DBconnector method
@@ -37,6 +45,11 @@ namespace Application_layer
             //ToDo add DBconnector method
             workteam.AddOffDay(offday);
             //ToDo Reschedule(date);
+        }
+
+        public List<Workteam> GetAllWorkteams()
+        {
+            throw new NotImplementedException();
         }
 
         public void Reschedule(DateTime date)
