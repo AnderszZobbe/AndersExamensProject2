@@ -15,6 +15,12 @@ namespace Domain
         {
             throw new NotImplementedException();
         }
+
+        public void AddOffDay(Offday offday)
+        {
+            offdays.Add(offday);
+        }
+
         public void EditForman(string Name)
         {
             foreman = Name;
