@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-    class DBConnector
+    public class DBConnector
     {
         private void SaveOrder(Order order)
         {
