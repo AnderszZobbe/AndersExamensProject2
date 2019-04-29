@@ -21,19 +21,38 @@ namespace Presentation
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ShowWorkteam : Window
     {
         private ObservableCollection<Workteam> workteams { get; set; } = new ObservableCollection<Workteam>();
 
         private Controller controller = Controller.Instance;
 
-        public MainWindow()
+        public ShowWorkteam()
         {
             InitializeComponent();
 
             List<Workteam> s = controller.GetAllWorkteams();
 
+            //workteams = s;
+
             WorkteamList.ItemsSource = workteams;
+        }
+
+        private void CreateNewWorkteam(object sender, RoutedEventArgs e)
+        {
+            CreateNewWorkteam cnw = new CreateNewWorkteam();
+            cnw.Owner = this;
+            cnw.ShowDialog();
+
+            if (cnw.Workteam != null)
+            {
+                controller.SaveWorkteam(cnw.Workteam);
+
+                WorkteamOverview wo = new WorkteamOverview();
+
+                wo.Show();
+                Close();
+            }
         }
     }
 }

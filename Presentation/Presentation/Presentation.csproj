@@ -55,6 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="WorkteamOverview.xaml.cs">
+      <DependentUpon>WorkteamOverview.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CreateNewWorkteam.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ShowWorkteam.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,10 +70,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CreateNewWorkteam.xaml.cs">
+      <DependentUpon>CreateNewWorkteam.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ShowWorkteam.xaml.cs">
       <DependentUpon>ShowWorkteam.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WorkteamOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -9,8 +9,8 @@ namespace Application_layer
 {
     public class Controller
     {
-        private List<Order> orders;
-        private List<Workteam> workteams;
+        private List<Order> orders = new List<Order>();
+        private List<Workteam> workteams = new List<Workteam>();
 
         public Controller()
         {
