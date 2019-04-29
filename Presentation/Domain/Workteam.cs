@@ -8,8 +8,8 @@ namespace Domain
 {
     public class Workteam
     {
-        private string foreman;
-        private List<Offday> offdays;
+        public string Foreman { get; set; }
+        public List<Offday> offdays;
 
         public bool IsAnOffday(DateTime date)
         {
@@ -21,16 +21,6 @@ namespace Domain
                 }
             }
             return false;
-        }
-
-        public void AddOffDay(Offday offday)
-        {
-            offdays.Add(offday);
-        }
-
-        public void EditForman(string Name)
-        {
-            foreman = Name;
         }
     }
 }
