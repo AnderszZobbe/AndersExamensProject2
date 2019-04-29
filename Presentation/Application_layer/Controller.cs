@@ -40,7 +40,7 @@ namespace Application_layer
         {
             Offday offday = new Offday(reason, startDate, duration);
             //ToDo add DBconnector method
-            workteam.AddOffDay(offday);
+            workteam.offdays.Add(offday);
             //ToDo Reschedule(date);
         }
 
@@ -80,7 +80,7 @@ namespace Application_layer
         public void EditForeman(string foremanName, Workteam workteam)
         {
             //ToDo add DBconnector method
-            workteam.EditForman(foremanName);
+            workteam.Foreman = foremanName;
         }
 
         public bool DeleteWorkteam(Workteam workteam)
