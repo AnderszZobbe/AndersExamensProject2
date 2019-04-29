@@ -31,5 +31,22 @@ namespace Domain
         {
             throw new NotImplementedException();
         }
+        public DateTime LastDay()
+        {
+            DateTime lastDay = StartDate;
+            foreach(Assignment i in assignments)
+            {
+                for (int x = i.duration; x == 0; x = x - 1)
+                {
+                    if (i.workteam.IsAnOffday(lastDay))
+                    {
+                        x++;
+                    }
+                    lastDay.AddDays(1);
+                }
+            }
+            return lastDay;
+            
+        }
     }
 }

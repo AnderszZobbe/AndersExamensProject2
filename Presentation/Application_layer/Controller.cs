@@ -56,7 +56,7 @@ namespace Application_layer
 
         public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
         {
-            //loo needs to be sorted and LastDay needs to be implementet
+            //loo needs to be sorted 
             //List<Order> loo = new List<Order>();
             //foreach(Order i in orders)
             //{
@@ -67,7 +67,6 @@ namespace Application_layer
             //            if (i.LastDay >= date)
             //            {
             //                loo.Add(i);
-
             //            }
             //            break;
             //        }

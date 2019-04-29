@@ -11,7 +11,7 @@ namespace Domain
         private string foreman;
         private List<Offday> offdays;
 
-        private bool IsAnOffday(DateTime date)
+        public bool IsAnOffday(DateTime date)
         {
             foreach(Offday i in offdays)
             {
