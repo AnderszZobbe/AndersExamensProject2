@@ -54,8 +54,26 @@ namespace Application_layer
             throw new NotImplementedException();
         }
 
-        public List<Order> ListOfOrdersFromDate(DateTime date)
+        public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
         {
+            //loo needs to be sorted and LastDay needs to be implementet
+            //List<Order> loo = new List<Order>();
+            //foreach(Order i in orders)
+            //{
+            //    foreach (Assignment x in i.assignments)
+            //    {
+            //        if(x.workteam == workteam)
+            //        {
+            //            if (i.LastDay >= date)
+            //            {
+            //                loo.Add(i);
+
+            //            }
+            //            break;
+            //        }
+            //    }
+            //}
+            //return loo
             throw new NotImplementedException();
         }
 

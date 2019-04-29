@@ -10,6 +10,6 @@ namespace Domain
     {
         private Workform workform;
         private int duration;
-        private Workteam workteam;
+        public Workteam workteam;
     }
 }

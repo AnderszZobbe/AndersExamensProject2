@@ -18,7 +18,7 @@ namespace Domain
         private Customer customer;
         private AsphaltWork asphaltWork;
         private Machine machine;
-        private List<Assignment> assignments;
+        public List<Assignment> assignments;
         public DateTime startDate;
 
         private DateTime GetStartDate()
