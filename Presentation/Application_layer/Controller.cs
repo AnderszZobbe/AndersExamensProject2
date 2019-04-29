@@ -48,7 +48,17 @@ namespace Application_layer
         }
         public void EditForeman(string foremanName, Workteam workteam)
         {
+            //ToDo add DBconnector method
             workteam.EditForman(foremanName);
+        }
+        public void DeleteWorkteam(Workteam workteam)
+        {
+            //ToDo add DBconnector method
+            if (workteams.Contains(workteam))
+            {
+                workteams.Remove(workteam);
+            }
+            
         }
     }
 }
