@@ -11,7 +11,6 @@ namespace Application_layer
     {
         private List<Order> orders;
         private List<Workteam> workteams;
-        private List<Offday> offdays;
 
         public Controller()
         {
@@ -32,9 +31,12 @@ namespace Application_layer
             workteams.Add(workteam);
         }
 
-        public void CreateOffday(OffdayReason reason, DateTime startDate, int duration)
+        public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
         {
-            throw new NotImplementedException();
+            Offday offday = new Offday(reason, startDate, duration);
+            //ToDo add DBconnector method
+            workteam.AddOffDay(offday);
+            //ToDo Reschedule(date);
         }
 
         public void Reschedule(DateTime date)

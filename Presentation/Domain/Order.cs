@@ -18,7 +18,6 @@ namespace Domain
         private Customer customer;
         private AsphaltWork asphaltWork;
         private Machine machine;
-        private Workteam workteam;
         private List<Assignment> assignments;
         public DateTime startDate;
 
