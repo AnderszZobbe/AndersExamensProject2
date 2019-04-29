@@ -39,6 +39,11 @@ namespace Application_layer
             //ToDo Reschedule(date);
         }
 
+        public List<Workteam> GetAllWorkteams()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Reschedule(DateTime date)
         {
             throw new NotImplementedException();

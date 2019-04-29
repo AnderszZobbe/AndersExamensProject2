@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListBox Margin="10">
+        <ListBox Margin="10,10,10,35" x:Name="WorkteamList">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>
@@ -16,5 +16,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
+        <Button Content="Lav nyt arbejdshold" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
