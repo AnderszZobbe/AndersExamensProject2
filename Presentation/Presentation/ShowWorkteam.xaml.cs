@@ -46,7 +46,7 @@ namespace Presentation
 
             if (cnw.Workteam != null)
             {
-                controller.CreateWorkteam(cnw.Workteam);
+                controller.CreateWorkteam(cnw.Workteam.Foreman);
 
                 WorkteamOverview wo = new WorkteamOverview();
 
