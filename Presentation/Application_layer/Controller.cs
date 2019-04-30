@@ -2,6 +2,7 @@
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace Application_layer
 {
     public class Controller
     {
-        private List<Order> orders = new List<Order>();
-        private List<Workteam> workteams = new List<Workteam>();
+        private ObservableCollection<Order> orders = new ObservableCollection<Order>();
+        private ObservableCollection<Workteam> workteams = new ObservableCollection<Workteam>();
 
         public static Controller Instance { get; } = new Controller();
 
@@ -64,7 +65,7 @@ namespace Application_layer
             //ToDo Reschedule(date);
         }
 
-        public List<Workteam> GetAllWorkteams()
+        public ObservableCollection<Workteam> GetAllWorkteams()
         {
             return workteams;
         }
@@ -74,7 +75,7 @@ namespace Application_layer
             throw new NotImplementedException();
         }
 
-        public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
+        public ObservableCollection<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
         {
             //loo needs to be sorted 
             //List<Order> loo = new List<Order>();

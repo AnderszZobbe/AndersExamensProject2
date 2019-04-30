@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,12 @@ namespace Presentation
     /// </summary>
     public partial class WorkteamOverview : Window
     {
-        public WorkteamOverview()
+        private Workteam workteam;
+
+        public WorkteamOverview(Workteam workteam)
         {
+            this.workteam = workteam;
+
             InitializeComponent();
         }
 
@@ -28,6 +33,12 @@ namespace Presentation
         {
             ShowWorkteam sw = new ShowWorkteam();
             sw.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DocumentNewWorkorder dnw = new DocumentNewWorkorder();
+            dnw.ShowDialog();
         }
     }
 }
