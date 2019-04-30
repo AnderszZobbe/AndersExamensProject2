@@ -37,5 +37,32 @@ namespace UnitTesting
 
             Assert.AreEqual(workteam, workteamFound);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ExpectExceptionDuplicateName()
+        {
+            string foreman = "Bravo";
+
+            Workteam workteam = controller.CreateWorkteam(foreman);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ExpectExceptionEmptyName()
+        {
+            string foreman = "";
+
+            Workteam workteam = controller.CreateWorkteam(foreman);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ExpectExceptionEmptyNoName()
+        {
+            string foreman = null;
+
+            Workteam workteam = controller.CreateWorkteam(foreman);
+        }
     }
 }
