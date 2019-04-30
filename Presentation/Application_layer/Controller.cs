@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application_layer.Exceptions;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,7 +42,7 @@ namespace Application_layer
             {
                 if (item.Foreman == foreman)
                 {
-                    throw new ArgumentException("There already exsits a workteam with a foreman by that name");
+                    throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
                 }
             }
 
