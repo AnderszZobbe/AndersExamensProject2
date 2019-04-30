@@ -1,8 +1,10 @@
 ﻿using Application_layer;
+using Application_layer.Exceptions;
 using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,6 +37,14 @@ namespace Presentation
             {
                 Workteam = controller.CreateWorkteam(foreman.Text);
                 Close();
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Formand må ikke være tomt");
+            }
+            catch (DuplicateObjectException)
+            {
+                MessageBox.Show($"Et hold for \"{foreman.Text}\" eksistere allerede");
             }
             catch (Exception exception)
             {

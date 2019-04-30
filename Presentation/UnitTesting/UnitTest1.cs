@@ -1,5 +1,6 @@
 ﻿using System;
 using Application_layer;
+using Application_layer.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -39,7 +40,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionDuplicateName()
         {
             string foreman = "Bravo";
