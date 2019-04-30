@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Controller.cs" />
     <Compile Include="DBConnector.cs" />
+    <Compile Include="Exceptions\DuplicateObjectException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

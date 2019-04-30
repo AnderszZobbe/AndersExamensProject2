@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="WorkteamOverview" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="WorkteamOverview" Height="450" Width="800" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
         <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-        <ListBox Margin="10,10,410,35" x:Name="WorkteamList">
+        <ListBox Margin="10,10,10,35" x:Name="WorkteamList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>

@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace Presentation
 {
     /// <summary>
-    /// Interaction logic for WorkteamOverview.xaml
+    /// Interaction logic for DocumentNewWorkorder.xaml
     /// </summary>
-    public partial class WorkteamOverview : Window
+    public partial class DocumentNewWorkorder : Window
     {
-        public WorkteamOverview()
+        public DocumentNewWorkorder()
         {
             InitializeComponent();
-        }
-
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            ShowWorkteam sw = new ShowWorkteam();
-            sw.Show();
         }
     }
 }
