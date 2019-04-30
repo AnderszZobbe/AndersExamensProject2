@@ -31,7 +31,9 @@ namespace Presentation
         {
             InitializeComponent();
 
-            List<Workteam> s = controller.GetAllWorkteams();
+            workteams = controller.GetAllWorkteams();
+
+
 
             //workteams = s;
 
@@ -46,11 +48,29 @@ namespace Presentation
 
             if (cnw.Workteam != null)
             {
-                WorkteamOverview wo = new WorkteamOverview();
+                WorkteamOverview wo = new WorkteamOverview(cnw.Workteam);
 
                 wo.Show();
                 Close();
             }
+        }
+
+        private void WorkteamListSelect(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                if (button.DataContext is Workteam workteam)
+                {
+                    OpenWorkteam(workteam);
+                }
+            }
+        }
+
+        private void OpenWorkteam(Workteam workteam)
+        {
+            WorkteamOverview wo = new WorkteamOverview(workteam);
+            wo.Show();
+            Close();
         }
     }
 }
