@@ -12,11 +12,6 @@ namespace Application_layer
         private List<Order> orders = new List<Order>();
         private List<Workteam> workteams = new List<Workteam>();
 
-        public Controller()
-        {
-
-        }
-
         public static Controller Instance { get; } = new Controller();
 
         public bool DeleteOrder(Order order)

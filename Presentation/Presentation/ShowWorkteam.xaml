@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        Title="Vælg et arbejdshold" Height="450" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <ListBox Margin="10,10,10,35" x:Name="WorkteamList">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>
-                        <TextBlock Text="{Binding Name}" ToolTip="{Binding FilePath}"/>
+                        <TextBlock Text="{Binding Name}"/>
                     </DockPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
