@@ -19,7 +19,8 @@ namespace Domain
         public AsphaltWork AsphaltWork { get; set; }
         public Machine Machine { get; set; }
         public DateTime StartDate { get; set; }
-
+        
+        // 
         public List<Assignment> assignments;
 
         private DateTime GetStartDate()
@@ -31,22 +32,22 @@ namespace Domain
         {
             throw new NotImplementedException();
         }
-        public DateTime LastDay()
+        public DateTime LastDay(Workteam workteam)
         {
-            DateTime lastDay = StartDate;
-            foreach(Assignment i in assignments)
-            {
-                for (int x = i.duration; x == 0; x = x - 1)
-                {
-                    if (i.workteam.IsAnOffday(lastDay))
-                    {
-                        x++;
-                    }
-                    lastDay.AddDays(1);
-                }
-            }
-            return lastDay;
-            
+            //DateTime lastDay = StartDate;
+            //foreach(Assignment i in assignments)
+            //{
+            //    for (int x = i.duration; x == 0; x = x - 1)
+            //    {
+            //        if (i.workteam.IsAnOffday(lastDay))
+            //        {
+            //            x++;
+            //        }
+            //        lastDay.AddDays(1);
+            //    }
+            //}
+            //return lastDay;
+            throw new NotImplementedException();
         }
     }
 }

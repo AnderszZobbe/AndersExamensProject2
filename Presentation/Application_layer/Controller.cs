@@ -82,14 +82,11 @@ namespace Application_layer
             //{
             //    foreach (Assignment x in i.assignments)
             //    {
-            //        if(x.workteam == workteam)
-            //        {
-            //            if (i.LastDay >= date)
+            //            if (i.LastDay(workteam) >= date)
             //            {
             //                loo.Add(i);
             //            }
             //            break;
-            //        }
             //    }
             //}
             //return loo
