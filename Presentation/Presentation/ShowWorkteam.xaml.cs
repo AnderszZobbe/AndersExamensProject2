@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -31,11 +32,10 @@ namespace Presentation
         {
             InitializeComponent();
 
-            workteams = controller.GetAllWorkteams();
-
-
-
-            //workteams = s;
+            foreach (Workteam workteam in controller.GetAllWorkteams())
+            {
+                workteams.Add(workteam);
+            }
 
             WorkteamList.ItemsSource = workteams;
         }
@@ -57,9 +57,9 @@ namespace Presentation
 
         private void WorkteamListSelect(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button)
+            if (sender is Selector element)
             {
-                if (button.DataContext is Workteam workteam)
+                if (element.SelectedItem is Workteam workteam)
                 {
                     OpenWorkteam(workteam);
                 }

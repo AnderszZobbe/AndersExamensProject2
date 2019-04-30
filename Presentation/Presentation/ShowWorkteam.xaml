@@ -7,12 +7,11 @@
         mc:Ignorable="d"
         Title="Vælg et arbejdshold" Height="450" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
-        <ListBox Margin="10,10,10,35" x:Name="WorkteamList">
+        <ListBox Margin="10,10,10,35" x:Name="WorkteamList" SelectionChanged="WorkteamListSelect">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>
                         <TextBlock Text="{Binding Foreman}"/>
-                        <Button Content="{Binding Foreman}" Click="WorkteamListSelect"/>
                     </DockPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

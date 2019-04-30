@@ -11,8 +11,8 @@ namespace Application_layer
 {
     public class Controller
     {
-        private ObservableCollection<Order> orders = new ObservableCollection<Order>();
-        private ObservableCollection<Workteam> workteams = new ObservableCollection<Workteam>();
+        private List<Order> orders = new List<Order>();
+        private List<Workteam> workteams = new List<Workteam>();
 
         public static Controller Instance { get; } = new Controller();
 
@@ -65,9 +65,9 @@ namespace Application_layer
             //ToDo Reschedule(date);
         }
 
-        public ObservableCollection<Workteam> GetAllWorkteams()
+        public List<Workteam> GetAllWorkteams()
         {
-            return workteams;
+            return workteams.ToList();
         }
 
         public void Reschedule(DateTime date)
@@ -75,7 +75,7 @@ namespace Application_layer
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
+        public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
         {
             //loo needs to be sorted 
             //List<Order> loo = new List<Order>();
