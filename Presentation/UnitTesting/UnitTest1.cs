@@ -57,7 +57,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyNoName()
         {
             string foreman = null;
