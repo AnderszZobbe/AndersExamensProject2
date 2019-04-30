@@ -27,6 +27,23 @@ namespace Application_layer
 
         public Workteam CreateWorkteam(string foreman)
         {
+            if (foreman == "")
+            {
+                throw new ArgumentException("String argument for CreateWorkteam cannot be empty");
+            }
+            if (foreman == null)
+            {
+                throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
+            }
+
+            foreach (Workteam item in workteams)
+            {
+                if (item.Foreman == foreman)
+                {
+                    throw new ArgumentException("There already exsits a workteam with a foreman by that name");
+                }
+            }
+
             Workteam workteam = new Workteam()
             {
                 Foreman = foreman
