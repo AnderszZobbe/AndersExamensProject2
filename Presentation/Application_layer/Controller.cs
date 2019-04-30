@@ -30,10 +30,17 @@ namespace Application_layer
             orders.Add(order);
         }
 
-        public void SaveWorkteam(Workteam workteam)
+        public Workteam CreateWorkteam(string foreman)
         {
+            Workteam workteam = new Workteam()
+            {
+                Foreman = foreman
+            };
+
             //ToDo add DBconnector method
             workteams.Add(workteam);
+
+            return workteam;
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
