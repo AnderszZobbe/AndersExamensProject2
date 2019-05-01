@@ -16,26 +16,26 @@
             <ColumnDefinition Width="127*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10">
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,5"/>
-            <Label Content="Label"/>
-            <TextBox Height="23" Margin="0,0,0,0"/>
+            <Label Content="Ordre nummer"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="orderNumber"/>
+            <Label Content="Kunde"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="customer"/>
+            <Label Content="Maskine"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="machine"/>
+            <Label Content="Strækning"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="address"/>
+            <Label Content="Bemærkning"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="remark"/>
+            <Label Content="m2 (Areal)"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="area"/>
+            <Label Content="Tons (Mængde)"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="amount"/>
+            <Label Content="Recept"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="prescription"/>
+            <Label Content="Leverings fabrik"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="AsphaltWork"/>
+            <Label Content="Deadline"/>
+            <DatePicker FirstDayOfWeek="Monday"  x:Name="deadline"/>
         </StackPanel>
         <ListBox Margin="10,10,10,45" x:Name="WorkteamList" Grid.Column="1">
             <ListBox.ItemTemplate>
@@ -47,6 +47,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Content="Button" Grid.Column="1" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom"/>
-        <Button Content="Gem arbejdsordre" Margin="10" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Button Content="Gem arbejdsordre" Margin="10" Grid.ColumnSpan="2" Grid.Row="1" Click="AttemptCreate"/>
     </Grid>
 </Window>

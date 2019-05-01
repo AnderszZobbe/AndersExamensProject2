@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application_layer;
+using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,19 @@ namespace Presentation
     /// </summary>
     public partial class DocumentNewWorkorder : Window
     {
-        public DocumentNewWorkorder()
+        private Controller controller = Controller.Instance;
+        private Workteam workteam;
+
+        public DocumentNewWorkorder(Workteam workteam)
         {
             InitializeComponent();
+
+            this.workteam = workteam;
+        }
+
+        private void AttemptCreate(object sender, RoutedEventArgs e)
+        {
+            controller.SaveOrder();
         }
     }
 }

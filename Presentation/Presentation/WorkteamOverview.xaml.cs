@@ -24,9 +24,11 @@ namespace Presentation
 
         public WorkteamOverview(Workteam workteam)
         {
+            InitializeComponent();
+
             this.workteam = workteam;
 
-            InitializeComponent();
+            Title = $"{workteam.Foreman} - {Title}";
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -37,7 +39,8 @@ namespace Presentation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DocumentNewWorkorder dnw = new DocumentNewWorkorder();
+            DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam);
+            dnw.Owner = this;
             dnw.ShowDialog();
         }
     }
