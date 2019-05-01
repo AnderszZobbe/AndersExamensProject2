@@ -9,15 +9,13 @@ namespace UnitTesting
     [TestClass]
     public class EditForeman
     {
-         
+        Controller controller = Controller.Instance;
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionChangeNameToNull()
         {
-            Controller controller = Controller.Instance;
             Workteam workteam = controller.CreateWorkteam("Hans");
-
             controller.EditForeman(null, workteam);
         }
 
@@ -25,8 +23,7 @@ namespace UnitTesting
         [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionChangeNameToAlreadyExsistingName()
         {
-            Controller controller = Controller.Instance;
-            Workteam workteam = controller.CreateWorkteam("Hans");
+            Workteam workteam = controller.CreateWorkteam("Tom");
             Workteam workteam2 = controller.CreateWorkteam("Jan");
 
             controller.EditForeman("Jan", workteam);
@@ -36,8 +33,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToEmptyString()
         {
-            Controller controller = Controller.Instance;
-            Workteam workteam = controller.CreateWorkteam("Hans");
+            Workteam workteam = controller.CreateWorkteam("Jim");
             controller.EditForeman("", workteam);
         }
     }
