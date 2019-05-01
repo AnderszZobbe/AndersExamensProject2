@@ -8,25 +8,34 @@ namespace Domain
 {
     public class Order
     {
-        public int OrderNumber { get; set; }
-        public string Adress { get; set; }
-        public string Remark { get; set; }
-        public int Area { get; set; }
-        public int Amount { get; set; }
-        public string perscription { get; set; }
-        public DateTime Deadline { get; set; }
-        public Customer Customer { get; set; }
-        public AsphaltWork AsphaltWork { get; set; }
-        public Machine Machine { get; set; }
-        public DateTime StartDate { get; set; }
-        
-        // 
         public List<Assignment> assignments;
 
-        private DateTime GetStartDate()
+        public Order(int orderNumber, string adress, string remark, int area, int amount, string prescription, DateTime deadline, Customer customer, AsphaltWork asphaltWork, Machine machine, DateTime startDate)
         {
-            throw new NotImplementedException();
+            OrderNumber = orderNumber;
+            Adress = adress ?? string.Empty;
+            Remark = remark ?? string.Empty;
+            Area = area;
+            Amount = amount;
+            Prescription = prescription ?? string.Empty;
+            Deadline = deadline;
+            Customer = customer;
+            AsphaltWork = asphaltWork;
+            Machine = machine;
+            StartDate = startDate;
         }
+
+        public int OrderNumber { get; private set; }
+        public string Adress { get; private set; }
+        public string Remark { get; private set; }
+        public int Area { get; private set; }
+        public int Amount { get; private set; }
+        public string Prescription { get; private set; }
+        public DateTime Deadline { get; private set; }
+        public Customer Customer { get; private set; }
+        public AsphaltWork AsphaltWork { get; private set; }
+        public Machine Machine { get; private set; }
+        public DateTime StartDate { get; private set; }
 
         private DateTime GetNextAvailableDate()
         {
