@@ -14,6 +14,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
+            DBConnector.CLEARTABLES();
             controller = Controller.Instance;
         }
 
@@ -22,7 +23,8 @@ namespace UnitTesting
         {
             string foreman = "Alpha";
 
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.GetWorkteamByName(foreman);
 
             Assert.IsNotNull(workteam);
         }
@@ -32,7 +34,8 @@ namespace UnitTesting
         {
             string foreman = "Bravo";
 
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.GetWorkteamByName(foreman);
 
             Workteam workteamFound = controller.GetAllWorkteams().Find(o => o.Foreman == workteam.Foreman);
 
@@ -44,8 +47,7 @@ namespace UnitTesting
         public void ExpectExceptionDuplicateName()
         {
             string foreman = "Bravo";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
         }
 
         [TestMethod]
@@ -53,8 +55,7 @@ namespace UnitTesting
         public void ExpectExceptionEmptyName()
         {
             string foreman = "";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
         }
 
         [TestMethod]
@@ -62,8 +63,7 @@ namespace UnitTesting
         public void ExpectExceptionEmptyNoName()
         {
             string foreman = null;
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
         }
     }
 }

@@ -42,8 +42,10 @@ namespace Presentation
 
         private void CreateNewWorkteam(object sender, RoutedEventArgs e)
         {
-            CreateNewWorkteam cnw = new CreateNewWorkteam();
-            cnw.Owner = this;
+            CreateNewWorkteam cnw = new CreateNewWorkteam
+            {
+                Owner = this
+            };
             cnw.ShowDialog();
 
             if (cnw.Workteam != null)

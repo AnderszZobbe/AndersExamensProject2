@@ -11,6 +11,16 @@ namespace Domain
         public string Foreman { get; set; }
         public List<Offday> offdays;
 
+        public Workteam(string foreman)
+        {
+            if (foreman == "")
+            {
+                throw new ArgumentException("String argument for CreateWorkteam cannot be empty");
+            }
+
+            Foreman = foreman ?? throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
+        }
+
         public bool IsAnOffday(DateTime date)
         {
             foreach(Offday i in offdays)

@@ -10,10 +10,10 @@ namespace Domain
     {
         public List<Assignment> assignments;
 
-        public Order(int? orderNumber, string adress, string remark, int? area, int? amount, string prescription, DateTime deadline, DateTime startDate, Customer customer, AsphaltWork asphaltWork, Machine machine)
+        public Order(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, Customer customer, AsphaltCompany asphaltWork, Machine machine)
         {
             OrderNumber = orderNumber ?? null;
-            Adress = adress ?? string.Empty;
+            Address = address ?? string.Empty;
             Remark = remark ?? string.Empty;
             Area = area ?? null;
             Amount = amount ?? null;
@@ -25,14 +25,15 @@ namespace Domain
         }
 
         public int? OrderNumber { get; private set; }
-        public string Adress { get; private set; }
+        public string Address { get; private set; }
         public string Remark { get; private set; }
         public int? Area { get; private set; }
         public int? Amount { get; private set; }
         public string Prescription { get; private set; }
-        public DateTime Deadline { get; private set; }
+        public DateTime? Deadline { get; private set; }
+        public DateTime? StartDate { get; private set; }
         public Customer Customer { get; private set; }
-        public AsphaltWork AsphaltWork { get; private set; }
+        public AsphaltCompany AsphaltWork { get; private set; }
         public Machine Machine { get; private set; }
 
         private DateTime GetNextAvailableDate()

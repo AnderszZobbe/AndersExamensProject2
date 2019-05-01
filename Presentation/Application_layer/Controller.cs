@@ -11,8 +11,10 @@ namespace Application_layer
 {
     public class Controller
     {
-        private List<Order> orders = new List<Order>();
-        private List<Workteam> workteams = new List<Workteam>();
+        private readonly DBConnector dBConnector = new DBConnector();
+
+        private readonly Dictionary<Order, int> orders = new Dictionary<Order, int>();
+        private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
 
         private Controller()
         {
@@ -25,40 +27,48 @@ namespace Application_layer
             return orders.Remove(order);
         }
 
-        public void SaveOrder(Order order)
+        public void CreateOrder(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, Customer customer, AsphaltCompany asphaltWork, Machine machine)
         {
-            //ToDo add DBconnector method
-            orders.Add(order);
+            Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, customer, asphaltWork, machine);
+
+            dBConnector.CreateOrder(orders, order);
         }
 
-        public Workteam CreateWorkteam(string foreman)
+        public Workteam GetWorkteamByName(string foreman)
         {
-            if (foreman == "")
-            {
-                throw new ArgumentException("String argument for CreateWorkteam cannot be empty");
-            }
-            if (foreman == null)
-            {
-                throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
-            }
+            List<Workteam> workteams = this.workteams.Keys.ToList();
 
-            foreach (Workteam item in workteams)
+            Workteam workteam = workteams.Find(o => o.Foreman == foreman);
+
+            if (workteam == null)
             {
-                if (item.Foreman == foreman)
+                dBConnector.GetAllWorkteams(this.workteams);
+
+                workteams = this.workteams.Keys.ToList();
+
+                workteam = workteams.Find(o => o.Foreman == foreman);
+
+                if (workteam == null)
                 {
-                    throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
+                    throw new NotFoundException("The workteam you're trying to get does not exist");
                 }
             }
 
-            Workteam workteam = new Workteam()
-            {
-                Foreman = foreman
-            };
-
-            //ToDo add DBconnector method
-            workteams.Add(workteam);
-
             return workteam;
+        }
+
+        public void CreateWorkteam(string foreman)
+        {
+            dBConnector.GetAllWorkteams(workteams);
+
+            if (workteams.Keys.Any(o => o.Foreman == foreman))
+            {
+                throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
+            }
+
+            Workteam workteam = new Workteam(foreman);
+
+            dBConnector.CreateWorkteam(workteams, workteam);
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
@@ -71,7 +81,53 @@ namespace Application_layer
 
         public List<Workteam> GetAllWorkteams()
         {
-            return workteams.ToList();
+            dBConnector.GetAllWorkteams(workteams);
+            return workteams.Keys.ToList();
+        }
+
+        public bool CustomerExistsByName(string customerName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateCustomer(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AsphaltWorkExistsByName(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateAsphaltWork(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AsphaltCompany GetAsphaltWorkByName(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MachineExistsByName(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Machine GetMachineByName(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateMachine(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Customer GetCustomerByName(string text)
+        {
+            throw new NotImplementedException();
         }
 
         public void Reschedule(DateTime date)
@@ -102,7 +158,7 @@ namespace Application_layer
         public void EditForeman(string foremanName, Workteam workteam)
         {
 
-            if (workteams.Where(i => i.Foreman == foremanName).Count() != 0)
+            if (workteams.Where(o => o.Key.Foreman == foremanName).Count() != 0)
             {
                 throw new DuplicateObjectException();
             }

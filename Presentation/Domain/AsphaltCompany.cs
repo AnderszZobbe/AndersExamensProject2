@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class AsphaltWork
+    public class AsphaltCompany
     {
         private string name;
     }

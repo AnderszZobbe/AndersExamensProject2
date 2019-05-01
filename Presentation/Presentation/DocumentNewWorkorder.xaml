@@ -17,25 +17,25 @@
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10">
             <Label Content="Ordre nummer"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="orderNumber"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="orderNumberInput"/>
             <Label Content="Kunde"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="customer"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="customerInput"/>
             <Label Content="Maskine"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="machine"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="machineInput"/>
             <Label Content="Strækning"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="address"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="addressInput"/>
             <Label Content="Bemærkning"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="remark"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="remarkInput"/>
             <Label Content="m2 (Areal)"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="area"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="areaInput"/>
             <Label Content="Tons (Mængde)"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="amount"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="amountInput"/>
             <Label Content="Recept"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="prescription"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="prescriptionInput"/>
             <Label Content="Leverings fabrik"/>
-            <TextBox Height="23" Margin="0,0,0,5" x:Name="AsphaltWork"/>
+            <TextBox Height="23" Margin="0,0,0,5" x:Name="AsphaltWorkInput"/>
             <Label Content="Deadline"/>
-            <DatePicker FirstDayOfWeek="Monday"  x:Name="deadline"/>
+            <DatePicker FirstDayOfWeek="Monday"  x:Name="deadlineInput"/>
         </StackPanel>
         <ListBox Margin="10,10,10,45" x:Name="WorkteamList" Grid.Column="1">
             <ListBox.ItemTemplate>
@@ -47,6 +47,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Content="Button" Grid.Column="1" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom"/>
-        <Button Content="Gem arbejdsordre" Margin="10" Grid.ColumnSpan="2" Grid.Row="1" Click="AttemptCreate"/>
+        <Button Content="Gem arbejdsordre" Margin="10" Grid.ColumnSpan="2" Grid.Row="1" Click="CreateOrder"/>
     </Grid>
 </Window>
