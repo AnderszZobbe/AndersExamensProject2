@@ -8,6 +8,10 @@ namespace Application_layer.Exceptions
 {
     public class DuplicateObjectException : Exception
     {
+        public DuplicateObjectException()
+        {
+        }
+
         public DuplicateObjectException(string message) : base(message)
         {
         }

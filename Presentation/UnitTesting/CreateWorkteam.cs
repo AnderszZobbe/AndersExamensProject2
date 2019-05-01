@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTesting
 {
     [TestClass]
-    public class UnitTest1
+    public class CreateWorkteam
     {
         Controller controller;
 

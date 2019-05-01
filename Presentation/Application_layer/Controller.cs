@@ -97,11 +97,18 @@ namespace Application_layer
             //return loo
             throw new NotImplementedException();
         }
+        
 
         public void EditForeman(string foremanName, Workteam workteam)
         {
+
+            if (workteams.Where(i => i.Foreman == foremanName).Count() != 0)
+            {
+                throw new DuplicateObjectException();
+            }
+            if (foremanName.Count() == 0) { throw new ArgumentException(); }
             //ToDo add DBconnector method
-            workteam.Foreman = foremanName;
+            workteam.Foreman = foremanName ?? throw new ArgumentNullException();
         }
 
         public bool DeleteWorkteam(Workteam workteam)
