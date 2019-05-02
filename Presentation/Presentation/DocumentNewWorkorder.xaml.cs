@@ -76,28 +76,30 @@ namespace Presentation
                 }
             }
 
-            Customer customer;
-            if (!controller.CustomerExistsByName(customerInput.Text))
+            /*Customer customer;
+            if (customerInput.Text != string.Empty && !controller.CustomerExistsByName(customerInput.Text))
             {
                 controller.CreateCustomer(customerInput.Text);
             }
             customer = controller.GetCustomerByName(customerInput.Text);
 
             AsphaltCompany asphaltWork;
-            if (!controller.AsphaltWorkExistsByName(AsphaltWorkInput.Text))
+            if (AsphaltWorkInput.Text != string.Empty && !controller.AsphaltWorkExistsByName(AsphaltWorkInput.Text))
             {
                 controller.CreateAsphaltWork(AsphaltWorkInput.Text);
             }
             asphaltWork = controller.GetAsphaltWorkByName(AsphaltWorkInput.Text);
 
             Machine machine;
-            if (!controller.MachineExistsByName(orderNumberInput.Text))
+            if (machineInput.Text != string.Empty && !controller.MachineExistsByName(machineInput.Text))
             {
-                controller.CreateMachine(orderNumberInput.Text);
+                controller.CreateMachine(machineInput.Text);
             }
-            machine = controller.GetMachineByName(orderNumberInput.Text);
+            machine = controller.GetMachineByName(machineInput.Text);*/
 
-            controller.CreateOrder(orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, customer, asphaltWork, machine);
+            controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
+
+            Close();
         }
     }
 }

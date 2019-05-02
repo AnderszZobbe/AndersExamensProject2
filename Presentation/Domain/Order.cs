@@ -8,38 +8,29 @@ namespace Domain
 {
     public class Order
     {
-        public List<Assignment> assignments;
+        public List<Assignment> assignments = new List<Assignment>();
 
-        public Order(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, Customer customer, AsphaltCompany asphaltWork, Machine machine)
+        public Order(Workteam workteam)
         {
-            OrderNumber = orderNumber ?? null;
-            Address = address ?? string.Empty;
-            Remark = remark ?? string.Empty;
-            Area = area ?? null;
-            Amount = amount ?? null;
-            Prescription = prescription ?? string.Empty;
-            Deadline = deadline;
-            Customer = customer;
-            AsphaltWork = asphaltWork;
-            Machine = machine;
+            Workteam = workteam ?? throw new ArgumentNullException(nameof(workteam));
         }
 
-        public int? OrderNumber { get; private set; }
-        public string Address { get; private set; }
-        public string Remark { get; private set; }
-        public int? Area { get; private set; }
-        public int? Amount { get; private set; }
-        public string Prescription { get; private set; }
-        public DateTime? Deadline { get; private set; }
-        public DateTime? StartDate { get; private set; }
-        public Customer Customer { get; private set; }
-        public AsphaltCompany AsphaltWork { get; private set; }
-        public Machine Machine { get; private set; }
+        public int? OrderNumber { get; set; } = null;
+        public string Address { get; set; } = null;
+        public string Remark { get; set; } = null;
+        public int? Area { get; set; } = null;
+        public int? Amount { get; set; } = null;
+        public string Prescription { get; set; } = null;
+        public Workteam Workteam { get; set; }
+        public DateTime? Deadline { get; set; } = null;
+        public DateTime? StartDate { get; set; } = null;
+        public int Priority { get; set; } = 0;
 
         private DateTime GetNextAvailableDate()
         {
             throw new NotImplementedException();
         }
+
         public DateTime LastDay(Workteam workteam)
         {
             //DateTime lastDay = StartDate;

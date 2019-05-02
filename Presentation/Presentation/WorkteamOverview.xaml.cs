@@ -1,6 +1,8 @@
-﻿using Domain;
+﻿using Application_layer;
+using Domain;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,9 @@ namespace Presentation
     /// </summary>
     public partial class WorkteamOverview : Window
     {
+        private ObservableCollection<Order> orders { get; set; }
         private Workteam workteam;
+        private Controller controller = Controller.Instance;
 
         public WorkteamOverview(Workteam workteam)
         {
@@ -29,6 +33,8 @@ namespace Presentation
             this.workteam = workteam;
 
             Title = $"{workteam.Foreman} - {Title}";
+
+            UpdateOrders();
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -42,6 +48,20 @@ namespace Presentation
             DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam);
             dnw.Owner = this;
             dnw.ShowDialog();
+
+            UpdateOrders();
+        }
+
+        private void UpdateOrders()
+        {
+            orders = new ObservableCollection<Order>();
+
+            foreach (Order order in controller.GetAllOrdersByWorkteam(workteam))
+            {
+                orders.Add(order);
+            }
+
+            OrderList.ItemsSource = orders;
         }
     }
 }

@@ -27,9 +27,18 @@ namespace Application_layer
             return orders.Remove(order);
         }
 
-        public void CreateOrder(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, Customer customer, AsphaltCompany asphaltWork, Machine machine)
+        public void CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
-            Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, customer, asphaltWork, machine);
+            Order order = new Order(workteam)
+            {
+                OrderNumber = orderNumber,
+                Address = address,
+                Remark = remark,
+                Area = area,
+                Amount = amount,
+                Prescription = prescription,
+                Deadline = deadline
+            };
 
             Connector.CreateOrder(orders, order);
         }
@@ -55,6 +64,17 @@ namespace Application_layer
             }
 
             return workteam;
+        }
+
+        public List<Order> GetAllOrdersByWorkteam(Workteam workteam)
+        {
+            Connector.GetAllOrdersByWorkteam(this.orders, workteam);
+
+            List<Order> orders = this.orders.Keys.ToList();
+
+            orders = orders.FindAll(o => o.Workteam == workteam);
+
+            return orders;
         }
 
         public void CreateWorkteam(string foreman)

@@ -18,6 +18,7 @@ namespace Presentation
         public App()
         {
             Controller.Connector = new DBConnector();
+            Controller.Connector = new DBTestConnector();
         }
     }
 }

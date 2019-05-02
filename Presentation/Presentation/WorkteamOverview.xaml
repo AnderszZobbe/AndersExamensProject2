@@ -8,7 +8,7 @@
         Title="Oversigt" Height="450" Width="800" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
         <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click"/>
-        <ListBox Margin="10,10,10,35" x:Name="WorkteamList">
+        <ListBox Margin="10,10,10,35" x:Name="OrderList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>

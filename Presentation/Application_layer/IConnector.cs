@@ -10,9 +10,8 @@ namespace Application_layer
     public interface IConnector
     {
         void GetAllWorkteams(Dictionary<Workteam, int> workteams);
-
         void CreateWorkteam(Dictionary<Workteam, int> workteams, Workteam workteam);
-
         void CreateOrder(Dictionary<Order, int> orders, Order order);
+        void GetAllOrdersByWorkteam(Dictionary<Order, int> orders, Workteam workteam);
     }
 }

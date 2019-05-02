@@ -94,5 +94,10 @@ namespace Persistence
                 workteams.Add(workteam, id);*/
             }
         }
+
+        public void GetAllOrdersByWorkteam(Dictionary<Order, int> orders, Workteam workteam)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
