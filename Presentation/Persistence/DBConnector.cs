@@ -99,5 +99,10 @@ namespace Persistence
         {
             throw new NotImplementedException();
         }
+
+        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

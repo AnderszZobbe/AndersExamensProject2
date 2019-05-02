@@ -99,6 +99,12 @@ namespace Application_layer
             //ToDo Reschedule(date);
         }
 
+        private void FillOrderWithAssignments(Order order)
+        {
+            // Connect with database to get list of assignments, add them to the order assigned.
+            int orderId = orders[order];
+        }
+
         public List<Workteam> GetAllWorkteams()
         {
             Connector.GetAllWorkteams(workteams);

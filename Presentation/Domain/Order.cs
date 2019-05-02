@@ -8,7 +8,7 @@ namespace Domain
 {
     public class Order
     {
-        public List<Assignment> assignments = new List<Assignment>();
+        public readonly List<Assignment> assignments = new List<Assignment>();
 
         public Order(Workteam workteam)
         {
