@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateOffDay.cs" />
     <Compile Include="CreateWorkteam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EditForeman.cs" />
