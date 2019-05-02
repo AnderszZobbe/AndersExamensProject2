@@ -10,19 +10,21 @@ namespace Persistence
 {
     public class DBTestConnector : IConnector
     {
+        private int orderID = 1;
+        private int workteamID = 1;
+
         public void CreateOrder(Dictionary<Order, int> orders, Order order)
         {
-            throw new NotImplementedException();
+            orders.Add(order, orderID++);
         }
 
         public void CreateWorkteam(Dictionary<Workteam, int> workteams, Workteam workteam)
         {
-            throw new NotImplementedException();
+            workteams.Add(workteam, workteamID++);
         }
 
         public void GetAllWorkteams(Dictionary<Workteam, int> workteams)
         {
-            throw new NotImplementedException();
         }
     }
 }
