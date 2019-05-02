@@ -11,7 +11,7 @@ namespace Application_layer
 {
     public class Controller
     {
-        private readonly DBConnector dBConnector = new DBConnector();
+        public static IConnector Connector;
 
         private readonly Dictionary<Order, int> orders = new Dictionary<Order, int>();
         private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
@@ -31,7 +31,7 @@ namespace Application_layer
         {
             Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, customer, asphaltWork, machine);
 
-            dBConnector.CreateOrder(orders, order);
+            Connector.CreateOrder(orders, order);
         }
 
         public Workteam GetWorkteamByName(string foreman)
@@ -42,7 +42,7 @@ namespace Application_layer
 
             if (workteam == null)
             {
-                dBConnector.GetAllWorkteams(this.workteams);
+                Connector.GetAllWorkteams(this.workteams);
 
                 workteams = this.workteams.Keys.ToList();
 
@@ -59,7 +59,7 @@ namespace Application_layer
 
         public void CreateWorkteam(string foreman)
         {
-            dBConnector.GetAllWorkteams(workteams);
+            Connector.GetAllWorkteams(workteams);
 
             if (workteams.Keys.Any(o => o.Foreman == foreman))
             {
@@ -68,7 +68,7 @@ namespace Application_layer
 
             Workteam workteam = new Workteam(foreman);
 
-            dBConnector.CreateWorkteam(workteams, workteam);
+            Connector.CreateWorkteam(workteams, workteam);
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
@@ -81,7 +81,7 @@ namespace Application_layer
 
         public List<Workteam> GetAllWorkteams()
         {
-            dBConnector.GetAllWorkteams(workteams);
+            Connector.GetAllWorkteams(workteams);
             return workteams.Keys.ToList();
         }
 

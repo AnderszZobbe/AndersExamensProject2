@@ -3,13 +3,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domain;
 using Application_layer;
 using Application_layer.Exceptions;
+using Persistence;
 
 namespace UnitTesting
 {
     [TestClass]
     public class EditForeman
     {
-        Controller controller = Controller.Instance;
+        Controller controller;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            Controller.Connector = new DBTestConnector();
+            controller = Controller.Instance;
+        }
 
         [TestMethod]
         public void EditNameOfForemanOnAWorkteam()

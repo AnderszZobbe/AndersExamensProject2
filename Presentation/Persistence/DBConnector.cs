@@ -1,5 +1,6 @@
-﻿using Application_layer.Properties;
+﻿using Application_layer;
 using Domain;
+using Persistence.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_layer
+namespace Persistence
 {
-    public class DBConnector
+    public class DBConnector : IConnector
     {
         private static readonly string connectionString = string.Format("Server={0}; Database={1}; User Id={2}; Password={3};", Settings.Default.dbserver, Settings.Default.dbname, Settings.Default.dbuser, Settings.Default.dbpassword);
 
-        internal DBConnector()
+        public DBConnector()
         {
 
         }
@@ -24,7 +25,7 @@ namespace Application_layer
         /// However, it keeps all deleted workteams if they're removed from the database after getting them.
         /// </summary>
         /// <param name="workteams"></param>
-        internal void GetAllWorkteams(Dictionary<Workteam, int> workteams)
+        public void GetAllWorkteams(Dictionary<Workteam, int> workteams)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -33,7 +34,7 @@ namespace Application_layer
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-                
+
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -59,7 +60,7 @@ namespace Application_layer
         /// </summary>
         /// <param name="workteams"></param>
         /// <param name="workteam"></param>
-        internal void CreateWorkteam(Dictionary<Workteam, int> workteams, Workteam workteam)
+        public void CreateWorkteam(Dictionary<Workteam, int> workteams, Workteam workteam)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -71,12 +72,12 @@ namespace Application_layer
                 cmd.Parameters.Add(new SqlParameter("@foreman", workteam.Foreman));
 
                 int id = (int)cmd.ExecuteScalar();
-                
+
                 workteams.Add(workteam, id);
             }
         }
 
-        internal void CreateOrder(Dictionary<Order, int> orders, Order order)
+        public void CreateOrder(Dictionary<Order, int> orders, Order order)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -92,11 +93,6 @@ namespace Application_layer
 
                 workteams.Add(workteam, id);*/
             }
-        }
-
-        public static void CLEARTABLES()
-        {
-
         }
     }
 }

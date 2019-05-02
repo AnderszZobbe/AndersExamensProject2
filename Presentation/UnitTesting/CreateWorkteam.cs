@@ -3,6 +3,7 @@ using Application_layer;
 using Application_layer.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Persistence;
 
 namespace UnitTesting
 {
@@ -14,7 +15,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            DBConnector.CLEARTABLES();
+            Controller.Connector = new DBTestConnector();
             controller = Controller.Instance;
         }
 

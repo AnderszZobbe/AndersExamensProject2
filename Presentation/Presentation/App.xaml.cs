@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Persistence;
+using Application_layer;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,9 @@ namespace Presentation
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Controller.Connector = new DBTestConnector();
+        }
     }
 }
