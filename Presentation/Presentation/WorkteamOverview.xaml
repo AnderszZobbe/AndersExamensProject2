@@ -5,18 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Oversigt" Height="450" Width="800" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
+        Title="Oversigt" Height="450" Width="1314.286" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
-        <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click"/>
-        <ListBox Margin="10,10,10,35" x:Name="OrderList">
+        <Grid Height="30" VerticalAlignment="Top" Margin="10,10,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="1073*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Klar"/>
+            <Label Content="Ordrenummer" Grid.Column="1"/>
+            <Label Content="Strækning" Grid.Column="2"/>
+            <Label Content="Maskine" Grid.Column="3"/>
+            <Label Content="m2" Grid.Column="4"/>
+            <Label Content="tons" Grid.Column="5"/>
+            <Grid Grid.Column="6" x:Name="GridDays">
+                
+            </Grid>
+        </Grid>
+        <ListBox Margin="10,45,10,35" x:Name="OrderList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel>
+                        <TextBlock Text="{Binding OrderNumber}"/>
                         <TextBlock Text="{Binding OrderNumber}"/>
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+        <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click"/>
     </Grid>
 </Window>

@@ -35,6 +35,27 @@ namespace Presentation
             Title = $"{workteam.Foreman} - {Title}";
 
             UpdateOrders();
+            GenerateDays();
+        }
+
+        private void GenerateDays()
+        {
+            DateTime dateRoller = DateTime.Now;
+
+            for (int i = 0; i < 7*5; i++)
+            {
+                GridDays.ColumnDefinitions.Add(new ColumnDefinition());
+
+                Label label = new Label()
+                {
+                    Content = $"{dateRoller.Day}/{dateRoller.Month}",
+                };
+
+                GridDays.Children.Add(label);
+                Grid.SetColumn(label, i);
+
+                dateRoller = dateRoller.AddDays(1);
+            }
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

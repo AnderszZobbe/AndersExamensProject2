@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Domain;
 
 namespace Presentation
 {
@@ -18,7 +19,20 @@ namespace Presentation
         public App()
         {
             Controller.Connector = new DBConnector();
+
+            Debug();
+        }
+
+        private void Debug()
+        {
             Controller.Connector = new DBTestConnector();
+
+            Controller controller = Controller.Instance;
+
+            controller.CreateWorkteam("testunit");
+            Workteam workteam = controller.GetWorkteamByName("testunit");
+
+            controller.CreateOrder(workteam, 200, null, null, null, null, null, null);
         }
     }
 }
