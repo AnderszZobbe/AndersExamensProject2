@@ -61,10 +61,14 @@ namespace Application_layer
         {
             Connector.GetAllWorkteams(workteams);
 
-            if (workteams.Keys.Any(o => o.Foreman == foreman))
+            if (!(workteams.Count == 0))
             {
-                throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
+                if (workteams.Keys.Any(o => o.Foreman == foreman))
+                {
+                    throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
+                }
             }
+
 
             Workteam workteam = new Workteam(foreman);
 

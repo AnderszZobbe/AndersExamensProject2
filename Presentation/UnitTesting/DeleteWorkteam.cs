@@ -14,12 +14,13 @@ namespace UnitTesting
         public void TestSuccesfulDeletion()
         {
             Controller controller = Controller.Instance;
-            string foreman = "Hans";
+            string foreman = "Derp";
             controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam("Lol");
 
             Workteam workteam = controller.GetWorkteamByName(foreman);
             Assert.AreEqual(true, controller.DeleteWorkteam(workteam));
-            Assert.AreEqual(0, controller.GetAllWorkteams().Count);
+            Assert.AreEqual(1, controller.GetAllWorkteams().Count);
         }
 
         [TestMethod]
