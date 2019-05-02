@@ -9,7 +9,7 @@ namespace Domain
     public class Workteam
     {
         public string Foreman { get; set; }
-        public List<Offday> offdays;
+        public List<Offday> offdays = new List<Offday>();
 
         public Workteam(string foreman)
         {

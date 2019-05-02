@@ -34,7 +34,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DateOutOfRangeException))]
         public void Negativduration()
         {
             string foreman = "Bo";
@@ -55,8 +55,8 @@ namespace UnitTesting
             controller.CreateOffday(OffdayReason.FridayFree, date1, 1, workteam);
         }
         [TestMethod]
-        [ExpectedException(typeof(DuplicateObjectException))]
-        public void ExpectExceptionDuplicateOffDay()
+        [ExpectedException(typeof(OverlapException))]
+        public void ExpectExceptionOverlappingOffDay()
         {
             
             string foreman = "Dennis";
@@ -76,7 +76,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DateOutOfRangeException))]
         public void ExpectExceptionEmptyDuration()
         {
             string foreman = "Eric";
@@ -87,6 +87,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DateOutOfRangeException))]
         public void TimeMax()
         {
             string foreman = "Frederick";
@@ -96,6 +97,7 @@ namespace UnitTesting
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.MaxValue, 2, workteam);
         }
         [TestMethod]
+        [ExpectedException(typeof(DateOutOfRangeException))]
         public void TimeMin()
         {
             string foreman = "Gert";

@@ -93,10 +93,36 @@ namespace Application_layer
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
         {
+            DateTime dateRoller = startDate;
+            if (workteam == null)
+            {
+                throw new ArgumentNullException("You are trying to add offdaýs to a nonexistent workteam");
+            }
+            if (duration <= 0)
+            {
+                throw new DateOutOfRangeException("Your are trying add an offdate with a duration of 0 or less");
+            }
+            if (startDate < DateTime.Today)
+            {
+                throw new DateOutOfRangeException("You are trying to add a task, which starts in the past");
+            }
+            if (startDate > DateTime.Today.AddYears(1))
+            {
+                throw new DateOutOfRangeException("You are trying to add a task, which starts in a year");
+            }
+            for (int i = 0; i < duration; i++)
+            {
+                if (workteam.IsAnOffday(dateRoller))
+                {
+                    throw new OverlapException("There is another offday in the given period");
+                }
+
+
+                dateRoller = dateRoller.AddDays(1);
+            }
+
             Offday offday = new Offday(reason, startDate, duration);
-            //ToDo add DBconnector method
             workteam.offdays.Add(offday);
-            //ToDo Reschedule(date);
         }
 
         private void FillOrderWithAssignments(Order order)
