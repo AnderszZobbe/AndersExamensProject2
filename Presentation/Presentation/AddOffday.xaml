@@ -1,0 +1,21 @@
+﻿<Window x:Class="Presentation.AddOffday"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="Tilføj fridag" Width="400" SizeToContent="Height" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <StackPanel Margin="10">
+            <Label Content="Årsag"/>
+            <ComboBox  Margin="0,0,0,10" x:Name="ReasonComboBox"/>
+            <Label Content="Start dato"/>
+            <DatePicker VerticalAlignment="Top" Margin="0,0,0,10" x:Name="StartDate"/>
+            <Label Content="Slut dato"/>
+            <DatePicker VerticalAlignment="Top" Margin="0,0,0,10" x:Name="EndDate"/>
+            <Button Content="Gem " VerticalAlignment="Top" Click="SaveOffday"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

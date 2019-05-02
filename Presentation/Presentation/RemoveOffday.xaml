@@ -1,0 +1,15 @@
+﻿<Window x:Class="Presentation.RemoveOffday"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="Fjern fridag" Width="400" WindowStartupLocation="CenterOwner" SizeToContent="Height">
+    <Grid>
+        <StackPanel Margin="10">
+            <Label Content="Sikker på du vil slette denne fridag?" Margin="0,0,0,10"/>
+            <Button Content="Ja, slet fridag" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

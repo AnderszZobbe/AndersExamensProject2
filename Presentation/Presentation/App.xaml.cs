@@ -33,6 +33,10 @@ namespace Presentation
             Workteam workteam = controller.GetWorkteamByName("testunit");
 
             controller.CreateOrder(workteam, 200, null, null, null, null, null, null);
+
+            controller.CreateOffday(OffdayReason.Holiday, DateTime.Now, 1, workteam);
+
+            controller.CreateOffday(OffdayReason.Holiday, DateTime.Now.AddDays(3), 3, workteam);
         }
     }
 }

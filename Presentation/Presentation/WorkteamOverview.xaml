@@ -8,7 +8,7 @@
         Title="Oversigt" Height="450" Width="1314.286" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
         <StackPanel Margin="10,10,10,35" x:Name="OrderStack">
-            <Grid Height="30" VerticalAlignment="Top" x:Name="OrderGrid">
+            <Grid VerticalAlignment="Top" x:Name="OrderGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="90"/>
@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Klar"/>
+                <Label Content="Klar" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="Ordrenummer" Grid.Column="1" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="Strækning" Grid.Column="2" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="Maskine" Grid.Column="3" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
