@@ -40,19 +40,39 @@ namespace Presentation
 
         private void GenerateDays()
         {
+            Grid gridDays = OrderGrid.Children.OfType<Grid>().First();
+
             DateTime dateRoller = DateTime.Now;
 
             for (int i = 0; i < 7*5; i++)
             {
-                GridDays.ColumnDefinitions.Add(new ColumnDefinition());
+                ColumnDefinition columnDefinition = new ColumnDefinition();
+                gridDays.ColumnDefinitions.Add(columnDefinition);
 
+
+
+                // Border
+                Border border = new Border()
+                {
+                    BorderBrush = Brushes.DimGray,
+                    BorderThickness = new Thickness(1),
+                };
+                gridDays.Children.Add(border);
+                Grid.SetColumn(border, i);
+
+
+                // Label
                 Label label = new Label()
                 {
                     Content = $"{dateRoller.Day}/{dateRoller.Month}",
+                    Padding = new Thickness(0),
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
                 };
-
-                GridDays.Children.Add(label);
+                gridDays.Children.Add(label);
                 Grid.SetColumn(label, i);
+
+
 
                 dateRoller = dateRoller.AddDays(1);
             }
