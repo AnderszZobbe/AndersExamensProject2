@@ -10,30 +10,36 @@ namespace UnitTesting
     [TestClass]
     public class DeleteWorkteam
     {
-        //[TestMethod]
-        //public void TestSuccesfulDeletion()
-        //{
-        //    Controller controller = Controller.Instance;
-        //    string foreman = "Hans";
-        //    controller.CreateWorkteam(foreman);
-
-        //    Workteam workteam = controller.GetWorkteamByName(foreman);
-        //    controller.DeleteWorkteam(workteam);
-        //    controller.GetWorkteamByName(foreman);
-        //    Assert.AreEqual(, controller.GetAllWorkteams());
-        //}
-
         [TestMethod]
-        [ExpectedException(typeof(NotFoundException))]
-        public void ExpectedExceptionDeleteNonExistentWorkteam()
+        public void TestSuccesfulDeletion()
         {
             Controller controller = Controller.Instance;
             string foreman = "Hans";
+            controller.CreateWorkteam(foreman);
+
+            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Assert.AreEqual(true, controller.DeleteWorkteam(workteam));
+            Assert.AreEqual(0, controller.GetAllWorkteams().Count);
+        }
+
+        [TestMethod]
+        public void DeleteNonExistentWorkteam()
+        {
+            Controller controller = Controller.Instance;
+            string foreman = "Gert";
 
             Workteam workteam = new Workteam(foreman);
 
+            Assert.AreEqual(false, controller.DeleteWorkteam(workteam));
+        }
 
-            controller.DeleteWorkteam(workteam);
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ExpectedExceptionDeleteNull()
+        {
+            Controller controller = Controller.Instance;
+
+            controller.DeleteWorkteam(null);
         }
     }
 }
