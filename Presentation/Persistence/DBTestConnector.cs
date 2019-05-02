@@ -23,6 +23,10 @@ namespace Persistence
             workteams.Add(workteam, workteamID++);
         }
 
+        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam)
+        {
+        }
+
         public void GetAllOrdersByWorkteam(Dictionary<Order, int> orders, Workteam workteam)
         {
         }
