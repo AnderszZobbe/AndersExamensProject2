@@ -4,29 +4,37 @@ using Application_layer;
 using Domain;
 using System.Collections.Generic;
 using Application_layer.Exceptions;
+using Persistence;
 
 namespace UnitTesting
 {
     [TestClass]
     public class DeleteWorkteam
     {
+        Controller controller;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            Controller.Connector = new DBTestConnector();
+            controller = Controller.Instance;
+        }
+
         [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
         public void TestSuccesfulDeletion()
         {
-            Controller controller = Controller.Instance;
             string foreman = "Derp";
             controller.CreateWorkteam(foreman);
-            controller.CreateWorkteam("Lol");
 
             Workteam workteam = controller.GetWorkteamByName(foreman);
             Assert.AreEqual(true, controller.DeleteWorkteam(workteam));
-            Assert.AreEqual(1, controller.GetAllWorkteams().Count);
+            workteam = controller.GetWorkteamByName(foreman);
         }
 
         [TestMethod]
         public void DeleteNonExistentWorkteam()
         {
-            Controller controller = Controller.Instance;
             string foreman = "Gert";
 
             Workteam workteam = new Workteam(foreman);
@@ -38,8 +46,6 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectedExceptionDeleteNull()
         {
-            Controller controller = Controller.Instance;
-
             controller.DeleteWorkteam(null);
         }
     }
