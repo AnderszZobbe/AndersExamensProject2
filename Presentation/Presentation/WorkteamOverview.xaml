@@ -8,7 +8,7 @@
         Title="Oversigt" Height="450" Width="1314.286" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
         <StackPanel Margin="10,10,10,35" x:Name="OrderStack">
-            <Grid VerticalAlignment="Top" x:Name="OrderGrid">
+            <Grid VerticalAlignment="Top" x:Name="OrderGrid" Height="60">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="90"/>
@@ -26,17 +26,17 @@
                 <Label Content="tons" Grid.Column="5" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Grid Grid.Column="6"/>
             </Grid>
+            <ListBox x:Name="OrderList">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <TextBlock Text="{Binding OrderNumber}"/>
+                            <TextBlock Text="{Binding OrderNumber}"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
-        <ListBox Margin="10,45,10,35" x:Name="OrderList">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel>
-                        <TextBlock Text="{Binding OrderNumber}"/>
-                        <TextBlock Text="{Binding OrderNumber}"/>
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
         <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click"/>
     </Grid>
 </Window>

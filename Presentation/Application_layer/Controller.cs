@@ -110,7 +110,7 @@ namespace Application_layer
             {
                 throw new DateOutOfRangeException("You are trying to add a task, which starts in a year");
             }
-            for (int i = 0; i < duration; i++)
+            for (int i = 0; i < duration - 1; i++)
             {
                 if (workteam.IsAnOffday(dateRoller))
                 {
