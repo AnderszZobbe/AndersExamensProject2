@@ -65,7 +65,7 @@ namespace Presentation
             int? amount = null;
             if (!amountInput.Text.Equals(string.Empty))
             {
-                if (int.TryParse(areaInput.Text, out int resultAmount))
+                if (int.TryParse(amountInput.Text, out int resultAmount))
                 {
                     amount = resultAmount;
                 }
