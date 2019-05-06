@@ -254,25 +254,39 @@ namespace Presentation
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
                     border.BorderThickness = new Thickness();
+                    border.BorderBrush = null;
 
                     switch (workteam.GetOffdayReason(dateRoller))
                     {
                         case OffdayReason.Weekend:
-                            border.Background = Brushes.PaleVioletRed;
+                            border.Background = Brushes.Red;
                             break;
                         case OffdayReason.FridayFree:
-                            border.Background = Brushes.DarkRed;
-                            break;
                         case OffdayReason.Holiday:
                         default:
-                            border.Background = Brushes.Red;
+                            border.Background = Brushes.DarkRed;
                             break;
                     }
                 }
                 else if(workteam.IsAWorkday(order, dateRoller)) // Is the date a workday?
                 {
-                    border.Background = Brushes.Orange;
-                    border.BorderBrush = Brushes.DarkOrange;
+                    border.BorderThickness = new Thickness();
+                    border.BorderBrush = null;
+
+                    switch (workteam.GetWorkform(order, dateRoller))
+                    {
+                        case Workform.Day:
+                            border.Background = Brushes.Orange;
+                            break;
+                        case Workform.Night:
+                            border.Background = Brushes.DarkCyan;
+                            break;
+                        case Workform.Move:
+                            border.Background = Brushes.LightGray;
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 dateRoller = dateRoller.AddDays(1);

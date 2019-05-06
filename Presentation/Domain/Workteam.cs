@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,38 +25,76 @@ namespace Domain
 
         public bool IsAnOffday(DateTime date)
         {
-            foreach(Offday offday in offdays)
-            {
-                if (offday.IsOffday(date))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return offdays.Any(o => o.IsOffday(date));
         }
 
         public OffdayReason GetOffdayReason(DateTime date)
         {
-            foreach (Offday offday in offdays)
-            {
-                if (offday.IsOffday(date))
-                {
-                    return offday.OffdayReason;
-                }
-            }
-            throw new Exception(); // TODO: Put notfound exception in the domain layer
+            return offdays.Find(o => o.IsOffday(date)).OffdayReason;
         }
 
         public bool IsAWorkday(Order order, DateTime date)
         {
-            // TODO: MAKE
-            return true;
+            if (order.StartDate == null) // Return false if there's no startdate
+            {
+                return false;
+            }
+
+            List<Assignment> assignments = order.assignments;
+
+            DateTime dateRoller = order.StartDate.Value;
+
+            foreach (Assignment assignment in assignments)
+            {
+                for (int i = 0; i <= assignment.Duration; i++) // Loop for remaining duration days
+                {
+                    while (IsAnOffday(dateRoller))
+                    {
+                        dateRoller = dateRoller.AddDays(1);
+                    }
+
+                    if (dateRoller.Date == date.Date)
+                    {
+                        return true;
+                    }
+
+                    dateRoller = dateRoller.AddDays(1);
+                }
+            }
+
+            return false;
         }
 
         public Workform GetWorkform(Order order, DateTime date)
         {
-            // TODO: MAKE
-            return Workform.Day;
+            if (order.StartDate == null) // Return false if there's no startdate
+            {
+                throw new NullReferenceException("Order doesn't have a start date");
+            }
+
+            List<Assignment> assignments = order.assignments;
+
+            DateTime dateRoller = order.StartDate.Value;
+
+            foreach (Assignment assignment in assignments)
+            {
+                for (int i = 0; i <= assignment.Duration; i++) // Loop for remaining duration days
+                {
+                    while (IsAnOffday(dateRoller))
+                    {
+                        dateRoller = dateRoller.AddDays(1);
+                    }
+
+                    if (dateRoller.Date == date.Date)
+                    {
+                        return assignment.Workform;
+                    }
+
+                    dateRoller = dateRoller.AddDays(1);
+                }
+            }
+
+            throw new NullReferenceException("There's no workform on this date");
         }
     }
 }

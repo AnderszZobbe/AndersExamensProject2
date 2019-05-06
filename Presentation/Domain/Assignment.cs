@@ -8,7 +8,7 @@ namespace Domain
 {
     public class Assignment
     {
-        public Workform workform = Workform.Day;
-        public int duration = 0;
+        public Workform Workform = Workform.Day;
+        public int Duration = 0;
     }
 }

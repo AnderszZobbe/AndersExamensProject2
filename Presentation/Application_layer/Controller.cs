@@ -60,8 +60,8 @@ namespace Application_layer
         public void CreateAssignment(Order order, int? duration = null, Workform? workform = null)
         {
             Assignment assignment = new Assignment();
-            assignment.workform = workform ?? assignment.workform;
-            assignment.duration = duration ?? assignment.duration;
+            assignment.Workform = workform ?? assignment.Workform;
+            assignment.Duration = duration ?? assignment.Duration;
 
             order.assignments.Add(assignment);
 

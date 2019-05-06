@@ -10,6 +10,6 @@ namespace Domain
     {
         Day,
         Night,
-        Followup
+        Move
     }
 }

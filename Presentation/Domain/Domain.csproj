@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Assignment.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="Exceptions\OffdayNotFoundException.cs" />
     <Compile Include="Offday.cs" />
     <Compile Include="OffdayReason.cs" />
     <Compile Include="Order.cs" />

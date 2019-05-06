@@ -29,7 +29,7 @@ namespace Domain
                 {
                     totalDuration++;
                 }
-                totalDuration += assignment.duration;
+                totalDuration += assignment.Duration;
             }
             return totalDuration;
         }
