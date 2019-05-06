@@ -178,20 +178,16 @@ namespace Application_layer
         public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
         {
             //loo needs to be sorted 
-            //List<Order> loo = new List<Order>();
-            //foreach(Order i in orders)
-            //{
-            //    foreach (Assignment x in i.assignments)
-            //    {
-            //            if (i.LastDay(workteam) >= date)
-            //            {
-            //                loo.Add(i);
-            //            }
-            //            break;
-            //    }
-            //}
-            //return loo
-            throw new NotImplementedException();
+            List<Order> loo = new List<Order>();
+            foreach (Order i in GetAllOrdersByWorkteam(workteam))
+            {
+                if (i.LastDay(workteam) >= date)
+                {
+                    loo.Add(i);
+                }
+            }
+            return loo;
+            
         }
         
 
