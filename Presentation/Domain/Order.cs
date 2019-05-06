@@ -31,7 +31,10 @@ namespace Domain
             int totalDuration = 0;
             foreach (Assignment assignment in assignments)
             {
-                totalDuration++;
+                if (totalDuration == 0)
+                {
+                    totalDuration++;
+                }
                 totalDuration += assignment.duration;
             }
             return totalDuration;

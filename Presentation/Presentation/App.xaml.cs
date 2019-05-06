@@ -30,6 +30,7 @@ namespace Presentation
             Controller controller = Controller.Instance;
 
             controller.CreateWorkteam("testunit");
+
             Workteam workteam = controller.GetWorkteamByName("testunit");
 
             controller.CreateAndGetOrder(workteam, 200, null, null, null, null, null, null);
@@ -42,7 +43,9 @@ namespace Presentation
 
             controller.CreateAssignment(order, 5);
 
-            controller.SetStartDateOnOrder(order, DateTime.Now.AddDays(1));
+            controller.CreateAssignment(order, 2, Workform.Night);
+
+            controller.SetStartDateOnOrder(order, DateTime.Now.AddDays(10));
         }
     }
 }

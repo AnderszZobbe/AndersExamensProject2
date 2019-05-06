@@ -170,51 +170,6 @@ namespace Application_layer
             return workteams.Keys.ToList();
         }
 
-        public bool CustomerExistsByName(string customerName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateCustomer(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AsphaltWorkExistsByName(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateAsphaltWork(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public AsphaltCompany GetAsphaltWorkByName(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool MachineExistsByName(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Machine GetMachineByName(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateMachine(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer GetCustomerByName(string text)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Reschedule(DateTime date)
         {
             throw new NotImplementedException();
@@ -247,7 +202,10 @@ namespace Application_layer
             {
                 throw new DuplicateObjectException();
             }
-            if (foremanName.Count() == 0) { throw new ArgumentException(); }
+            if (foremanName.Count() == 0)
+            {
+                throw new ArgumentException();
+            }
             //ToDo add DBconnector method
             workteam.Foreman = foremanName ?? throw new ArgumentNullException();
         }
