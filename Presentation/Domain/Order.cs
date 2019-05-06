@@ -46,7 +46,7 @@ namespace Domain
                 DateTime lastDay = (DateTime)StartDate;
                 foreach (Assignment i in assignments)
                 {
-                    for (int x = i.duration; x == 0; x = x - 1)
+                    for (int x = i.Duration; x == 0; x = x - 1)
                     {
                         if (workteam.IsAnOffday(lastDay))
                         {
