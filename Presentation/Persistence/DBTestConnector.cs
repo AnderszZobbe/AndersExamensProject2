@@ -12,6 +12,12 @@ namespace Persistence
     {
         private int orderID = 1;
         private int workteamID = 1;
+        private int assignmentID = 1;
+
+        public void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment)
+        {
+            assignments.Add(assignment, assignmentID++);
+        }
 
         public void CreateOrder(Dictionary<Order, int> orders, Order order)
         {

@@ -32,11 +32,17 @@ namespace Presentation
             controller.CreateWorkteam("testunit");
             Workteam workteam = controller.GetWorkteamByName("testunit");
 
-            controller.CreateOrder(workteam, 200, null, null, null, null, null, null);
+            controller.CreateAndGetOrder(workteam, 200, null, null, null, null, null, null);
 
             controller.CreateOffday(OffdayReason.Holiday, DateTime.Now, 1, workteam);
 
             controller.CreateOffday(OffdayReason.Holiday, DateTime.Now.AddDays(3), 3, workteam);
+
+            Order order = controller.CreateAndGetOrder(workteam, 123, "", "", null, null, "", null);
+
+            controller.CreateAssignment(order, 5);
+
+            controller.SetStartDateOnOrder(order, DateTime.Now.AddDays(1));
         }
     }
 }

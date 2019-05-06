@@ -14,5 +14,6 @@ namespace Application_layer
         void CreateOrder(Dictionary<Order, int> orders, Order order);
         void GetAllOrdersByWorkteam(Dictionary<Order, int> orders, Workteam workteam);
         void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam);
+        void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment);
     }
 }

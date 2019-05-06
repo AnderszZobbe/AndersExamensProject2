@@ -26,6 +26,17 @@ namespace Domain
         public DateTime? StartDate { get; set; } = null;
         public int Priority { get; set; } = 0;
 
+        public int GetTotalDuration()
+        {
+            int totalDuration = 0;
+            foreach (Assignment assignment in assignments)
+            {
+                totalDuration++;
+                totalDuration += assignment.duration;
+            }
+            return totalDuration;
+        }
+
         private DateTime GetNextAvailableDate()
         {
             throw new NotImplementedException();
