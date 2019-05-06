@@ -97,7 +97,7 @@ namespace Presentation
             }
             machine = controller.GetMachineByName(machineInput.Text);*/
 
-            controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
+            controller.CreateAndGetOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
 
             Close();
         }

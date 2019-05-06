@@ -104,5 +104,10 @@ namespace Persistence
         {
             throw new NotImplementedException();
         }
+
+        public void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
