@@ -251,21 +251,28 @@ namespace Presentation
                 Grid.SetRow(border, 1);
                 Grid.SetColumn(border, i);
 
-                if (workteam.IsAnOffday(dateRoller))
+                if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    border.Background = Brushes.Red;
-                    border.BorderBrush = Brushes.DarkRed;
-                }
-                else if (order.StartDate != null) // Order set!
-                {
-                    if (order.StartDate.Value <= dateRoller)
+                    border.BorderThickness = new Thickness(0);
+
+                    switch (workteam.GetOffdayReason(dateRoller))
                     {
-                        if (--orderLength > 0)
-                        {
-                            border.Background = Brushes.Orange;
-                            border.BorderBrush = Brushes.DarkOrange;
-                        }
+                        case OffdayReason.Weekend:
+                            border.Background = Brushes.IndianRed;
+                            break;
+                        case OffdayReason.FridayFree:
+                            border.Background = Brushes.OrangeRed;
+                            break;
+                        case OffdayReason.Holiday:
+                        default:
+                            border.Background = Brushes.Red;
+                            break;
                     }
+                }
+                else if(workteam.IsAWorkday(order, dateRoller)) // Is the date a workday?
+                {
+                    border.Background = Brushes.Orange;
+                    border.BorderBrush = Brushes.DarkOrange;
                 }
 
                 dateRoller = dateRoller.AddDays(1);

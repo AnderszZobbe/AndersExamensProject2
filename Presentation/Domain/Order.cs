@@ -10,18 +10,12 @@ namespace Domain
     {
         public readonly List<Assignment> assignments = new List<Assignment>();
 
-        public Order(Workteam workteam)
-        {
-            Workteam = workteam ?? throw new ArgumentNullException(nameof(workteam));
-        }
-
         public int? OrderNumber { get; set; } = null;
         public string Address { get; set; } = null;
         public string Remark { get; set; } = null;
         public int? Area { get; set; } = null;
         public int? Amount { get; set; } = null;
         public string Prescription { get; set; } = null;
-        public Workteam Workteam { get; set; }
         public DateTime? Deadline { get; set; } = null;
         public DateTime? StartDate { get; set; } = null;
         public int Priority { get; set; } = 0;

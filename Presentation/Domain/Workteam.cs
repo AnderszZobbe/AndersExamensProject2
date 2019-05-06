@@ -9,7 +9,8 @@ namespace Domain
     public class Workteam
     {
         public string Foreman { get; set; }
-        public List<Offday> offdays = new List<Offday>();
+        public readonly List<Offday> offdays = new List<Offday>();
+        public readonly List<Order> orders = new List<Order>();
 
         public Workteam(string foreman)
         {
@@ -23,14 +24,38 @@ namespace Domain
 
         public bool IsAnOffday(DateTime date)
         {
-            foreach(Offday i in offdays)
+            foreach(Offday offday in offdays)
             {
-                if (i.IsDate(date))
+                if (offday.IsOffday(date))
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public OffdayReason GetOffdayReason(DateTime date)
+        {
+            foreach (Offday offday in offdays)
+            {
+                if (offday.IsOffday(date))
+                {
+                    return offday.OffdayReason;
+                }
+            }
+            throw new Exception(); // TODO: Put notfound exception in the domain layer
+        }
+
+        public bool IsAWorkday(Order order, DateTime date)
+        {
+            // TODO: MAKE
+            return true;
+        }
+
+        public Workform GetWorkform(Order order, DateTime date)
+        {
+            // TODO: MAKE
+            return Workform.Day;
         }
     }
 }

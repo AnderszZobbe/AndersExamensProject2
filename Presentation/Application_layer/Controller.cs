@@ -31,7 +31,7 @@ namespace Application_layer
 
         public Order CreateAndGetOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
-            Order order = new Order(workteam)
+            Order order = new Order()
             {
                 OrderNumber = orderNumber,
                 Address = address,
@@ -41,6 +41,8 @@ namespace Application_layer
                 Prescription = prescription,
                 Deadline = deadline
             };
+
+            workteam.orders.Add(order);
 
             Connector.CreateOrder(orders, order);
 
@@ -101,16 +103,12 @@ namespace Application_layer
 
         public List<Order> GetAllOrdersByWorkteam(Workteam workteam)
         {
-            Connector.GetAllOrdersByWorkteam(this.orders, workteam);
+            Connector.FillWorkteamWithOrders(orders, workteam);
 
-            List<Order> orders = this.orders.Keys.ToList();
-
-            orders = orders.FindAll(o => o.Workteam == workteam);
-
-            return orders;
+            return workteam.orders;
         }
 
-        public void CreateWorkteam(string foreman)
+        public Workteam CreateWorkteam(string foreman)
         {
             Connector.GetAllWorkteams(workteams);
 
@@ -122,6 +120,8 @@ namespace Application_layer
             Workteam workteam = new Workteam(foreman);
 
             Connector.CreateWorkteam(workteams, workteam);
+
+            return workteam;
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
@@ -131,9 +131,9 @@ namespace Application_layer
             {
                 throw new ArgumentNullException("You are trying to add offdaýs to a nonexistent workteam");
             }
-            if (duration <= 0)
+            if (duration < 0)
             {
-                throw new DateOutOfRangeException("Your are trying add an offdate with a duration of 0 or less");
+                throw new DateOutOfRangeException("Your are trying add an offdate with a duration of less than 0");
             }
             if (startDate < DateTime.Today)
             {
@@ -143,7 +143,7 @@ namespace Application_layer
             {
                 throw new DateOutOfRangeException("You are trying to add a task, which starts in a year");
             }
-            for (int i = 0; i < duration - 1; i++)
+            for (int i = 0; i < duration; i++)
             {
                 if (workteam.IsAnOffday(dateRoller))
                 {

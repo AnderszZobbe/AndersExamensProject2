@@ -8,20 +8,20 @@ namespace Domain
 {
     public class Offday
     {
-        private OffdayReason reason;
-        private DateTime startDate;
-        private int duration;
+        public readonly OffdayReason OffdayReason;
+        public readonly DateTime StartDate;
+        public readonly int Duration;
 
         public Offday(OffdayReason reason, DateTime startDate, int duration)
         {
-            this.reason = reason;
-            this.startDate = startDate;
-            this.duration = duration;
+            OffdayReason = reason;
+            StartDate = startDate;
+            Duration = duration;
         }
 
-        public bool IsDate(DateTime date)
+        public bool IsOffday(DateTime date)
         {
-            if(startDate <= date && date <= startDate.AddDays(duration))
+            if(date >= StartDate && date <= StartDate.AddDays(Duration))
             {
                 return true;
             }

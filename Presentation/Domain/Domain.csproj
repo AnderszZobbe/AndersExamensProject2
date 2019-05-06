@@ -49,5 +49,8 @@
     <Compile Include="Workform.cs" />
     <Compile Include="Workteam.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

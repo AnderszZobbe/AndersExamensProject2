@@ -41,7 +41,7 @@ namespace UnitTesting
 
             controller.CreateWorkteam(foreman);
             Workteam workteam = controller.GetWorkteamByName(foreman);
-            Order order = new Order(workteam);
+            Order order = new Order();
             Assert.AreEqual(false, controller.DeleteOrder(order));
         }
         [TestMethod]

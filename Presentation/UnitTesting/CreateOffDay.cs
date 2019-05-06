@@ -96,6 +96,7 @@ namespace UnitTesting
             Workteam workteam = controller.GetWorkteamByName(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.MaxValue, 2, workteam);
         }
+
         [TestMethod]
         [ExpectedException(typeof(DateOutOfRangeException))]
         public void TimeMin()
@@ -103,7 +104,9 @@ namespace UnitTesting
             string foreman = "Gert";
 
             controller.CreateWorkteam(foreman);
+
             Workteam workteam = controller.GetWorkteamByName(foreman);
+
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.MinValue, 2, workteam);
         }
 

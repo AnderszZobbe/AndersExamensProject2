@@ -33,7 +33,7 @@ namespace Persistence
         {
         }
 
-        public void GetAllOrdersByWorkteam(Dictionary<Order, int> orders, Workteam workteam)
+        public void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam)
         {
         }
 
