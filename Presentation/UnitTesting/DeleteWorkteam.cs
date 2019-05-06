@@ -5,6 +5,7 @@ using Domain;
 using System.Collections.Generic;
 using Application_layer.Exceptions;
 using Persistence;
+using Domain.Exceptions;
 
 namespace UnitTesting
 {

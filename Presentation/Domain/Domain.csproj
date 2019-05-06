@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assignment.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Offday.cs" />
     <Compile Include="OffdayReason.cs" />
     <Compile Include="Order.cs" />
@@ -49,8 +50,6 @@
     <Compile Include="Workform.cs" />
     <Compile Include="Workteam.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
