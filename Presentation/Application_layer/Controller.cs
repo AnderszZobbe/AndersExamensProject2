@@ -65,6 +65,17 @@ namespace Application_layer
             Connector.CreateAssignment(assignments, assignment);
         }
 
+        public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
+        {
+            order.OrderNumber = orderNumber;
+            order.Address = address;
+            order.Remark = remark;
+            order.Area = area;
+            order.Amount = amount;
+            order.Prescription = prescription;
+            order.Deadline = deadline;
+        }
+
         public Workteam GetWorkteamByName(string foreman)
         {
             List<Workteam> workteams = this.workteams.Keys.ToList();
