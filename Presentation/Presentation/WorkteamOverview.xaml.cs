@@ -234,10 +234,12 @@ namespace Presentation
 
             DateTime dateRoller = DateTime.Now;
 
+            int orderLength = order.GetTotalDuration();
+
             for (int i = 0; i < 7 * weeks; i++)
             {
                 gridDays.ColumnDefinitions.Add(new ColumnDefinition());
-                
+
                 // Border
                 Border border = new Border()
                 {
@@ -254,7 +256,18 @@ namespace Presentation
                     border.Background = Brushes.Red;
                     border.BorderBrush = Brushes.DarkRed;
                 }
-                
+                else if (order.StartDate != null) // Order set!
+                {
+                    if (order.StartDate.Value <= dateRoller)
+                    {
+                        if (--orderLength > 0)
+                        {
+                            border.Background = Brushes.Orange;
+                            border.BorderBrush = Brushes.DarkOrange;
+                        }
+                    }
+                }
+
                 dateRoller = dateRoller.AddDays(1);
             }
         }

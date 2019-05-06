@@ -15,6 +15,8 @@ namespace Application_layer
 
         private readonly Dictionary<Order, int> orders = new Dictionary<Order, int>();
         private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
+        private readonly Dictionary<Assignment, int> assignments = new Dictionary<Assignment, int>();
+        private readonly Dictionary<Offday, int> offdays = new Dictionary<Offday, int>();
 
         private Controller()
         {
@@ -27,7 +29,7 @@ namespace Application_layer
             return orders.Remove(order);
         }
 
-        public void CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
+        public Order CreateAndGetOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
             Order order = new Order(workteam)
             {
@@ -41,6 +43,26 @@ namespace Application_layer
             };
 
             Connector.CreateOrder(orders, order);
+
+            return order;
+        }
+
+        public void SetStartDateOnOrder(Order order, DateTime startDate)
+        {
+            order.StartDate = startDate;
+
+            // TODO: Add update to database
+        }
+
+        public void CreateAssignment(Order order, int? duration = null, Workform? workform = null)
+        {
+            Assignment assignment = new Assignment();
+            assignment.workform = workform ?? assignment.workform;
+            assignment.duration = duration ?? assignment.duration;
+
+            order.assignments.Add(assignment);
+
+            Connector.CreateAssignment(assignments, assignment);
         }
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
