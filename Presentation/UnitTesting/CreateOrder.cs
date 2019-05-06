@@ -26,7 +26,7 @@ namespace UnitTesting
 
             controller.CreateWorkteam(foreman);
             Workteam workteam = controller.GetWorkteamByName(foreman);
-            controller.CreateOrder(workteam,1,"","",1,1,"",DateTime.Today);
+            controller.CreateAndGetOrder(workteam,1,"","",1,1,"",DateTime.Today);
             Order order = controller.GetAllOrdersByWorkteam(workteam)[0];
 
             Assert.IsNotNull(order);
@@ -41,15 +41,15 @@ namespace UnitTesting
             string foreman = "Bravo";
             controller.CreateWorkteam(foreman);
             Workteam workteam = controller.GetWorkteamByName(foreman);
-            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
-            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateAndGetOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateAndGetOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyNoName()
         {
-            controller.CreateOrder(null, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateAndGetOrder(null, 1, "", "", 1, 1, "", DateTime.Today);
         }
 
     }
