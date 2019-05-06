@@ -187,6 +187,21 @@ namespace Application_layer
                     loo.Add(i);
                 }
             }
+            Order temp = new Order();
+
+            for (int write = 0; write < loo.Count; write++)
+            {
+                for (int sort = 0; sort < loo.Count - 1; sort++)
+                {
+                    if (loo[sort].StartDate > loo[sort + 1].StartDate)
+                    {
+                        temp = loo[sort + 1];
+                        loo[sort + 1] = loo[sort];
+                        loo[sort] = temp;
+                    }
+                }
+            }
+
             return loo;
             
         }
