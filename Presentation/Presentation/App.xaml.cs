@@ -35,13 +35,11 @@ namespace Presentation
 
             controller.CreateAndGetOrder(workteam, 200, null, null, null, null, null, null);
 
-            controller.CreateOffday(OffdayReason.Holiday, DateTime.Now, 0, workteam);
+            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today.AddDays(3), 0, workteam); // Friday
 
-            controller.CreateOffday(OffdayReason.Holiday, DateTime.Now.AddDays(3), 2, workteam);
+            controller.CreateOffday(OffdayReason.Weekend, DateTime.Today.AddDays(4), 1, workteam); // Weekend
 
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Now.AddDays(7), 2, workteam);
-
-            controller.CreateOffday(OffdayReason.Weekend, DateTime.Now.AddDays(13), 2, workteam);
+            controller.CreateOffday(OffdayReason.Holiday, DateTime.Today.AddDays(14), 6, workteam); // Week holiday
 
             Order order = controller.CreateAndGetOrder(workteam, 123, "", "", null, null, "", null);
 

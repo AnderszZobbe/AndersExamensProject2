@@ -253,15 +253,15 @@ namespace Presentation
 
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    border.BorderThickness = new Thickness(0);
+                    border.BorderThickness = new Thickness();
 
                     switch (workteam.GetOffdayReason(dateRoller))
                     {
                         case OffdayReason.Weekend:
-                            border.Background = Brushes.IndianRed;
+                            border.Background = Brushes.PaleVioletRed;
                             break;
                         case OffdayReason.FridayFree:
-                            border.Background = Brushes.OrangeRed;
+                            border.Background = Brushes.DarkRed;
                             break;
                         case OffdayReason.Holiday:
                         default:

@@ -79,11 +79,9 @@ namespace UnitTesting
         [ExpectedException(typeof(DateOutOfRangeException))]
         public void ExpectExceptionEmptyDuration()
         {
-            string foreman = "Eric";
+            Workteam workteam = controller.CreateWorkteam("Eric");
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, 0, workteam);
+            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, -1, workteam);
         }
 
         [TestMethod]

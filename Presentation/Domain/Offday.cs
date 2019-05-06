@@ -21,11 +21,7 @@ namespace Domain
 
         public bool IsOffday(DateTime date)
         {
-            if(date >= StartDate && date <= StartDate.AddDays(Duration))
-            {
-                return true;
-            }
-            return false;
+            return date.Date >= StartDate.Date && date.Date <= StartDate.AddDays(Duration).Date ? true : false;
         }
     }
 }
