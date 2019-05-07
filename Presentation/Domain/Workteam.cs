@@ -28,9 +28,9 @@ namespace Domain
             return offdays.Any(o => o.IsOffday(date));
         }
 
-        public OffdayReason GetOffdayReason(DateTime date)
+        public Offday GetOffday(DateTime date)
         {
-            return offdays.Find(o => o.IsOffday(date)).OffdayReason;
+            return offdays.Find(o => o.IsOffday(date));
         }
 
         public bool IsAWorkday(Order order, DateTime date)

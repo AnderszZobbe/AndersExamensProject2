@@ -61,9 +61,6 @@
     <Compile Include="DocumentNewWorkorder.xaml.cs">
       <DependentUpon>DocumentNewWorkorder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RemoveOffday.xaml.cs">
-      <DependentUpon>RemoveOffday.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WorkteamOverview.xaml.cs">
       <DependentUpon>WorkteamOverview.xaml</DependentUpon>
     </Compile>
@@ -76,10 +73,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DocumentNewWorkorder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RemoveOffday.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
