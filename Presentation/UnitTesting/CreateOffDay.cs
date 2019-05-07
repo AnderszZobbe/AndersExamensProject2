@@ -23,10 +23,8 @@ namespace UnitTesting
         public void ReturnOffDay()
         {
             string foreman = "Adam";
+            Workteam workteam = controller.CreateWorkteam(foreman);
 
-            controller.CreateWorkteam(foreman);
-
-            Workteam workteam = controller.GetWorkteamByName(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today,1,workteam);
 
             Assert.AreEqual(true, workteam.IsAnOffday(DateTime.Today));
@@ -39,8 +37,7 @@ namespace UnitTesting
         {
             string foreman = "Bo";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, -1, workteam);
         }
 
@@ -50,8 +47,7 @@ namespace UnitTesting
             DateTime date1 = new DateTime(2020, 2, 29, 8, 30, 52);
             string foreman = "cecile";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, date1, 1, workteam);
         }
         [TestMethod]
@@ -61,8 +57,7 @@ namespace UnitTesting
             
             string foreman = "Dennis";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, 1, workteam);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, 1, workteam);
 
@@ -90,8 +85,7 @@ namespace UnitTesting
         {
             string foreman = "Frederick";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.MaxValue, 2, workteam);
         }
 
@@ -101,10 +95,7 @@ namespace UnitTesting
         {
             string foreman = "Gert";
 
-            controller.CreateWorkteam(foreman);
-
-            Workteam workteam = controller.GetWorkteamByName(foreman);
-
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.MinValue, 2, workteam);
         }
 
