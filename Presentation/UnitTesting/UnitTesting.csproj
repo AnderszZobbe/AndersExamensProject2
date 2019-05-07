@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateOffDay.cs" />
+    <Compile Include="EditOrder.cs" />
     <Compile Include="CreateOrder.cs" />
     <Compile Include="CreateWorkteam.cs" />
     <Compile Include="DeleteOrder.cs" />
