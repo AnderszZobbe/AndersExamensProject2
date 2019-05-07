@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Oversigt" Height="450" Width="1314.286" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
-        <ScrollViewer Height="374" Margin="10,10,10,0" VerticalAlignment="Top">
+        <ScrollViewer Margin="10,10,10,35">
             <StackPanel x:Name="OrderStack">
-                <Grid x:Name="NewGrid">
+                <Grid x:Name="GridTemplate">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30"/>
                         <ColumnDefinition Width="90"/>
