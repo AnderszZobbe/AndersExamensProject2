@@ -22,10 +22,9 @@ namespace UnitTesting
         [TestMethod]
         public void ReturnWorkteam()
         {
-            string foreman = "Alpha";
+            string foreman = "Sven";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
 
             Assert.IsNotNull(workteam);
         }
@@ -33,10 +32,9 @@ namespace UnitTesting
         [TestMethod]
         public void EstablishMoreWorkteam()
         {
-            string foreman = "Bravo";
+            string foreman = "Knud";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
 
             Workteam workteamFound = controller.GetAllWorkteams().Find(o => o.Foreman == workteam.Foreman);
 
@@ -47,7 +45,7 @@ namespace UnitTesting
         [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionDuplicateName()
         {
-            string foreman = "Bravo";
+            string foreman = "Knud";
             controller.CreateWorkteam(foreman);
         }
 

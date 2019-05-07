@@ -24,8 +24,7 @@ namespace UnitTesting
         {
             string foreman = "Alpha";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateAndGetOrder(workteam,1,"","",1,1,"",DateTime.Today);
             Order order = controller.GetAllOrdersByWorkteam(workteam)[0];
 
@@ -39,8 +38,7 @@ namespace UnitTesting
         public void ExpectExceptionDuplicateOrder()
         {
             string foreman = "Bravo";
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateAndGetOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
             controller.CreateAndGetOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
         }
