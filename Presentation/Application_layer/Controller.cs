@@ -226,5 +226,21 @@ namespace Application_layer
         {
             return workteams.Remove(workteam);
         }
+
+        public void DeleteOffdayByDate(Workteam workteam, DateTime date)
+        {
+            Offday offday = workteam.GetOffday(date);
+
+            Connector.DeleteOffday(offdays, offday);
+            
+            if (workteam.offdays.Remove(offday))
+            {
+                Connector.DeleteOffday(offdays, offday);
+            }
+            else
+            {
+                throw new OffdayNotFoundException();
+            }
+        }
     }
 }

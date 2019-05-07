@@ -18,7 +18,7 @@ namespace Presentation
     {
         public App()
         {
-            Controller.Connector = new DBConnector();
+            //Controller.Connector = new DBConnector();
 
             Debug();
         }
@@ -50,7 +50,7 @@ namespace Presentation
             controller.SetStartDateOnOrder(order, DateTime.Now.AddDays(7));
             //controller.SetStartDateOnOrder(order, DateTime.Now);
 
-            Order order2 = controller.CreateAndGetOrder(workteam, 321, null, null, null, null, null, null);
+            Order order2 = controller.CreateAndGetOrder(workteam, 321, null, null, null, null, null, DateTime.Now.AddDays(7*4));
         }
     }
 }
