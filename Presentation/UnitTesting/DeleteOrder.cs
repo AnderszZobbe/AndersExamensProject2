@@ -28,7 +28,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateAndGetOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
 
-            Assert.AreEqual(true, controller.DeleteOrder(order));
+            Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
             Assert.AreEqual(false, controller.GetAllOrdersByWorkteam(workteam).Exists(o => o == order));
         }
         [TestMethod]
@@ -39,13 +39,13 @@ namespace UnitTesting
             controller.CreateWorkteam(foreman);
             Workteam workteam = controller.GetWorkteamByName(foreman);
             Order order = new Order();
-            Assert.AreEqual(false, controller.DeleteOrder(order));
+            Assert.AreEqual(false, controller.DeleteOrder(workteam, order));
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectedExceptionDeleteNull()
         {
-            Assert.AreEqual(false, controller.DeleteOrder(null));
+            Assert.AreEqual(false, controller.DeleteOrder(null, null));
         }
     }
     }

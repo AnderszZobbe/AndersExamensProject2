@@ -25,9 +25,26 @@ namespace Application_layer
 
         public static Controller Instance { get; } = new Controller();
 
-        public bool DeleteOrder(Order order)
+        public bool DeleteOrder(Workteam workteam, Order order)
         {
-            return orders.Remove(order);
+            if (workteam == null )
+            {
+                throw new ArgumentNullException("Workteam is nonexistent");
+            }
+            if (order == null)
+            {
+                throw new ArgumentNullException("Order is nonexistent");
+            }
+            if (workteam.orders.Remove(order))
+            {
+                //Connector.DeleteOrder(orders, workteam, order);
+                return true;
+            }
+            else
+            {
+                workteam.orders.Add(order);
+                return false;
+            }
         }
 
         public Order CreateAndGetOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
@@ -78,6 +95,11 @@ namespace Application_layer
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
+            if (orders.Keys.Any(o => o.OrderNumber == orderNumber && o != order))
+            {
+                throw new DuplicateObjectException("There already exists an order with that order number");
+            }
+
             order.OrderNumber = orderNumber;
             order.Address = address;
             order.Remark = remark;
@@ -239,8 +261,6 @@ namespace Application_layer
         {
             Offday offday = workteam.GetOffday(date);
 
-            Connector.DeleteOffday(offdays, offday);
-            
             if (workteam.offdays.Remove(offday))
             {
                 Connector.DeleteOffday(offdays, offday);

@@ -38,9 +38,9 @@ namespace UnitTesting
         {
             string foreman = "EditOrder2";
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateAndGetOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateAndGetOrder(workteam, 7, "", "", 1, 1, "", DateTime.Today);
             Order order = controller.CreateAndGetOrder(workteam, 0, "", "", 1, 1, "", DateTime.Today);
-            controller.EditOrder(order, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.EditOrder(order, 7, "", "", 1, 1, "", DateTime.Today);
         }
 
         [TestMethod]
@@ -49,10 +49,10 @@ namespace UnitTesting
             string foreman = "EditOrder3";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateAndGetOrder(workteam, 6, "", "", 1, 1, "", DateTime.Today);
-            controller.EditOrder(order, 7, "1", "1", 2, 2, "1", DateTime.Today.AddDays(1));
+            Order order = controller.CreateAndGetOrder(workteam, 8, "", "", 1, 1, "", DateTime.Today);
+            controller.EditOrder(order, 9, "1", "1", 2, 2, "1", DateTime.Today.AddDays(1));
 
-            Assert.AreEqual(order.OrderNumber, 7);
+            Assert.AreEqual(order.OrderNumber, 9);
             Assert.AreEqual(order.Address, "1");
             Assert.AreEqual(order.Remark, "1");
             Assert.AreEqual(order.Area, 2);

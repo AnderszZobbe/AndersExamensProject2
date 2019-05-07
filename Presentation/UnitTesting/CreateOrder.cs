@@ -25,7 +25,7 @@ namespace UnitTesting
             string foreman = "Alpha";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateAndGetOrder(workteam,1,"","",1,1,"",DateTime.Today);
+            controller.CreateAndGetOrder(workteam,8,"","",1,1,"",DateTime.Today);
             Order order = controller.GetAllOrdersByWorkteam(workteam)[0];
 
             Assert.IsNotNull(order);

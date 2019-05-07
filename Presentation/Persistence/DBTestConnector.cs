@@ -45,5 +45,10 @@ namespace Persistence
         {
             offdays.Remove(offday);
         }
+
+        public void DeleteOrder(Dictionary<Order, int> orders, Workteam workteam, Order order)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
