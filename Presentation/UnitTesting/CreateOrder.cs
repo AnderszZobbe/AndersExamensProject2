@@ -47,7 +47,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyNoName()
         {
-            controller.CreateAndGetOrder(null, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateAndGetOrder(null, 2, "", "", 1, 1, "", DateTime.Today);
         }
 
     }

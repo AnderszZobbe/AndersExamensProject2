@@ -22,7 +22,7 @@ namespace UnitTesting
         [TestMethod]
         public void ReturnOffDay()
         {
-            string foreman = "Adam";
+            string foreman = "Kevin";
             Workteam workteam = controller.CreateWorkteam(foreman);
 
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today,1,workteam);
