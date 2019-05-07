@@ -11,6 +11,7 @@ namespace Application_layer
     {
         // Create
         void CreateWorkteam(Dictionary<Workteam, int> workteams, Workteam workteam);
+        void CreateOffday(Dictionary<Offday, int> offdays, Offday offday);
         void CreateOrder(Dictionary<Order, int> orders, Order order);
         void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment);
 
