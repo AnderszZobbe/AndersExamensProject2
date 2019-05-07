@@ -39,6 +39,6 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click"/>
+        <Button Content="Dokumentérny arbejdsordre" Margin="10,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="DocumentNewWorkorder"/>
     </Grid>
 </Window>

@@ -40,5 +40,10 @@ namespace Persistence
         public void GetAllWorkteams(Dictionary<Workteam, int> workteams)
         {
         }
+
+        public void DeleteOffday(Dictionary<Offday, int> offdays, Offday offday)
+        {
+            offdays.Remove(offday);
+        }
     }
 }

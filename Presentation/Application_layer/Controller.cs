@@ -32,7 +32,15 @@ namespace Application_layer
 
         public Order CreateAndGetOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
-            Order order = new Order()
+            if (workteam == null)
+            {
+                throw new ArgumentNullException("A workteam was not given");
+            }
+            if (orders.Keys.Any(o => o.OrderNumber == orderNumber))
+            {
+                throw new DuplicateObjectException("There already exists an order with that order number");
+            }
+                Order order = new Order()
             {
                 OrderNumber = orderNumber,
                 Address = address,
@@ -225,6 +233,22 @@ namespace Application_layer
         public bool DeleteWorkteam(Workteam workteam)
         {
             return workteams.Remove(workteam);
+        }
+
+        public void DeleteOffdayByDate(Workteam workteam, DateTime date)
+        {
+            Offday offday = workteam.GetOffday(date);
+
+            Connector.DeleteOffday(offdays, offday);
+            
+            if (workteam.offdays.Remove(offday))
+            {
+                Connector.DeleteOffday(offdays, offday);
+            }
+            else
+            {
+                throw new OffdayNotFoundException();
+            }
         }
     }
 }

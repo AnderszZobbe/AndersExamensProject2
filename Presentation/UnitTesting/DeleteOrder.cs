@@ -21,18 +21,15 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestSuccesfulDeletion()
         {
             string foreman = "Adam";
+            
+            Workteam workteam = controller.CreateWorkteam(foreman);
+            Order order = controller.CreateAndGetOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
-            controller.CreateAndGetOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
-
-            Order orders = controller.GetAllOrdersByWorkteam(workteam)[0];
-            Assert.AreEqual(true, controller.DeleteOrder(orders));
-            orders = controller.GetAllOrdersByWorkteam(workteam)[0];
+            Assert.AreEqual(true, controller.DeleteOrder(order));
+            Assert.AreEqual(false, controller.GetAllOrdersByWorkteam(workteam).Exists(o => o == order));
         }
         [TestMethod]
         public void TestDeletionOfNullObject()

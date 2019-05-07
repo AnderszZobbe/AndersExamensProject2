@@ -15,5 +15,6 @@ namespace Application_layer
         void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam);
         void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam);
         void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment);
+        void DeleteOffday(Dictionary<Offday, int> offdays, Offday offday);
     }
 }

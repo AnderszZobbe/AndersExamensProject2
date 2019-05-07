@@ -26,9 +26,8 @@ namespace UnitTesting
         public void TestSuccesfulDeletion()
         {
             string foreman = "Derp";
-            controller.CreateWorkteam(foreman);
 
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             Assert.AreEqual(true, controller.DeleteWorkteam(workteam));
             workteam = controller.GetWorkteamByName(foreman);
         }

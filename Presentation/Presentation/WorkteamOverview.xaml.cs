@@ -241,22 +241,14 @@ namespace Presentation
                 gridDays.ColumnDefinitions.Add(new ColumnDefinition());
 
                 // Border
-                Border border = new Border()
-                {
-                    BorderThickness = new Thickness(1),
-                    BorderBrush = Brushes.LightGray,
-                    Background = Brushes.White,
-                };
+                Border border = new Border();
                 gridDays.Children.Add(border);
                 Grid.SetRow(border, 1);
                 Grid.SetColumn(border, i);
 
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    border.BorderThickness = new Thickness();
-                    border.BorderBrush = null;
-
-                    switch (workteam.GetOffdayReason(dateRoller))
+                    switch (workteam.GetOffday(dateRoller).OffdayReason)
                     {
                         case OffdayReason.Weekend:
                             border.Background = Brushes.Red;
@@ -270,9 +262,6 @@ namespace Presentation
                 }
                 else if(workteam.IsAWorkday(order, dateRoller)) // Is the date a workday?
                 {
-                    border.BorderThickness = new Thickness();
-                    border.BorderBrush = null;
-
                     switch (workteam.GetWorkform(order, dateRoller))
                     {
                         case Workform.Day:
@@ -288,6 +277,26 @@ namespace Presentation
                             break;
                     }
                 }
+                else
+                {
+                    border.BorderThickness = new Thickness(1);
+                    border.BorderBrush = Brushes.LightGray;
+                    border.Background = Brushes.White;
+                }
+
+                // Deadline
+                if (order.Deadline != null && order.Deadline.Value.Date == dateRoller.Date)
+                {
+                    Border deadLINE = new Border()
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        BorderThickness = new Thickness(2),
+                        BorderBrush = Brushes.Black,
+                    };
+                    gridDays.Children.Add(deadLINE);
+                    Grid.SetRow(deadLINE, 1);
+                    Grid.SetColumn(deadLINE, i);
+                }
 
                 dateRoller = dateRoller.AddDays(1);
             }
@@ -299,7 +308,7 @@ namespace Presentation
             sw.Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DocumentNewWorkorder(object sender, RoutedEventArgs e)
         {
             DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam);
             dnw.Owner = this;
@@ -314,8 +323,26 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is DateTime datePicked)
                 {
-                    AddOffday ao = new AddOffday(workteam, datePicked);
-                    ao.Owner = this;
+                    AddOffday ao = new AddOffday(workteam, datePicked, datePicked)
+                    {
+                        Owner = this
+                    };
+                    ao.ShowDialog();
+                    UpdateDataGrid();
+                }
+            }
+        }
+
+        private void AddWeekOffday(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is DateTime datePicked)
+                {
+                    AddOffday ao = new AddOffday(workteam, datePicked, datePicked.AddDays(6))
+                    {
+                        Owner = this
+                    };
                     ao.ShowDialog();
                     UpdateDataGrid();
                 }
@@ -324,7 +351,22 @@ namespace Presentation
 
         private void RemoveOffday(object sender, RoutedEventArgs e)
         {
-            Close();
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is DateTime datePicked)
+                {
+                    MessageBoxResult result = MessageBox.Show("Vil du fjerne denne fridags periode?", "Fjern fridags peroide", MessageBoxButton.YesNo);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            controller.DeleteOffdayByDate(workteam, datePicked);
+                            UpdateDataGrid();
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                    }
+                }
+            }
         }
     }
 }
