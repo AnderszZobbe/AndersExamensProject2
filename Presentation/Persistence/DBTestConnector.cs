@@ -13,6 +13,7 @@ namespace Persistence
         private int orderID = 1;
         private int workteamID = 1;
         private int assignmentID = 1;
+        private int offdayID = 1;
 
         public void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment)
         {
@@ -29,11 +30,11 @@ namespace Persistence
             workteams.Add(workteam, workteamID++);
         }
 
-        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam)
+        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam, int workteamId)
         {
         }
 
-        public void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam)
+        public void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam, int workteamId)
         {
         }
 
@@ -54,17 +55,15 @@ namespace Persistence
 
         public void CreateOffday(Dictionary<Offday, int> offdays, Offday offday)
         {
-            throw new NotImplementedException();
+            offdays.Add(offday, offdayID++);
         }
 
-        public void FillWorkteamWithOffdays(Dictionary<Offday, int> offdays, Workteam workteam)
+        public void FillWorkteamWithOffdays(Dictionary<Offday, int> offdays, Workteam workteam, int workteamId)
         {
-            throw new NotImplementedException();
         }
 
-        public void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order)
+        public void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order, int orderId)
         {
-            throw new NotImplementedException();
         }
     }
 }

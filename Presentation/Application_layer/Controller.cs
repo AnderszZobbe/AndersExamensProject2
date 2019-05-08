@@ -134,7 +134,7 @@ namespace Application_layer
 
         public List<Order> GetAllOrdersByWorkteam(Workteam workteam)
         {
-            Connector.FillWorkteamWithOrders(orders, workteam);
+            Connector.FillWorkteamWithOrders(orders, workteam, workteams[workteam]);
 
             return workteam.orders;
         }

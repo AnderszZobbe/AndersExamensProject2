@@ -17,9 +17,9 @@ namespace Application_layer
 
         // Read
         void GetAllWorkteams(Dictionary<Workteam, int> workteams);
-        void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam);
-        void FillWorkteamWithOffdays(Dictionary<Offday, int> offdays, Workteam workteam);
-        void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order);
+        void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam, int workteamId);
+        void FillWorkteamWithOffdays(Dictionary<Offday, int> offdays, Workteam workteam, int workteamId);
+        void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order, int orderId);
 
         // Update
 
