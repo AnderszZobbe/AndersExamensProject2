@@ -228,13 +228,13 @@ namespace Presentation
                 {
                     switch (workteam.GetWorkform(order, dateRoller))
                     {
-                        case Workform.Day:
+                        case Workform.Dag:
                             btn.Background = Brushes.Orange;
                             break;
-                        case Workform.Night:
+                        case Workform.Nat:
                             btn.Background = Brushes.DarkCyan;
                             break;
-                        case Workform.Move:
+                        case Workform.Flytning:
                             btn.Background = Brushes.LightGray;
                             break;
                         default:

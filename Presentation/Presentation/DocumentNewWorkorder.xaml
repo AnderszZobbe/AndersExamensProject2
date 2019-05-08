@@ -37,16 +37,8 @@
             <Label Content="Deadline"/>
             <DatePicker FirstDayOfWeek="Monday"  x:Name="deadlineInput"/>
         </StackPanel>
-        <ListBox Margin="10,10,10,45" x:Name="WorkteamList" Grid.Column="1">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Content="Button" Grid.Column="1" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom"/>
+        <StackPanel Margin="10,10,10,45" x:Name="AssignmentsStackPanel" Grid.Column="1"/>
+        <Button Content="Tilføj arbejdsform" Grid.Column="1" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" Click="AddWorkform"/>
         <Button Content="Gem arbejdsordre" Margin="10" Grid.ColumnSpan="2" Grid.Row="1" Click="CreateOrder"/>
     </Grid>
 </Window>

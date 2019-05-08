@@ -26,7 +26,7 @@ namespace UnitTesting
             string foreman = "Adam";
             
             Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateAndGetOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
+            Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
 
             Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
             Assert.AreEqual(false, controller.GetAllOrdersByWorkteam(workteam).Exists(o => o == order));

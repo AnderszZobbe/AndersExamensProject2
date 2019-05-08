@@ -47,17 +47,21 @@ namespace Application_layer
             }
         }
 
-        public Order CreateAndGetOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
+        public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
+
+            // Init exceptions
             if (workteam == null)
             {
                 throw new ArgumentNullException("A workteam was not given");
             }
+
             if (orders.Keys.Any(o => o.OrderNumber == orderNumber))
             {
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
-                Order order = new Order()
+
+            Order order = new Order()
             {
                 OrderNumber = orderNumber,
                 Address = address,
@@ -70,7 +74,7 @@ namespace Application_layer
 
             workteam.orders.Add(order);
 
-            Connector.CreateOrder(orders, order);
+            Connector.CreateOrder(orders, order, workteams[workteam]);
 
             return order;
         }
@@ -82,15 +86,23 @@ namespace Application_layer
             // TODO: Add update to database
         }
 
-        public void CreateAssignment(Order order, int? duration = null, Workform? workform = null)
+        public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)
         {
+            // Init exceptions
+            if (order == null)
+            {
+                throw new ArgumentNullException("An order was not given");
+            }
+
             Assignment assignment = new Assignment();
             assignment.Workform = workform ?? assignment.Workform;
             assignment.Duration = duration ?? assignment.Duration;
 
             order.assignments.Add(assignment);
 
-            Connector.CreateAssignment(assignments, assignment);
+            Connector.CreateAssignment(assignments, assignment, orders[order]);
+
+            return assignment;
         }
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)

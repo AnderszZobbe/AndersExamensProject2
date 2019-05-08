@@ -1,0 +1,19 @@
+﻿using Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application_layer.DataClasses
+{
+    /// <summary>
+    /// Test class for something abstract
+    /// </summary>
+    public class OrderData : Order
+    {
+        internal OrderData()
+        {
+        }
+    }
+}

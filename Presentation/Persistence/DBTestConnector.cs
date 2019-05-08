@@ -15,12 +15,12 @@ namespace Persistence
         private int assignmentID = 1;
         private int offdayID = 1;
 
-        public void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment)
+        public void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment, int orderID)
         {
             assignments.Add(assignment, assignmentID++);
         }
 
-        public void CreateOrder(Dictionary<Order, int> orders, Order order)
+        public void CreateOrder(Dictionary<Order, int> orders, Order order, int workteamID)
         {
             orders.Add(order, orderID++);
         }
@@ -30,11 +30,11 @@ namespace Persistence
             workteams.Add(workteam, workteamID++);
         }
 
-        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam, int workteamId)
+        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam, int workteamID)
         {
         }
 
-        public void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam, int workteamId)
+        public void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam, int workteamID)
         {
         }
 
@@ -53,7 +53,7 @@ namespace Persistence
 
         }
 
-        public void CreateOffday(Dictionary<Offday, int> offdays, Offday offday)
+        public void CreateOffday(Dictionary<Offday, int> offdays, Offday offday, int workteamID)
         {
             offdays.Add(offday, offdayID++);
         }

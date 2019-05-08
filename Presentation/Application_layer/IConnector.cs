@@ -11,15 +11,15 @@ namespace Application_layer
     {
         // Create
         void CreateWorkteam(Dictionary<Workteam, int> workteams, Workteam workteam);
-        void CreateOffday(Dictionary<Offday, int> offdays, Offday offday);
-        void CreateOrder(Dictionary<Order, int> orders, Order order);
-        void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment);
+        void CreateOffday(Dictionary<Offday, int> offdays, Offday offday, int workteamID);
+        void CreateOrder(Dictionary<Order, int> orders, Order order, int workteamID);
+        void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment, int orderID);
 
         // Read
         void GetAllWorkteams(Dictionary<Workteam, int> workteams);
-        void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam, int workteamId);
-        void FillWorkteamWithOffdays(Dictionary<Offday, int> offdays, Workteam workteam, int workteamId);
-        void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order, int orderId);
+        void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam, int workteamID);
+        void FillWorkteamWithOffdays(Dictionary<Offday, int> offdays, Workteam workteam, int workteamID);
+        void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order, int orderID);
 
         // Update
 

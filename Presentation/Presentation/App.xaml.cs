@@ -29,9 +29,7 @@ namespace Presentation
 
             Controller controller = Controller.Instance;
 
-            controller.CreateWorkteam("testunit");
-
-            Workteam workteam = controller.GetWorkteamByName("testunit");
+            Workteam workteam = controller.CreateWorkteam("testunit");
 
             controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today.AddDays(3), 0, workteam); // Friday
 
@@ -39,18 +37,18 @@ namespace Presentation
 
             controller.CreateOffday(OffdayReason.Holiday, DateTime.Today.AddDays(14), 6, workteam); // Week holiday
 
-            Order order = controller.CreateAndGetOrder(workteam, 123, null, null, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, 123, null, null, null, null, null, null);
 
             controller.CreateAssignment(order, 4);
 
-            controller.CreateAssignment(order, 1, Workform.Night);
+            controller.CreateAssignment(order, 1, Workform.Nat);
 
-            controller.CreateAssignment(order, 0, Workform.Move);
+            controller.CreateAssignment(order, 0, Workform.Flytning);
 
             controller.SetStartDateOnOrder(order, DateTime.Now.AddDays(7));
             //controller.SetStartDateOnOrder(order, DateTime.Now);
 
-            Order order2 = controller.CreateAndGetOrder(workteam, 321, null, null, null, null, null, DateTime.Now.AddDays(7*4));
+            Order order2 = controller.CreateOrder(workteam, 321, null, null, null, null, null, DateTime.Now.AddDays(7*4));
         }
     }
 }
