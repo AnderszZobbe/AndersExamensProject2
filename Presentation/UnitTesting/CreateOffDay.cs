@@ -25,7 +25,7 @@ namespace UnitTesting
             string foreman = "Kevin";
             Workteam workteam = controller.CreateWorkteam(foreman);
 
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today,1,workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today,1,workteam);
 
             Assert.AreEqual(true, workteam.IsAnOffday(DateTime.Today));
             
@@ -38,7 +38,7 @@ namespace UnitTesting
             string foreman = "Bo";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, -1, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, -1, workteam);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace UnitTesting
             string foreman = "cecile";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.FridayFree, date1, 1, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, date1, 1, workteam);
         }
         [TestMethod]
         [ExpectedException(typeof(OverlapException))]
@@ -58,8 +58,8 @@ namespace UnitTesting
             string foreman = "Dennis";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, 1, workteam);
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, 1, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, 1, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, 1, workteam);
 
         }
 
@@ -67,7 +67,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyWorkteam()
         {
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, 1, null);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, 1, null);
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("Eric");
 
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today, -1, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, -1, workteam);
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace UnitTesting
             string foreman = "Frederick";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.MaxValue, 2, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.MaxValue, 2, workteam);
         }
 
         [TestMethod]
@@ -96,7 +96,7 @@ namespace UnitTesting
             string foreman = "Gert";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.MinValue, 2, workteam);
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.MinValue, 2, workteam);
         }
 
        

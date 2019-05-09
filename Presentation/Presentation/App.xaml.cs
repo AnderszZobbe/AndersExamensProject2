@@ -31,11 +31,11 @@ namespace Presentation
 
             Workteam workteam = controller.CreateWorkteam("testunit");
 
-            controller.CreateOffday(OffdayReason.FridayFree, DateTime.Today.AddDays(3), 0, workteam); // Friday
+            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today.AddDays(3), 0, workteam); // Friday
 
             controller.CreateOffday(OffdayReason.Weekend, DateTime.Today.AddDays(4), 1, workteam); // Weekend
 
-            controller.CreateOffday(OffdayReason.Holiday, DateTime.Today.AddDays(14), 6, workteam); // Week holiday
+            controller.CreateOffday(OffdayReason.Helligdag, DateTime.Today.AddDays(14), 6, workteam); // Week holiday
 
             Order order = controller.CreateOrder(workteam, 123, null, null, null, null, null, null);
 
