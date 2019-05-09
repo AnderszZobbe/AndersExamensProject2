@@ -47,6 +47,13 @@ namespace Application_layer
             }
         }
 
+        public void SetOrderStartDate(Order order, DateTime startDate)
+        {
+            order.StartDate = startDate;
+
+            // TODO: Save startdate to the database
+        }
+
         public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
             // Init exceptions

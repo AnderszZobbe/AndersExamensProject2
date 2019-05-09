@@ -94,7 +94,16 @@ namespace Presentation
                 }
             }
 
-            controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
+            Order orderCreated = controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
+
+
+            foreach (Grid assignment in AssignmentsStackPanel.Children)
+            {
+                int duration = ParseToIntOrNull(((TextBox)assignment.Children[5]).Text).Value - 1;
+                Workform workform = (Workform)((ComboBox)assignment.Children[4]).SelectedItem;
+
+                controller.CreateAssignment(orderCreated, duration, workform);
+            }
 
             Close();
         }
@@ -208,7 +217,8 @@ namespace Presentation
 
             TextBox durationBox = new TextBox
             {
-                Padding = new Thickness(0)
+                Padding = new Thickness(0),
+                Text = "1",
             };
             grid.Children.Add(durationBox);
             Grid.SetColumn(durationBox, 2);
