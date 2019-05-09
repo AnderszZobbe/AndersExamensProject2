@@ -92,6 +92,14 @@ namespace Application_layer
             {
                 throw new ArgumentNullException("An order was not given");
             }
+            if (duration < 0)
+            {
+                throw new DateOutOfRangeException("The given duration is negative");
+            }
+            if (duration > 360)
+            {
+                throw new DateOutOfRangeException("The given duration is longer that a year");
+            }
 
             Assignment assignment = new Assignment();
             assignment.Workform = workform ?? assignment.Workform;

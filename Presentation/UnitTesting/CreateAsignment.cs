@@ -45,7 +45,7 @@ namespace UnitTesting
 
         [TestMethod]
         [ExpectedException(typeof(DateOutOfRangeException))]
-        public void ToLongDuration()
+        public void TooLongDuration()
         {
             string foreman = "CreateAssignment3";
             Workteam workteam = controller.CreateWorkteam(foreman);
@@ -92,7 +92,7 @@ namespace UnitTesting
 
         //IndexOutOfRangeException might not be correct
         [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(System.Collections.Generic.KeyNotFoundException))]
         public void OrderDoesNotExist()
         {
             Order order = new Order();
