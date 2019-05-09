@@ -24,7 +24,7 @@ namespace Presentation
         private Controller controller = Controller.Instance;
         private Workteam workteam;
 
-        public AddOffday(Workteam workteam, DateTime startDate, DateTime endDate)
+        public AddOffday(Workteam workteam, DateTime startDate, DateTime endDate, OffdayReason offdayReason)
         {
             InitializeComponent();
 
@@ -35,6 +35,9 @@ namespace Presentation
             EndDate.SelectedDate = endDate;
 
             ReasonComboBox.ItemsSource = Enum.GetValues(typeof(OffdayReason)).Cast<OffdayReason>();
+            ReasonComboBox.SelectedItem = offdayReason;
+
+            SaveButton.Focus();
         }
 
         private void SaveOffday(object sender, RoutedEventArgs e)

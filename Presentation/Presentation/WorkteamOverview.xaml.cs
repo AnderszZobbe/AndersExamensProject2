@@ -25,9 +25,11 @@ namespace Presentation
     {
         private Workteam workteam;
         private Controller controller = Controller.Instance;
-        private int totalWeeks = 5;
+        private int totalWeeks = 7;
         private int startColumn = 0;
         private int clearRowFrom = 1;
+        //private DateTime startDate = DateTime.Now.AddDays(-14);
+        private DateTime startDate = DateTime.Now.AddDays(0);
 
         public WorkteamOverview(Workteam workteam)
         {
@@ -122,6 +124,9 @@ namespace Presentation
                     Grid.SetColumnSpan(weekGrid, Grid.GetColumnSpan(weekGrid) + 1);
                 }
 
+                // Current day
+                DisplayCurrentDay(grid, dateRoller, startColumn + i);
+
                 dateRoller = dateRoller.AddDays(1);
             }
         }
@@ -173,8 +178,8 @@ namespace Presentation
                         case OffdayReason.Weekend:
                             btn.Background = Brushes.Red;
                             break;
-                        case OffdayReason.FridayFree:
-                        case OffdayReason.Holiday:
+                        case OffdayReason.Fredagsfri:
+                        case OffdayReason.Helligdag:
                         default:
                             btn.Background = Brushes.DarkRed;
                             break;
@@ -190,6 +195,9 @@ namespace Presentation
 
                     btn.Click += AddOffday;
                 }
+
+                // Current day
+                DisplayCurrentDay(grid, dateRoller, i + startColumn);
 
                 dateRoller = dateRoller.AddDays(1);
             }
@@ -217,8 +225,8 @@ namespace Presentation
                         case OffdayReason.Weekend:
                             btn.Background = Brushes.Red;
                             break;
-                        case OffdayReason.FridayFree:
-                        case OffdayReason.Holiday:
+                        case OffdayReason.Fredagsfri:
+                        case OffdayReason.Helligdag:
                         default:
                             btn.Background = Brushes.DarkRed;
                             break;
@@ -248,7 +256,41 @@ namespace Presentation
                     btn.Background = Brushes.White;
                 }
 
+                // Deadline
+                if (order.Deadline != null && order.Deadline.Value.Date == dateRoller.Date)
+                {
+                    Border deadline = new Border
+                    {
+                        BorderThickness = new Thickness(1),
+                        BorderBrush = Brushes.Black,
+                        HorizontalAlignment = HorizontalAlignment.Right
+                    };
+
+                    grid.Children.Add(deadline);
+                    Grid.SetColumn(deadline, i + startColumn);
+                }
+
+                // Current day
+                DisplayCurrentDay(grid, dateRoller, i + startColumn);
+
                 dateRoller = dateRoller.AddDays(1);
+            }
+        }
+
+        private void DisplayCurrentDay(Grid grid, DateTime dateRoller, int column)
+        {
+            if (dateRoller.Date == DateTime.Today)
+            {
+                Border deadline = new Border
+                {
+                    BorderThickness = new Thickness(1),
+                    BorderBrush = Brushes.Red,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    IsHitTestVisible = false
+                };
+
+                grid.Children.Add(deadline);
+                Grid.SetColumn(deadline, column);
             }
         }
 
@@ -274,17 +316,17 @@ namespace Presentation
 
             Grid grid = InitializeGridRow();
 
-            InitializeWeeksGrid(grid, DateTime.Now);
+            InitializeWeeksGrid(grid, startDate);
 
             grid = InitializeGridRow();
 
-            InitializeOffdaysGrid(grid, DateTime.Now);
+            InitializeOffdaysGrid(grid, startDate);
 
             foreach (Order order in this.workteam.orders)
             {
                 grid = InitializeGridRow();
 
-                InitializeOrderGrid(grid, order, DateTime.Now);
+                InitializeOrderGrid(grid, order, startDate);
             }
         }
 
@@ -336,10 +378,36 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is DateTime datePicked)
                 {
-                    AddOffday ao = new AddOffday(workteam, datePicked, datePicked)
+                    AddOffday ao;
+                    if (datePicked.DayOfWeek == DayOfWeek.Friday)
                     {
-                        Owner = this
-                    };
+                        ao = new AddOffday(workteam, datePicked, datePicked, OffdayReason.Fredagsfri)
+                        {
+                            Owner = this
+                        };
+                    }
+                    else if (datePicked.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        ao = new AddOffday(workteam, datePicked, datePicked.AddDays(1), OffdayReason.Weekend)
+                        {
+                            Owner = this
+                        };
+                    }
+                    else if (datePicked.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        ao = new AddOffday(workteam, datePicked.AddDays(-1), datePicked, OffdayReason.Weekend)
+                        {
+                            Owner = this
+                        };
+                    }
+                    else
+                    {
+                        ao = new AddOffday(workteam, datePicked, datePicked, OffdayReason.Helligdag)
+                        {
+                            Owner = this
+                        };
+                    }
+
                     ao.ShowDialog();
                     UpdateDataGrid();
                 }

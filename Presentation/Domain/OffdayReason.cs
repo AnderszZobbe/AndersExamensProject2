@@ -9,7 +9,7 @@ namespace Domain
     public enum OffdayReason
     {
         Weekend,
-        FridayFree,
-        Holiday
+        Fredagsfri,
+        Helligdag
     }
 }

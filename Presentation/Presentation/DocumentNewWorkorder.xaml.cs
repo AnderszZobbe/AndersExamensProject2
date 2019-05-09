@@ -22,8 +22,8 @@ namespace Presentation
     /// </summary>
     public partial class DocumentNewWorkorder : Window
     {
-        private Controller controller = Controller.Instance;
-        private Workteam workteam;
+        private readonly Controller controller = Controller.Instance;
+        private readonly Workteam workteam;
         public Order Order;
 
         public DocumentNewWorkorder(Workteam workteam)
@@ -33,70 +33,66 @@ namespace Presentation
             this.workteam = workteam;
         }
 
+        private int? ParseToIntOrNull(string s)
+        {
+            int? nullNumber = null;
+            if (!s.Equals(string.Empty))
+            {
+                nullNumber = int.Parse(s);
+            }
+            return nullNumber;
+        }
+
         private void CreateOrder(object sender, RoutedEventArgs e)
         {
-            int? orderNumber = null;
-            if (!orderNumberInput.Text.Equals(string.Empty))
+            int? orderNumber;
+            try
             {
-                if (int.TryParse(orderNumberInput.Text, out int resultOrderNumber))
+                orderNumber = ParseToIntOrNull(orderNumberInput.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Order Nummer skal være hele tal");
+                return;
+            }
+
+            int? area;
+            try
+            {
+                area = ParseToIntOrNull(orderNumberInput.Text);
+            }
+            catch
+            {
+                MessageBox.Show("m2 skal være hele tal");
+                return;
+            }
+
+            int? amount;
+            try
+            {
+                amount = ParseToIntOrNull(orderNumberInput.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Tons (Mængde) skal være hele tal");
+                return;
+            }
+
+            foreach (Grid assignment in AssignmentsStackPanel.Children)
+            {
+                try
                 {
-                    orderNumber = resultOrderNumber;
+                    if(ParseToIntOrNull(((TextBox)assignment.Children[5]).Text) == null)
+                    {
+                        throw new Exception();
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("Order Nummer skal være hele tal");
+                    MessageBox.Show("Én af arbejdsformerne har ikke tal som antal dage");
                     return;
                 }
             }
-
-            int? area = null;
-            if (!areaInput.Text.Equals(string.Empty))
-            {
-                if (int.TryParse(areaInput.Text, out int resultArea))
-                {
-                    area = resultArea;
-                }
-                else
-                {
-                    MessageBox.Show("m2 skal være hele tal");
-                    return;
-                }
-            }
-
-            int? amount = null;
-            if (!amountInput.Text.Equals(string.Empty))
-            {
-                if (int.TryParse(amountInput.Text, out int resultAmount))
-                {
-                    amount = resultAmount;
-                }
-                else
-                {
-                    MessageBox.Show("Tons (Mængde) skal være hele tal");
-                    return;
-                }
-            }
-
-            /*Customer customer;
-            if (customerInput.Text != string.Empty && !controller.CustomerExistsByName(customerInput.Text))
-            {
-                controller.CreateCustomer(customerInput.Text);
-            }
-            customer = controller.GetCustomerByName(customerInput.Text);
-
-            AsphaltCompany asphaltWork;
-            if (AsphaltWorkInput.Text != string.Empty && !controller.AsphaltWorkExistsByName(AsphaltWorkInput.Text))
-            {
-                controller.CreateAsphaltWork(AsphaltWorkInput.Text);
-            }
-            asphaltWork = controller.GetAsphaltWorkByName(AsphaltWorkInput.Text);
-
-            Machine machine;
-            if (machineInput.Text != string.Empty && !controller.MachineExistsByName(machineInput.Text))
-            {
-                controller.CreateMachine(machineInput.Text);
-            }
-            machine = controller.GetMachineByName(machineInput.Text);*/
 
             controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
 

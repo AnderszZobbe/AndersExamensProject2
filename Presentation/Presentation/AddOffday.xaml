@@ -14,7 +14,7 @@
             <DatePicker VerticalAlignment="Top" Margin="0,0,0,10" x:Name="StartDate"/>
             <Label Content="Slut dato"/>
             <DatePicker VerticalAlignment="Top" Margin="0,0,0,10" x:Name="EndDate"/>
-            <Button Content="Gem " VerticalAlignment="Top" Click="SaveOffday"/>
+            <Button Content="Gem" x:Name="SaveButton" VerticalAlignment="Top" Click="SaveOffday"/>
         </StackPanel>
 
     </Grid>
