@@ -50,5 +50,12 @@ namespace UnitTesting
             controller.CreateOrder(null, 2, "", "", 1, 1, "", DateTime.Today);
         }
 
+        [TestMethod]
+        public void CanAddTwoOrdersWithNull()
+        {
+            Workteam workteam = controller.CreateWorkteam("Frank");
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+        }
     }
 }
