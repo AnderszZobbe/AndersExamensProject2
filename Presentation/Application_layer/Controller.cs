@@ -227,9 +227,36 @@ namespace Application_layer
             return workteams.Keys.ToList();
         }
 
-        public void Reschedule(DateTime date)
+        public void Reschedule(Workteam workteam, Order orderToRescheduleFrom, DateTime startDate)
         {
-            throw new NotImplementedException();
+            List<Order> orders = workteam.orders;
+
+
+            if (!orders.Exists(o => o == orderToRescheduleFrom))
+            {
+                throw new NotFoundException("The order was not found in the workteam provided.");
+            }
+
+            int orderIndex = orders.IndexOf(orderToRescheduleFrom);
+
+            SetStartDateOnOrder(orderToRescheduleFrom, startDate);
+
+            DateTime dateRoller = startDate;
+
+            for (int i = orderIndex + 1; i < orders.Count; i++)
+            {
+                Order order = orders[i];
+
+                if (order.StartDate != null) // Is it assigned to the board?
+                {
+                    /*if (!workteam.IsAnOffday(dateRoller) && !workteam.IsAWorkday(order, dateRoller)
+                    {
+
+                    }
+
+                    dateRoller = dateRoller.AddDays(1);*/
+                }
+            }
         }
 
         public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)

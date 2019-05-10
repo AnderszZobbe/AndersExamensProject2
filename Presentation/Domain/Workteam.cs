@@ -23,6 +23,26 @@ namespace Domain
             Foreman = foreman ?? throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
         }
 
+        public DateTime GetNextAvailableDate(Order order)
+        {
+            DateTime dateRoller = order.StartDate ?? throw new NotFoundException("The startdate of the order is not found");
+
+            bool nextAvailableDateFound = false;
+            while (!nextAvailableDateFound)
+            {
+                if (!IsAnOffday(dateRoller) && !IsAWorkday(order, dateRoller))
+                {
+                    nextAvailableDateFound = true;
+                }
+                else
+                {
+                    dateRoller = dateRoller.AddDays(1);
+                }
+            }
+
+            return dateRoller;
+        }
+
         public bool IsAnOffday(DateTime date)
         {
             return offdays.Any(o => o.IsOffday(date));

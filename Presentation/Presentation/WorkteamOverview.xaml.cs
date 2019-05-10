@@ -28,8 +28,8 @@ namespace Presentation
         private int totalWeeks = 7;
         private int startColumn = 0;
         private int clearRowFrom = 1;
-        //private DateTime startDate = DateTime.Now.AddDays(-14);
-        private DateTime startDate = DateTime.Now.AddDays(0);
+        private DateTime startDate = DateTime.Now.AddDays(-14);
+        //private DateTime startDate = DateTime.Now.AddDays(0);
 
         public WorkteamOverview(Workteam workteam)
         {
