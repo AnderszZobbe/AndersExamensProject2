@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application_layer.DataClasses
 {
-    public class AssignmentData : Assignment
+    public class OffdayData : Offday
     {
-        internal AssignmentData()
+        internal OffdayData(OffdayReason reason, DateTime startDate, int duration) : base(reason, startDate, duration)
         {
         }
     }

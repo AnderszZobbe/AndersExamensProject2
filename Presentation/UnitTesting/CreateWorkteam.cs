@@ -45,8 +45,8 @@ namespace UnitTesting
         [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionDuplicateName()
         {
-            string foreman = "Knud";
-            controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam("Knud");
+            controller.CreateWorkteam("Knud");
         }
 
         [TestMethod]

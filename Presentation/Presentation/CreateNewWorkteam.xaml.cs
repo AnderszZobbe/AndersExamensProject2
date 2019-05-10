@@ -35,8 +35,7 @@ namespace Presentation
         {
             try
             {
-                controller.CreateWorkteam(foreman.Text);
-                Workteam = controller.GetWorkteamByName(foreman.Text);
+                Workteam = controller.CreateWorkteam(foreman.Text);
                 Close();
             }
             catch (ArgumentException)

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application_layer.DataClasses
 {
-    public class AssignmentData : Assignment
+    public class WorkteamData : Workteam
     {
-        internal AssignmentData()
+        internal WorkteamData(string foreman) : base(foreman)
         {
         }
     }

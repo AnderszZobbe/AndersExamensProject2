@@ -92,14 +92,12 @@ namespace UnitTesting
 
         //IndexOutOfRangeException might not be correct
         [TestMethod]
-        [ExpectedException(typeof(System.Collections.Generic.KeyNotFoundException))]
+        [ExpectedException(typeof(NullReferenceException))]
         public void OrderDoesNotExist()
         {
             Order order = new Order();
             Assignment assignment = controller.CreateAssignment(order, null, null);
 
         }
-
-       
     }
 }

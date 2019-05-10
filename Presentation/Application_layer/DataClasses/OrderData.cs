@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace Application_layer.DataClasses
 {
-    /// <summary>
-    /// Test class for something abstract
-    /// </summary>
     public class OrderData : Order
     {
         internal OrderData()

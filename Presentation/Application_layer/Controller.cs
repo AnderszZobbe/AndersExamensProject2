@@ -7,17 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Exceptions;
+using Application_layer.DataClasses;
 
 namespace Application_layer
 {
     public class Controller
     {
         public static IConnector Connector;
-
-        private readonly Dictionary<Order, int> orders = new Dictionary<Order, int>();
-        private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
-        private readonly Dictionary<Assignment, int> assignments = new Dictionary<Assignment, int>();
-        private readonly Dictionary<Offday, int> offdays = new Dictionary<Offday, int>();
 
         private Controller()
         {
@@ -37,7 +33,7 @@ namespace Application_layer
             }
             if (workteam.orders.Remove(order))
             {
-                //Connector.DeleteOrder(orders, workteam, order);
+                Connector.DeleteOrder(workteam as WorkteamData, order as OrderData);
                 return true;
             }
             else
@@ -55,12 +51,14 @@ namespace Application_layer
                 throw new ArgumentNullException("A workteam was not given");
             }
 
-            if (orders.Keys.Any(o => orderNumber != null && o.OrderNumber == orderNumber))
+            List<Order> orders = Connector.GetAllOrders().ToList<Order>();
+
+            if (orders.Any(o => orderNumber != null && o.OrderNumber == orderNumber))
             {
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
 
-            Order order = new Order()
+            Order order = new OrderData()
             {
                 OrderNumber = orderNumber,
                 Address = address,
@@ -71,16 +69,16 @@ namespace Application_layer
                 Deadline = deadline
             };
 
-            workteam.orders.Add(order);
+            //workteam.orders.Add(order);
 
-            Connector.CreateOrder(orders, order, workteams[workteam]);
+            Connector.CreateOrder(order as OrderData, workteam as WorkteamData);
 
             return order;
         }
 
         public void SetStartDateOnOrder(Order order, DateTime startDate)
         {
-            Connector.UpdateOrderStartDate(order, startDate);
+            Connector.UpdateOrderStartDate(order as OrderData, startDate);
         }
 
         public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)
@@ -99,20 +97,20 @@ namespace Application_layer
                 throw new DateOutOfRangeException("The given duration is longer that a year");
             }
 
-            Assignment assignment = new Assignment();
+            Assignment assignment = new AssignmentData();
             assignment.Workform = workform ?? assignment.Workform;
             assignment.Duration = duration ?? assignment.Duration;
 
-            order.assignments.Add(assignment);
-
-            Connector.CreateAssignment(assignments, assignment, orders[order]);
+            Connector.CreateAssignment(assignment as AssignmentData, order as OrderData);
 
             return assignment;
         }
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
-            if (orders.Keys.Any(o => o.OrderNumber == orderNumber && o != order))
+            List<Order> orders = Connector.GetAllOrders().ToList<Order>();
+
+            if (orders.Any(o => o.OrderNumber == orderNumber && o != order))
             {
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
@@ -126,50 +124,16 @@ namespace Application_layer
             order.Deadline = deadline;
         }
 
-        public Workteam GetWorkteamByName(string foreman)
-        {
-            List<Workteam> workteams = this.workteams.Keys.ToList();
-
-            Workteam workteam = workteams.Find(o => o.Foreman == foreman);
-
-            if (workteam == null)
-            {
-                Connector.GetAllWorkteams(this.workteams);
-
-                workteams = this.workteams.Keys.ToList();
-
-                workteam = workteams.Find(o => o.Foreman == foreman);
-
-                if (workteam == null)
-                {
-                    throw new NotFoundException("The workteam you're trying to get does not exist");
-                }
-            }
-
-            return workteam;
-        }
-
         public List<Order> GetAllOrdersByWorkteam(Workteam workteam)
         {
-            Connector.FillWorkteamWithOrders(orders, workteam, workteams[workteam]);
+            Connector.FillWorkteamWithOrders(workteam as WorkteamData);
 
             return workteam.orders;
         }
 
         public Workteam CreateWorkteam(string foreman)
         {
-            Connector.GetAllWorkteams(workteams);
-
-            if (workteams.Keys.Any(o => o.Foreman == foreman))
-            {
-                throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
-            }
-
-            Workteam workteam = new Workteam(foreman);
-
-            Connector.CreateWorkteam(workteams, workteam);
-
-            return workteam;
+            return Connector.CreateWorkteam(foreman);
         }
 
         public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
@@ -202,20 +166,18 @@ namespace Application_layer
                 dateRoller = dateRoller.AddDays(1);
             }
 
-            Offday offday = new Offday(reason, startDate, duration);
+            Offday offday = new OffdayData(reason, startDate, duration);
             workteam.offdays.Add(offday);
         }
 
         private void FillOrderWithAssignments(Order order)
         {
-            // Connect with database to get list of assignments, add them to the order assigned.
-            int orderId = orders[order];
+            Connector.FillOrderWithAssignments(order as OrderData);
         }
 
         public List<Workteam> GetAllWorkteams()
         {
-            Connector.GetAllWorkteams(workteams);
-            return workteams.Keys.ToList();
+            return Connector.GetAllWorkteams().ToList<Workteam>();
         }
 
         public void Reschedule(Workteam workteam, Order orderToRescheduleFrom, DateTime startDate)
@@ -247,8 +209,9 @@ namespace Application_layer
         
         public void EditForeman(string foremanName, Workteam workteam)
         {
+            List<Workteam> workteams = Connector.GetAllWorkteams().ToList<Workteam>();
 
-            if (workteams.Where(o => o.Key.Foreman == foremanName).Count() != 0)
+            if (workteams.Where(o => o.Foreman == foremanName).Count() != 0)
             {
                 throw new DuplicateObjectException();
             }
@@ -262,7 +225,7 @@ namespace Application_layer
 
         public bool DeleteWorkteam(Workteam workteam)
         {
-            return workteams.Remove(workteam);
+            return Connector.DeleteWorkteam(workteam as WorkteamData);
         }
 
         public void DeleteOffdayByDate(Workteam workteam, DateTime date)
@@ -271,7 +234,7 @@ namespace Application_layer
 
             if (workteam.offdays.Remove(offday))
             {
-                Connector.DeleteOffday(offdays, offday);
+                Connector.DeleteOffday(offday as OffdayData, workteam as WorkteamData);
             }
             else
             {

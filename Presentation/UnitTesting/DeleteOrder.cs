@@ -23,21 +23,19 @@ namespace UnitTesting
         [TestMethod]
         public void TestSuccesfulDeletion()
         {
-            string foreman = "Adam";
-            
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("Adam");
             Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
-
+            
             Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
             Assert.AreEqual(false, controller.GetAllOrdersByWorkteam(workteam).Exists(o => o == order));
         }
+
         [TestMethod]
         public void TestDeletionOfNullObject()
         {
             string foreman = "BOB";
 
-            controller.CreateWorkteam(foreman);
-            Workteam workteam = controller.GetWorkteamByName(foreman);
+            Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = new Order();
             Assert.AreEqual(false, controller.DeleteOrder(workteam, order));
         }

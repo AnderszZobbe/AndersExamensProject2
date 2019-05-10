@@ -22,17 +22,15 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotFoundException))]
         public void TestSuccesfulDeletion()
         {
-            string foreman = "Derp";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("Derp");
             Assert.AreEqual(true, controller.DeleteWorkteam(workteam));
-            workteam = controller.GetWorkteamByName(foreman);
+            Assert.AreEqual(false, controller.DeleteWorkteam(workteam));
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void DeleteNonExistentWorkteam()
         {
             string foreman = "Gert";
