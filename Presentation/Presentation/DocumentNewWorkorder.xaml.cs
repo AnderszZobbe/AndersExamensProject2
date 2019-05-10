@@ -105,6 +105,8 @@ namespace Presentation
                 controller.CreateAssignment(orderCreated, duration, workform);
             }
 
+            controller.SetStartDateOnOrder(orderCreated, DateTime.Today);
+
             Close();
         }
 
