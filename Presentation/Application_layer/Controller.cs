@@ -80,9 +80,7 @@ namespace Application_layer
 
         public void SetStartDateOnOrder(Order order, DateTime startDate)
         {
-            order.StartDate = startDate;
-
-            Connector.UpdateOrderStartDate(order);
+            Connector.UpdateOrderStartDate(order, startDate);
         }
 
         public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)

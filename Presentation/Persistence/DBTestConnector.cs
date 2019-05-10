@@ -66,8 +66,9 @@ namespace Persistence
         {
         }
 
-        public void UpdateOrderStartDate(Order order)
+        public void UpdateOrderStartDate(Order order, DateTime startDate)
         {
+            order.StartDate = startDate;
         }
     }
 }
