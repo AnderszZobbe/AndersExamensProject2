@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EditForeman.cs" />
     <Compile Include="DeleteWorkteam.cs" />
+    <Compile Include="GetNextAvailableDate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
