@@ -12,13 +12,24 @@ namespace Application_layer
 {
     public class Controller
     {
+        private static Controller instance;
         public static IConnector Connector;
 
         private Controller()
         {
         }
 
-        public static Controller Instance { get; } = new Controller();
+        public static Controller Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Controller();
+                }
+                return instance;
+            }
+        }
 
         public bool DeleteOrder(Workteam workteam, Order order)
         {
