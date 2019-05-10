@@ -312,6 +312,9 @@ namespace Presentation
 
         private void UpdateDataGrid()
         {
+            // testing
+            controller.Reschedule(workteam, workteam.orders[0], DateTime.Today);
+
             DeleteRows();
 
             Grid grid = InitializeGridRow();

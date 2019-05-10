@@ -47,13 +47,6 @@ namespace Application_layer
             }
         }
 
-        public void SetOrderStartDate(Order order, DateTime startDate)
-        {
-            order.StartDate = startDate;
-
-            // TODO: Save startdate to the database
-        }
-
         public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
             // Init exceptions
@@ -89,7 +82,7 @@ namespace Application_layer
         {
             order.StartDate = startDate;
 
-            // TODO: Add update to database
+            Connector.UpdateOrderStartDate(order);
         }
 
         public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)
@@ -241,48 +234,19 @@ namespace Application_layer
 
             SetStartDateOnOrder(orderToRescheduleFrom, startDate);
 
-            for (int i = orderIndex + 1; i < orders.Count; i++)
+            for (int i = orderIndex; i < orders.Count - 1; i++)
             {
                 Order order = orders[i];
 
                 if (order.StartDate != null) // Is it assigned to the board?
                 {
-                    SetStartDateOnOrder(order, workteam.GetNextAvailableDate(order));
+                    DateTime nextAvailableDate = workteam.GetNextAvailableDate(order);
+
+                    SetStartDateOnOrder(orders[i + 1], nextAvailableDate);
                 }
             }
-        }
-
-        public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
-        {
-            //loo needs to be sorted 
-            List<Order> loo = new List<Order>();
-            foreach (Order i in GetAllOrdersByWorkteam(workteam))
-            {
-                if (i.LastDay(workteam) >= date)
-                {
-                    loo.Add(i);
-                }
-            }
-            Order temp = new Order();
-
-            for (int write = 0; write < loo.Count; write++)
-            {
-                for (int sort = 0; sort < loo.Count - 1; sort++)
-                {
-                    if (loo[sort].StartDate > loo[sort + 1].StartDate)
-                    {
-                        temp = loo[sort + 1];
-                        loo[sort + 1] = loo[sort];
-                        loo[sort] = temp;
-                    }
-                }
-            }
-
-            return loo;
-            
         }
         
-
         public void EditForeman(string foremanName, Workteam workteam)
         {
 
