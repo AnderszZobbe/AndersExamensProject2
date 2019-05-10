@@ -1,5 +1,4 @@
-﻿using Application_layer.DataClasses;
-using Domain;
+﻿using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,27 +10,37 @@ namespace Application_layer
     public interface IConnector
     {
         // Create
-        WorkteamData CreateWorkteam(string foreman);
-        OffdayData CreateOffday(OffdayData offday, WorkteamData workteam);
-        OrderData CreateOrder(OrderData order, WorkteamData workteam);
-        AssignmentData CreateAssignment(AssignmentData assignment, OrderData order);
+        Workteam CreateWorkteam(string foreman);
+        Offday CreateOffday(Offday offday, Workteam workteam);
+        Order CreateOrder(Order order, Workteam workteam);
+        Assignment CreateAssignment(Assignment assignment, Order order);
 
         // Read
-        List<WorkteamData> GetAllWorkteams();
-        List<OrderData> GetAllOrders();
-        List<OffdayData> GetAllOffdays();
-        List<AssignmentData> GetAllAssignments();
-        void FillWorkteamWithOrders(WorkteamData workteam);
-        void FillWorkteamWithOffdays(WorkteamData workteam);
-        void FillOrderWithAssignments(OrderData order);
+        // > Get All
+        List<Workteam> GetAllWorkteams();
+        List<Order> GetAllOrders();
+        List<Offday> GetAllOffdays();
+        List<Assignment> GetAllAssignments();
+
+        // > Exists
+        bool WorkteamExists(Workteam workteam);
+        bool OffdayExists(Offday offday);
+        bool OrderExists(Order order);
+        bool AssignmentExists(Assignment assignment);
+
+        // > Fill
+        void FillWorkteamWithOrders(Workteam workteam);
+        void FillWorkteamWithOffdays(Workteam workteam);
+        void FillOrderWithAssignments(Order order);
 
         // Update
-        void UpdateOrderStartDate(OrderData order, DateTime startDate);
+        void UpdateWorkteamForeman(Workteam workteam, string foreman);
+        void UpdateOrderStartDate(Order order, DateTime startDate);
 
         // Delete
-        bool DeleteOffday(OffdayData offday, WorkteamData workteam);
-        bool DeleteOrder(WorkteamData workteam, OrderData order);
-        bool DeleteWorkteam(WorkteamData workteam);
-        bool DeleteAssignment(OrderData order, AssignmentData assignment);
+        bool DeleteOffday(Offday offday, Workteam workteam);
+        bool DeleteOrder(Workteam workteam, Order order);
+        bool DeleteWorkteam(Workteam workteam);
+        bool DeleteAssignment(Order order, Assignment assignment);
     }
 }

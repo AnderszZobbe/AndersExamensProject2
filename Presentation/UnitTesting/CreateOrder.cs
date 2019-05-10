@@ -26,7 +26,8 @@ namespace UnitTesting
 
             Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOrder(workteam,8,"","",1,1,"",DateTime.Today);
-            Order order = controller.GetAllOrdersByWorkteam(workteam)[0];
+            controller.FillWorkteamWithOrders(workteam);
+            Order order = workteam.orders[0];
 
             Assert.IsNotNull(order);
         }

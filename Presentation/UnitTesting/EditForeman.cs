@@ -26,7 +26,7 @@ namespace UnitTesting
             string newName = "Fans";
 
             Workteam workteam = controller.CreateWorkteam(oldName);
-            controller.EditForeman(newName, workteam);
+            controller.EditForeman(workteam, newName);
 
             Assert.AreEqual(newName, workteam.Foreman);
         }
@@ -36,7 +36,7 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToNull()
         {
             Workteam workteam = controller.CreateWorkteam("Hans");
-            controller.EditForeman(null, workteam);
+            controller.EditForeman(workteam, null);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("Tom");
             Workteam workteam2 = controller.CreateWorkteam("Jan");
 
-            controller.EditForeman("Jan", workteam);
+            controller.EditForeman(workteam, "Jan");
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToEmptyString()
         {
             Workteam workteam = controller.CreateWorkteam("Jim");
-            controller.EditForeman("", workteam);
+            controller.EditForeman(workteam, "");
         }
     }
 }

@@ -42,10 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="DataClasses\AssignmentData.cs" />
-    <Compile Include="DataClasses\OffdayData.cs" />
-    <Compile Include="DataClasses\OrderData.cs" />
-    <Compile Include="DataClasses\WorkteamData.cs" />
     <Compile Include="DBTestConnector.cs" />
     <Compile Include="Exceptions\DateOutOfRangeException.cs" />
     <Compile Include="Exceptions\DuplicateObjectException.cs" />

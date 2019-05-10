@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Exceptions;
-using Application_layer.DataClasses;
 
 namespace Application_layer
 {
@@ -23,24 +22,7 @@ namespace Application_layer
 
         public bool DeleteOrder(Workteam workteam, Order order)
         {
-            if (workteam == null )
-            {
-                throw new ArgumentNullException("Workteam is nonexistent");
-            }
-            if (order == null)
-            {
-                throw new ArgumentNullException("Order is nonexistent");
-            }
-            if (workteam.orders.Remove(order))
-            {
-                Connector.DeleteOrder(workteam as WorkteamData, order as OrderData);
-                return true;
-            }
-            else
-            {
-                workteam.orders.Add(order);
-                return false;
-            }
+            return Connector.DeleteOrder(workteam, order);
         }
 
         public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
@@ -58,7 +40,7 @@ namespace Application_layer
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
 
-            Order order = new OrderData()
+            Order order = new Order()
             {
                 OrderNumber = orderNumber,
                 Address = address,
@@ -71,18 +53,27 @@ namespace Application_layer
 
             //workteam.orders.Add(order);
 
-            Connector.CreateOrder(order as OrderData, workteam as WorkteamData);
+            Connector.CreateOrder(order, workteam);
 
             return order;
         }
 
         public void SetStartDateOnOrder(Order order, DateTime startDate)
         {
-            Connector.UpdateOrderStartDate(order as OrderData, startDate);
+            Connector.UpdateOrderStartDate(order, startDate);
         }
 
         public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)
         {
+            if (order == null)
+            {
+                throw new ArgumentNullException("An order was not given");
+            }
+            if (!Connector.OrderExists(order))
+            {
+                throw new NullReferenceException("The order does not exists");
+            }
+
             // Init exceptions
             if (order == null)
             {
@@ -97,11 +88,11 @@ namespace Application_layer
                 throw new DateOutOfRangeException("The given duration is longer that a year");
             }
 
-            Assignment assignment = new AssignmentData();
+            Assignment assignment = new Assignment();
             assignment.Workform = workform ?? assignment.Workform;
             assignment.Duration = duration ?? assignment.Duration;
 
-            Connector.CreateAssignment(assignment as AssignmentData, order as OrderData);
+            Connector.CreateAssignment(assignment, order);
 
             return assignment;
         }
@@ -124,11 +115,14 @@ namespace Application_layer
             order.Deadline = deadline;
         }
 
-        public List<Order> GetAllOrdersByWorkteam(Workteam workteam)
+        public void FillWorkteamWithOrders(Workteam workteam)
         {
-            Connector.FillWorkteamWithOrders(workteam as WorkteamData);
+            Connector.FillWorkteamWithOrders(workteam);
+        }
 
-            return workteam.orders;
+        private void FillOrderWithAssignments(Order order)
+        {
+            Connector.FillOrderWithAssignments(order);
         }
 
         public Workteam CreateWorkteam(string foreman)
@@ -166,13 +160,8 @@ namespace Application_layer
                 dateRoller = dateRoller.AddDays(1);
             }
 
-            Offday offday = new OffdayData(reason, startDate, duration);
+            Offday offday = new Offday(reason, startDate, duration);
             workteam.offdays.Add(offday);
-        }
-
-        private void FillOrderWithAssignments(Order order)
-        {
-            Connector.FillOrderWithAssignments(order as OrderData);
         }
 
         public List<Workteam> GetAllWorkteams()
@@ -207,39 +196,21 @@ namespace Application_layer
             }
         }
         
-        public void EditForeman(string foremanName, Workteam workteam)
+        public void EditForeman(Workteam workteam, string foreman)
         {
-            List<Workteam> workteams = Connector.GetAllWorkteams().ToList<Workteam>();
-
-            if (workteams.Where(o => o.Foreman == foremanName).Count() != 0)
-            {
-                throw new DuplicateObjectException();
-            }
-            if (foremanName.Count() == 0)
-            {
-                throw new ArgumentException();
-            }
-            //ToDo add DBconnector method
-            workteam.Foreman = foremanName ?? throw new ArgumentNullException();
+            Connector.UpdateWorkteamForeman(workteam, foreman);
         }
 
         public bool DeleteWorkteam(Workteam workteam)
         {
-            return Connector.DeleteWorkteam(workteam as WorkteamData);
+            return Connector.DeleteWorkteam(workteam);
         }
 
-        public void DeleteOffdayByDate(Workteam workteam, DateTime date)
+        public bool DeleteOffdayByDate(Workteam workteam, DateTime date)
         {
             Offday offday = workteam.GetOffday(date);
 
-            if (workteam.offdays.Remove(offday))
-            {
-                Connector.DeleteOffday(offday as OffdayData, workteam as WorkteamData);
-            }
-            else
-            {
-                throw new OffdayNotFoundException();
-            }
+            return Connector.DeleteOffday(offday, workteam);
         }
     }
 }

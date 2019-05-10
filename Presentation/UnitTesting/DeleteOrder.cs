@@ -27,20 +27,20 @@ namespace UnitTesting
             Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
             
             Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
-            Assert.AreEqual(false, controller.GetAllOrdersByWorkteam(workteam).Exists(o => o == order));
+            controller.FillWorkteamWithOrders(workteam);
+            Assert.AreEqual(false, workteam.orders.Exists(o => o == order));
         }
 
         [TestMethod]
         public void TestDeletionOfNullObject()
         {
-            string foreman = "BOB";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("TestDeletionOfNullObject");
             Order order = new Order();
             Assert.AreEqual(false, controller.DeleteOrder(workteam, order));
         }
+
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(NullReferenceException))]
         public void ExpectedExceptionDeleteNull()
         {
             Assert.AreEqual(false, controller.DeleteOrder(null, null));

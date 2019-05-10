@@ -30,7 +30,6 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DeleteNonExistentWorkteam()
         {
             string foreman = "Gert";
