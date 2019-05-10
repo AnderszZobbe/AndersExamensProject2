@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="DBTestConnector.cs" />
     <Compile Include="Exceptions\DateOutOfRangeException.cs" />
     <Compile Include="Exceptions\DuplicateObjectException.cs" />
     <Compile Include="IConnector.cs" />
