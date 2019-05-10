@@ -22,6 +22,7 @@ namespace Application_layer
         void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order, int orderID);
 
         // Update
+        void UpdateOrderStartDate(Order order);
 
         // Delete
         void DeleteOffday(Dictionary<Offday, int> offdays, Offday offday);

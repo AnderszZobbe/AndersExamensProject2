@@ -47,13 +47,6 @@ namespace Application_layer
             }
         }
 
-        public void SetOrderStartDate(Order order, DateTime startDate)
-        {
-            order.StartDate = startDate;
-
-            // TODO: Save startdate to the database
-        }
-
         public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
             // Init exceptions
@@ -89,7 +82,7 @@ namespace Application_layer
         {
             order.StartDate = startDate;
 
-            // TODO: Add update to database
+            Connector.UpdateOrderStartDate(order);
         }
 
         public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)

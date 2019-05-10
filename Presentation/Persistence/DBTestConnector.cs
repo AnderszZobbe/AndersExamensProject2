@@ -65,5 +65,9 @@ namespace Persistence
         public void FillOrderWithAssignments(Dictionary<Assignment, int> assignments, Order order, int orderId)
         {
         }
+
+        public void UpdateOrderStartDate(Order order)
+        {
+        }
     }
 }
