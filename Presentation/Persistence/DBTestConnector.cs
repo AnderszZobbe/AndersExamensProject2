@@ -26,7 +26,7 @@ namespace Persistence
             return assignments.ContainsKey(assignment);
         }
 
-        public Assignment CreateAssignment(Assignment assignment, Order order)
+        public Assignment CreateAssignment(Order order, Assignment assignment)
         {
             // All clear
             assignments.Add(assignment, assignmentID++);
@@ -34,7 +34,7 @@ namespace Persistence
             return assignment;
         }
 
-        public Offday CreateOffday(Offday offday, Workteam workteam)
+        public Offday CreateOffday(Workteam workteam, Offday offday)
         {
             // All clear
             offdays.Add(offday, offdayID++);
@@ -42,7 +42,7 @@ namespace Persistence
             return offday;
         }
 
-        public Order CreateOrder(Order order, Workteam workteam)
+        public Order CreateOrder(Workteam workteam, Order order)
         {
             // All clear
             orders.Add(order, orderID++);
@@ -69,7 +69,7 @@ namespace Persistence
             return assignments.Remove(assignment);
         }
 
-        public bool DeleteOffday(Offday offday, Workteam workteam)
+        public bool DeleteOffday(Workteam workteam, Offday offday)
         {
             workteam.offdays.Remove(offday);
             return offdays.Remove(offday);

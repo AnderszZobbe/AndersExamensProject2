@@ -11,15 +11,15 @@ namespace Application_layer
     {
         // Create
         Workteam CreateWorkteam(string foreman);
-        Offday CreateOffday(Offday offday, Workteam workteam);
-        Order CreateOrder(Order order, Workteam workteam);
-        Assignment CreateAssignment(Assignment assignment, Order order);
+        Offday CreateOffday(Workteam workteam, Offday offday);
+        Order CreateOrder(Workteam workteam, Order order);
+        Assignment CreateAssignment(Order order, Assignment assignment);
 
         // Read
         // > Get All
         List<Workteam> GetAllWorkteams();
-        List<Order> GetAllOrders();
         List<Offday> GetAllOffdays();
+        List<Order> GetAllOrders();
         List<Assignment> GetAllAssignments();
 
         // > Exists
@@ -38,9 +38,9 @@ namespace Application_layer
         void UpdateOrderStartDate(Order order, DateTime startDate);
 
         // Delete
-        bool DeleteOffday(Offday offday, Workteam workteam);
-        bool DeleteOrder(Workteam workteam, Order order);
         bool DeleteWorkteam(Workteam workteam);
+        bool DeleteOffday(Workteam workteam, Offday offday);
+        bool DeleteOrder(Workteam workteam, Order order);
         bool DeleteAssignment(Order order, Assignment assignment);
     }
 }

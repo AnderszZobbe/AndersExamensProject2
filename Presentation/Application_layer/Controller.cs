@@ -38,15 +38,14 @@ namespace Application_layer
 
         public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
-            // Init exceptions
-            if (workteam == null)
+            if (!Connector.WorkteamExists(workteam))
             {
-                throw new ArgumentNullException("A workteam was not given");
+                throw new ArgumentNullException("A valid workteam was not given");
             }
 
-            List<Order> orders = Connector.GetAllOrders().ToList<Order>();
+            List<Order> orders = Connector.GetAllOrders();
 
-            if (orders.Any(o => orderNumber != null && o.OrderNumber == orderNumber))
+            if (orders.Any(o => orderNumber.HasValue && o.OrderNumber == orderNumber))
             {
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
@@ -62,9 +61,7 @@ namespace Application_layer
                 Deadline = deadline
             };
 
-            //workteam.orders.Add(order);
-
-            Connector.CreateOrder(order, workteam);
+            Connector.CreateOrder(workteam, order);
 
             return order;
         }
@@ -103,7 +100,7 @@ namespace Application_layer
             assignment.Workform = workform ?? assignment.Workform;
             assignment.Duration = duration ?? assignment.Duration;
 
-            Connector.CreateAssignment(assignment, order);
+            Connector.CreateAssignment(order, assignment);
 
             return assignment;
         }
@@ -221,7 +218,7 @@ namespace Application_layer
         {
             Offday offday = workteam.GetOffday(date);
 
-            return Connector.DeleteOffday(offday, workteam);
+            return Connector.DeleteOffday(workteam, offday);
         }
     }
 }
