@@ -253,38 +253,7 @@ namespace Application_layer
                 }
             }
         }
-
-        public List<Order> ListOfOrdersFromDate(Workteam workteam, DateTime date)
-        {
-            //loo needs to be sorted 
-            List<Order> loo = new List<Order>();
-            foreach (Order i in GetAllOrdersByWorkteam(workteam))
-            {
-                if (i.LastDay(workteam) >= date)
-                {
-                    loo.Add(i);
-                }
-            }
-            Order temp = new Order();
-
-            for (int write = 0; write < loo.Count; write++)
-            {
-                for (int sort = 0; sort < loo.Count - 1; sort++)
-                {
-                    if (loo[sort].StartDate > loo[sort + 1].StartDate)
-                    {
-                        temp = loo[sort + 1];
-                        loo[sort + 1] = loo[sort];
-                        loo[sort] = temp;
-                    }
-                }
-            }
-
-            return loo;
-            
-        }
         
-
         public void EditForeman(string foremanName, Workteam workteam)
         {
 
