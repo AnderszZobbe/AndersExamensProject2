@@ -25,7 +25,12 @@ namespace Domain
 
         public DateTime GetNextAvailableDate(Order order)
         {
-            DateTime dateRoller = order.StartDate ?? throw new NotFoundException("The startdate of the order is not found");
+            if (!orders.Exists(o => o == order))
+            {
+                throw new NullReferenceException("The order provided was not found in this workteam.");
+            }
+
+            DateTime dateRoller = order.StartDate ?? throw new NullReferenceException("The startdate of the order is not found");
 
             bool nextAvailableDateFound = false;
             while (!nextAvailableDateFound)

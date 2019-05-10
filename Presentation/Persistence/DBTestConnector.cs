@@ -1,4 +1,5 @@
 ﻿using Application_layer;
+using Application_layer.DataClasses;
 using Domain;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace Persistence
 {
     public class DBTestConnector : IConnector
     {
+        private Dictionary<OrderData, int> order;
+
         private int orderID = 1;
         private int workteamID = 1;
         private int assignmentID = 1;

@@ -66,13 +66,15 @@ namespace UnitTesting
             controller.SetStartDateOnOrder(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(0), workteam.GetNextAvailableDate(order));
         }
+        
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void InvalidStartDate()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate6");
+            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate7");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            order.StartDate = DateTime.MinValue;
+            controller.CreateAssignment(order);
+            order.StartDate = DateTime.MaxValue;
             workteam.GetNextAvailableDate(order);
         }
     }
