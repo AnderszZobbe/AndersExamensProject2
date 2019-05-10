@@ -241,13 +241,15 @@ namespace Application_layer
 
             SetStartDateOnOrder(orderToRescheduleFrom, startDate);
 
-            for (int i = orderIndex + 1; i < orders.Count; i++)
+            for (int i = orderIndex; i < orders.Count - 1; i++)
             {
                 Order order = orders[i];
 
                 if (order.StartDate != null) // Is it assigned to the board?
                 {
-                    SetStartDateOnOrder(order, workteam.GetNextAvailableDate(order));
+                    DateTime nextAvailableDate = workteam.GetNextAvailableDate(order);
+
+                    SetStartDateOnOrder(orders[i + 1], nextAvailableDate);
                 }
             }
         }
