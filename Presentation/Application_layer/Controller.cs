@@ -107,7 +107,7 @@ namespace Application_layer
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
         {
-            List<Order> orders = Connector.GetAllOrders().ToList<Order>();
+            List<Order> orders = Connector.GetAllOrders();
 
             if (orders.Any(o => o.OrderNumber == orderNumber && o != order))
             {
@@ -135,6 +135,16 @@ namespace Application_layer
 
         public Workteam CreateWorkteam(string foreman)
         {
+            if (foreman == string.Empty)
+            {
+                throw new ArgumentException();
+            }
+
+            if (Connector.GetAllWorkteams().Any(o => o.Foreman == foreman))
+            {
+                throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
+            }
+
             return Connector.CreateWorkteam(foreman);
         }
 
@@ -174,7 +184,7 @@ namespace Application_layer
 
         public List<Workteam> GetAllWorkteams()
         {
-            return Connector.GetAllWorkteams().ToList<Workteam>();
+            return Connector.GetAllWorkteams();
         }
 
         public void Reschedule(Workteam workteam, Order orderToRescheduleFrom, DateTime startDate)
@@ -206,7 +216,17 @@ namespace Application_layer
         
         public void EditForeman(Workteam workteam, string foreman)
         {
-            Connector.UpdateWorkteamForeman(workteam, foreman);
+            if (foreman == string.Empty)
+            {
+                throw new ArgumentException();
+            }
+
+            if (Connector.GetAllWorkteams().Any(o => o.Foreman == foreman))
+            {
+                throw new DuplicateObjectException();
+            }
+
+            Connector.UpdateWorkteamForeman(workteam, foreman ?? throw new ArgumentNullException());
         }
 
         public bool DeleteWorkteam(Workteam workteam)

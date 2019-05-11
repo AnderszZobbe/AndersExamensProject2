@@ -52,11 +52,6 @@ namespace Persistence
 
         public Workteam CreateWorkteam(string foreman)
         {
-            if (workteams.Keys.Any(o => o.Foreman == foreman))
-            {
-                throw new DuplicateObjectException("There already exsits a workteam with a foreman by that name");
-            }
-
             // All clear
             Workteam workteam = new Workteam(foreman);
             workteams.Add(workteam, workteamID++);
@@ -135,17 +130,7 @@ namespace Persistence
 
         public void UpdateWorkteamForeman(Workteam workteam, string foreman)
         {
-            if (foreman == string.Empty)
-            {
-                throw new ArgumentException();
-            }
-
-            if (workteams.Keys.Any(o => o.Foreman == foreman))
-            {
-                throw new DuplicateObjectException();
-            }
-
-            workteam.Foreman = foreman ?? throw new ArgumentNullException();
+            workteam.Foreman = foreman;
         }
 
         public bool WorkteamExists(Workteam workteam)
