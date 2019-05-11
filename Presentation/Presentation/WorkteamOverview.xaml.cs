@@ -299,14 +299,26 @@ namespace Presentation
             if (order != null)
             {
                 AddSimpleColumnLabel(grid, order.OrderNumber, 1);
-                AddSimpleColumnLabel(grid, order.Prescription, 2);
+                AddSimpleColumnLabel(grid, order.Address, 2);
                 AddSimpleColumnLabel(grid, order.Remark, 3);
-                AddSimpleColumnLabel(grid, order.Customer, 4);
-                AddSimpleColumnLabel(grid, order.OrderNumber, 5);
+                AddSimpleColumnLabel(grid, order.Area, 4);
+                AddSimpleColumnLabel(grid, order.Amount, 5);
+                AddSimpleColumnLabel(grid, order.Prescription, 6);
+                AddSimpleColumnLabel(grid, order.Customer, 7);
+                AddSimpleColumnLabel(grid, order.Machine, 8);
+                AddSimpleColumnLabel(grid, order.AsphaltWork, 9);
             }
             else
             {
                 AddSimpleColumnLabel(grid, "Order nummer", 1);
+                AddSimpleColumnLabel(grid, "Strækning", 2);
+                AddSimpleColumnLabel(grid, "Bemærkning", 3);
+                AddSimpleColumnLabel(grid, "m2", 4);
+                AddSimpleColumnLabel(grid, "tons", 5);
+                AddSimpleColumnLabel(grid, "Recept", 6);
+                AddSimpleColumnLabel(grid, "Kunde", 7);
+                AddSimpleColumnLabel(grid, "Maskine", 8);
+                AddSimpleColumnLabel(grid, "Asfaltværk", 9);
             }
         }
 
