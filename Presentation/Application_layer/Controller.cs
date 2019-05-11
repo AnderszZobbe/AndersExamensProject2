@@ -33,7 +33,7 @@ namespace Application_layer
             return Connector.DeleteOrder(workteam, order);
         }
 
-        public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
+        public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
             if (!Connector.WorkteamExists(workteam))
             {
@@ -45,20 +45,7 @@ namespace Application_layer
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
 
-            Order order = new Order()
-            {
-                OrderNumber = orderNumber,
-                Address = address,
-                Remark = remark,
-                Area = area,
-                Amount = amount,
-                Prescription = prescription,
-                Deadline = deadline
-            };
-
-            Connector.CreateOrder(workteam, order);
-
-            return order;
+            return Connector.CreateOrder(workteam, orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
         }
 
         public void SetStartDateOnOrder(Order order, DateTime startDate)

@@ -10,6 +10,21 @@ namespace Domain
     {
         public readonly List<Assignment> assignments = new List<Assignment>();
 
+        public Order(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
+        {
+            OrderNumber = orderNumber;
+            Address = address;
+            Remark = remark;
+            Area = area;
+            Amount = amount;
+            Prescription = prescription;
+            Deadline = deadline;
+            StartDate = startDate;
+            Customer = customer;
+            Machine = machine;
+            AsphaltWork = asphaltWork;
+        }
+
         public int? OrderNumber { get; set; }
 
         public string Address { get; set; }
@@ -25,5 +40,11 @@ namespace Domain
         public DateTime? Deadline { get; set; }
 
         public DateTime? StartDate { get; set; }
+
+        public string Customer { get; set; }
+
+        public string Machine { get; set; }
+
+        public string AsphaltWork { get; set; }
     }
 }

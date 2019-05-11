@@ -25,7 +25,7 @@ namespace UnitTesting
             string foreman = "Alpha";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOrder(workteam,8,"","",1,1,"",DateTime.Today);
+            controller.CreateOrder(workteam,8,"","",1,1,"",DateTime.Today, null, null, null, null);
             controller.FillWorkteamWithOrders(workteam);
             Order order = workteam.orders[0];
 
@@ -40,23 +40,23 @@ namespace UnitTesting
         {
             string foreman = "Bravo";
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
-            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
+            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyNoName()
         {
-            controller.CreateOrder(null, 2, "", "", 1, 1, "", DateTime.Today);
+            controller.CreateOrder(null, 2, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
         }
 
         [TestMethod]
         public void CanAddTwoOrdersWithNull()
         {
             Workteam workteam = controller.CreateWorkteam("Frank");
-            controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
         }
     }
 }

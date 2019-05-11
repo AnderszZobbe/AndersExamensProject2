@@ -12,7 +12,7 @@ namespace Application_layer
         // Create
         Workteam CreateWorkteam(string foreman);
         Offday CreateOffday(Workteam workteam, OffdayReason reason, DateTime startDate, int duration);
-        Order CreateOrder(Workteam workteam, Order order);
+        Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);
         Assignment CreateAssignment(Order order, Workform workform, int duration);
 
         // Read

@@ -301,7 +301,7 @@ namespace Presentation
                 AddSimpleColumnLabel(grid, order.OrderNumber, 1);
                 AddSimpleColumnLabel(grid, order.Prescription, 2);
                 AddSimpleColumnLabel(grid, order.Remark, 3);
-                AddSimpleColumnLabel(grid, order.Priority, 4);
+                AddSimpleColumnLabel(grid, order.Customer, 4);
                 AddSimpleColumnLabel(grid, order.OrderNumber, 5);
             }
             else

@@ -37,7 +37,7 @@ namespace Presentation
 
             controller.CreateOffday(workteam, OffdayReason.Helligdag, DateTime.Today.AddDays(14), 6); // Week holiday
 
-            Order order = controller.CreateOrder(workteam, 123, null, null, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, 123, null, null, null, null, null, null, null, null, null, null);
 
             controller.CreateAssignment(order, 4, Workform.Dag);
 
@@ -48,7 +48,7 @@ namespace Presentation
             controller.SetStartDateOnOrder(order, DateTime.Now.AddDays(7));
             //controller.SetStartDateOnOrder(order, DateTime.Now);
 
-            Order order2 = controller.CreateOrder(workteam, 321, null, null, null, null, null, DateTime.Now.AddDays(7*4));
+            Order order2 = controller.CreateOrder(workteam, 321, null, null, null, null, null, DateTime.Now.AddDays(7 * 4), null, null, null, null);
         }
     }
 }

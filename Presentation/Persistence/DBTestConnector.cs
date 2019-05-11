@@ -50,8 +50,11 @@ namespace Persistence
             return offday;
         }
 
-        public Order CreateOrder(Workteam workteam, Order order)
+        public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
+            // Construct
+            Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
+
             // Add
             orders.Add(order, orderID++);
             workteam.orders.Add(order);

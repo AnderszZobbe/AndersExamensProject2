@@ -24,7 +24,7 @@ namespace UnitTesting
         public void TestSuccesfulDeletion()
         {
             Workteam workteam = controller.CreateWorkteam("Adam");
-            Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today);
+            Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today, null, null, null, null);
             
             Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
             controller.FillWorkteamWithOrders(workteam);
@@ -35,7 +35,7 @@ namespace UnitTesting
         public void TestDeletionOfNullObject()
         {
             Workteam workteam = controller.CreateWorkteam("TestDeletionOfNullObject");
-            Order order = new Order();
+            Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
             Assert.AreEqual(false, controller.DeleteOrder(workteam, order));
         }
 

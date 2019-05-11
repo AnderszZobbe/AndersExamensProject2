@@ -94,7 +94,7 @@ namespace Presentation
                 }
             }
 
-            Order orderCreated = controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate);
+            Order orderCreated = controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, null, null, null, null);
 
 
             foreach (Grid assignment in AssignmentsStackPanel.Children)

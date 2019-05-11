@@ -24,7 +24,7 @@ namespace UnitTesting
         {
             string foreman = "CreateAssignment1";
             Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateOrder(workteam,null,null,null,null,null,null,null);
+            Order order = controller.CreateOrder(workteam,null,null,null,null,null,null,null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
 
@@ -38,7 +38,7 @@ namespace UnitTesting
         {
             string foreman = "CreateAssignment2";
             Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, -1, Workform.Dag);
 
         }
@@ -49,7 +49,7 @@ namespace UnitTesting
         {
             string foreman = "CreateAssignment3";
             Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, int.MaxValue, Workform.Dag);
 
         }
@@ -59,7 +59,7 @@ namespace UnitTesting
             
             string foreman = "CreateAssignment4";
             Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 1, Workform.Dag);
 
             Assert.AreEqual(1, assignment.Duration);
@@ -80,7 +80,7 @@ namespace UnitTesting
         public void CorrectWorkforeIsSaved()
         {
             Workteam workteam = controller.CreateWorkteam("CreateAssignment5");
-            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
             Assert.AreEqual(Workform.Dag, assignment.Workform);
@@ -95,7 +95,7 @@ namespace UnitTesting
         [ExpectedException(typeof(NullReferenceException))]
         public void OrderDoesNotExist()
         {
-            Order order = new Order();
+            Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
         }
