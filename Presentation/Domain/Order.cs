@@ -10,14 +10,20 @@ namespace Domain
     {
         public readonly List<Assignment> assignments = new List<Assignment>();
 
-        public int? OrderNumber { get; set; } = null;
-        public string Address { get; set; } = null;
-        public string Remark { get; set; } = null;
-        public int? Area { get; set; } = null;
-        public int? Amount { get; set; } = null;
-        public string Prescription { get; set; } = null;
-        public DateTime? Deadline { get; set; } = null;
-        public DateTime? StartDate { get; set; } = null;
-        public int Priority { get; set; } = 0;
+        public int? OrderNumber { get; set; }
+
+        public string Address { get; set; }
+
+        public string Remark { get; set; }
+
+        public int? Area { get; set; }
+
+        public int? Amount { get; set; }
+
+        public string Prescription { get; set; }
+
+        public DateTime? Deadline { get; set; }
+
+        public DateTime? StartDate { get; set; }
     }
 }
