@@ -26,35 +26,47 @@ namespace Persistence
             return assignments.ContainsKey(assignment);
         }
 
-        public Assignment CreateAssignment(Order order, Assignment assignment)
+        public Assignment CreateAssignment(Order order, Workform workform, int duration)
         {
-            // All clear
+            // Construct
+            Assignment assignment = new Assignment(workform, duration);
+
+            // Add
             assignments.Add(assignment, assignmentID++);
             order.assignments.Add(assignment);
             return assignment;
         }
 
-        public Offday CreateOffday(Workteam workteam, Offday offday)
+        public Offday CreateOffday(Workteam workteam, OffdayReason reason, DateTime startDate, int duration)
         {
-            // All clear
+            // Construct
+            Offday offday = new Offday(reason, startDate, duration);
+
+            // Add
             offdays.Add(offday, offdayID++);
             workteam.offdays.Add(offday);
+
+            // Return
             return offday;
         }
 
         public Order CreateOrder(Workteam workteam, Order order)
         {
-            // All clear
+            // Add
             orders.Add(order, orderID++);
             workteam.orders.Add(order);
+
+            // Return
             return order;
         }
 
         public Workteam CreateWorkteam(string foreman)
         {
-            // All clear
+            // Add
             Workteam workteam = new Workteam(foreman);
             workteams.Add(workteam, workteamID++);
+
+            // Return
             return workteam;
         }
 

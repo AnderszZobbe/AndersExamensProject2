@@ -22,34 +22,31 @@ namespace UnitTesting
         [TestMethod]
         public void ReturnOffDay()
         {
-            string foreman = "Kevin";
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("ReturnOffDay");
 
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today,1,workteam);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, 1);
 
             Assert.AreEqual(true, workteam.IsAnOffday(DateTime.Today));
             
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Negativduration()
         {
-            string foreman = "Bo";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, -1, workteam);
+            Workteam workteam = controller.CreateWorkteam("Negativduration");
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, -1);
         }
 
         [TestMethod]
         public void TimeLeapYear()
         {
             DateTime date1 = new DateTime(2020, 2, 29, 8, 30, 52);
-            string foreman = "cecile";
 
-            Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.Fredagsfri, date1, 1, workteam);
+            Workteam workteam = controller.CreateWorkteam("TimeLeapYear");
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, date1, 1);
         }
+
         [TestMethod]
         [ExpectedException(typeof(OverlapException))]
         public void ExpectExceptionOverlappingOffDay()
@@ -58,8 +55,8 @@ namespace UnitTesting
             string foreman = "Dennis";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, 1, workteam);
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, 1, workteam);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, 1);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, 1);
 
         }
 
@@ -67,36 +64,36 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyWorkteam()
         {
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, 1, null);
+            controller.CreateOffday(null, OffdayReason.Fredagsfri, DateTime.Today, 1);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ExpectExceptionEmptyDuration()
         {
             Workteam workteam = controller.CreateWorkteam("Eric");
 
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today, -1, workteam);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, -1);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeMax()
         {
             string foreman = "Frederick";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.MaxValue, 2, workteam);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.MaxValue, 2);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeMin()
         {
             string foreman = "Gert";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.MinValue, 2, workteam);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.MinValue, 2);
         }
 
        

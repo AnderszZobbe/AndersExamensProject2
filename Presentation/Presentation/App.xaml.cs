@@ -31,15 +31,15 @@ namespace Presentation
 
             Workteam workteam = controller.CreateWorkteam("testunit");
 
-            controller.CreateOffday(OffdayReason.Fredagsfri, DateTime.Today.AddDays(3), 0, workteam); // Friday
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today.AddDays(3), 0); // Friday
 
-            controller.CreateOffday(OffdayReason.Weekend, DateTime.Today.AddDays(4), 1, workteam); // Weekend
+            controller.CreateOffday(workteam, OffdayReason.Weekend, DateTime.Today.AddDays(4), 1); // Weekend
 
-            controller.CreateOffday(OffdayReason.Helligdag, DateTime.Today.AddDays(14), 6, workteam); // Week holiday
+            controller.CreateOffday(workteam, OffdayReason.Helligdag, DateTime.Today.AddDays(14), 6); // Week holiday
 
             Order order = controller.CreateOrder(workteam, 123, null, null, null, null, null, null);
 
-            controller.CreateAssignment(order, 4);
+            controller.CreateAssignment(order, 4, Workform.Dag);
 
             controller.CreateAssignment(order, 1, Workform.Nat);
 

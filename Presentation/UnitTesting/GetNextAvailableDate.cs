@@ -73,7 +73,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate7");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order);
+            controller.CreateAssignment(order, 0, Workform.Dag);
             order.StartDate = DateTime.MaxValue;
             workteam.GetNextAvailableDate(order);
         }

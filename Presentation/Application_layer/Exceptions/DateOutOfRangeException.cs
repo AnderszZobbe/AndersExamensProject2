@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application_layer
 {
-    public class DateOutOfRangeException : Exception
+    public class DateOutOfRangeException : ArgumentOutOfRangeException
     {
         public DateOutOfRangeException()
         {

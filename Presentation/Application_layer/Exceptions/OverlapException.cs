@@ -8,10 +8,6 @@ namespace Application_layer
 {
     public class OverlapException : Exception
     {
-        public OverlapException()
-        {
-        }
-
         public OverlapException(string message) : base(message)
         {
         }

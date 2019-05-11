@@ -25,7 +25,7 @@ namespace UnitTesting
             string foreman = "CreateAssignment1";
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam,null,null,null,null,null,null,null);
-            Assignment assignment = controller.CreateAssignment(order, null, null);
+            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
 
             Assert.IsNotNull(assignment);
@@ -33,24 +33,24 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void NegativDuration()
         {
             string foreman = "CreateAssignment2";
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, -1, null);
+            Assignment assignment = controller.CreateAssignment(order, -1, Workform.Dag);
 
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TooLongDuration()
         {
             string foreman = "CreateAssignment3";
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, int.MaxValue, null);
+            Assignment assignment = controller.CreateAssignment(order, int.MaxValue, Workform.Dag);
 
         }
         [TestMethod]
@@ -60,12 +60,12 @@ namespace UnitTesting
             string foreman = "CreateAssignment4";
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, 1, null);
+            Assignment assignment = controller.CreateAssignment(order, 1, Workform.Dag);
 
             Assert.AreEqual(1, assignment.Duration);
-            assignment = controller.CreateAssignment(order, 0, null);
+            assignment = controller.CreateAssignment(order, 0, Workform.Dag);
             Assert.AreEqual(0, assignment.Duration);
-            assignment = controller.CreateAssignment(order, 10, null);
+            assignment = controller.CreateAssignment(order, 10, Workform.Dag);
             Assert.AreEqual(10, assignment.Duration);
         }
 
@@ -73,7 +73,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionNullOrder()
         {
-            Assignment assignment = controller.CreateAssignment(null, null, null);
+            Assignment assignment = controller.CreateAssignment(null, 0, Workform.Dag);
         }
 
         [TestMethod]
@@ -81,12 +81,12 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("CreateAssignment5");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, null, Workform.Dag);
+            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
             Assert.AreEqual(Workform.Dag, assignment.Workform);
-            assignment = controller.CreateAssignment(order, null, Workform.Nat);
+            assignment = controller.CreateAssignment(order, 0, Workform.Nat);
             Assert.AreEqual(Workform.Nat, assignment.Workform);
-            assignment = controller.CreateAssignment(order, null, Workform.Flytning);
+            assignment = controller.CreateAssignment(order, 0, Workform.Flytning);
             Assert.AreEqual(Workform.Flytning, assignment.Workform);
         }
 
@@ -96,7 +96,7 @@ namespace UnitTesting
         public void OrderDoesNotExist()
         {
             Order order = new Order();
-            Assignment assignment = controller.CreateAssignment(order, null, null);
+            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
         }
     }

@@ -23,10 +23,7 @@ namespace Application_layer
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new Controller();
-                }
+                instance = instance ?? new Controller();
                 return instance;
             }
         }
@@ -43,9 +40,7 @@ namespace Application_layer
                 throw new ArgumentNullException("A valid workteam was not given");
             }
 
-            List<Order> orders = Connector.GetAllOrders();
-
-            if (orders.Any(o => orderNumber.HasValue && o.OrderNumber == orderNumber))
+            if (Connector.GetAllOrders().Any(o => orderNumber.HasValue && o.OrderNumber == orderNumber))
             {
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
@@ -71,38 +66,14 @@ namespace Application_layer
             Connector.UpdateOrderStartDate(order, startDate);
         }
 
-        public Assignment CreateAssignment(Order order, int? duration = null, Workform? workform = null)
+        public Assignment CreateAssignment(Order order, int duration, Workform workform)
         {
-            if (order == null)
-            {
-                throw new ArgumentNullException("An order was not given");
-            }
             if (!Connector.OrderExists(order))
             {
                 throw new NullReferenceException("The order does not exists");
             }
 
-            // Init exceptions
-            if (order == null)
-            {
-                throw new ArgumentNullException("An order was not given");
-            }
-            if (duration < 0)
-            {
-                throw new DateOutOfRangeException("The given duration is negative");
-            }
-            if (duration > 360)
-            {
-                throw new DateOutOfRangeException("The given duration is longer that a year");
-            }
-
-            Assignment assignment = new Assignment();
-            assignment.Workform = workform ?? assignment.Workform;
-            assignment.Duration = duration ?? assignment.Duration;
-
-            Connector.CreateAssignment(order, assignment);
-
-            return assignment;
+            return Connector.CreateAssignment(order, workform, duration);
         }
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
@@ -148,38 +119,24 @@ namespace Application_layer
             return Connector.CreateWorkteam(foreman);
         }
 
-        public void CreateOffday(OffdayReason reason, DateTime startDate, int duration, Workteam workteam)
+        public Offday CreateOffday(Workteam workteam, OffdayReason reason, DateTime startDate, int duration)
         {
+            if (!Connector.WorkteamExists(workteam))
+            {
+                throw new ArgumentNullException("You are trying to add offdays to a nonexistent workteam");
+            }
+
             DateTime dateRoller = startDate;
-            if (workteam == null)
-            {
-                throw new ArgumentNullException("You are trying to add offdaýs to a nonexistent workteam");
-            }
-            if (duration < 0)
-            {
-                throw new DateOutOfRangeException("Your are trying add an offdate with a duration of less than 0");
-            }
-            if (startDate < DateTime.Today)
-            {
-                throw new DateOutOfRangeException("You are trying to add a task, which starts in the past");
-            }
-            if (startDate > DateTime.Today.AddYears(1))
-            {
-                throw new DateOutOfRangeException("You are trying to add a task, which starts in a year");
-            }
             for (int i = 0; i < duration; i++)
             {
                 if (workteam.IsAnOffday(dateRoller))
                 {
                     throw new OverlapException("There is another offday in the given period");
                 }
-
-
                 dateRoller = dateRoller.AddDays(1);
             }
 
-            Offday offday = new Offday(reason, startDate, duration);
-            workteam.offdays.Add(offday);
+            return Connector.CreateOffday(workteam, reason, startDate, duration);
         }
 
         public List<Workteam> GetAllWorkteams()

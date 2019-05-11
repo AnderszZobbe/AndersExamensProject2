@@ -63,7 +63,7 @@ namespace Presentation
             try
             {
                 int length = ((TimeSpan)(EndDate.SelectedDate - StartDate.SelectedDate)).Days;
-                controller.CreateOffday((OffdayReason)ReasonComboBox.SelectedItem, StartDate.SelectedDate ?? throw new ArgumentNullException(), length, workteam);
+                controller.CreateOffday(workteam, (OffdayReason)ReasonComboBox.SelectedItem, StartDate.SelectedDate ?? throw new ArgumentNullException(), length);
             }
             catch (Exception exception)
             {

@@ -11,9 +11,9 @@ namespace Application_layer
     {
         // Create
         Workteam CreateWorkteam(string foreman);
-        Offday CreateOffday(Workteam workteam, Offday offday);
+        Offday CreateOffday(Workteam workteam, OffdayReason reason, DateTime startDate, int duration);
         Order CreateOrder(Workteam workteam, Order order);
-        Assignment CreateAssignment(Order order, Assignment assignment);
+        Assignment CreateAssignment(Order order, Workform workform, int duration);
 
         // Read
         // > Get All
