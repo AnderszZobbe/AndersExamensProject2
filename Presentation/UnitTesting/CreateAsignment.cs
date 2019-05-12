@@ -22,8 +22,7 @@ namespace UnitTesting
         [TestMethod]
         public void AssignmentIsMade()
         {
-            string foreman = "CreateAssignment1";
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("AssignmentIsMade");
             Order order = controller.CreateOrder(workteam,null,null,null,null,null,null,null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 
@@ -36,8 +35,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void NegativDuration()
         {
-            string foreman = "CreateAssignment2";
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("NegativDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, -1, Workform.Dag);
 
@@ -47,8 +45,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TooLongDuration()
         {
-            string foreman = "CreateAssignment3";
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("TooLongDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, int.MaxValue, Workform.Dag);
 
@@ -56,9 +53,7 @@ namespace UnitTesting
         [TestMethod]
         public void CorrectDurationIsSaved()
         {
-            
-            string foreman = "CreateAssignment4";
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("CorrectDurationIsSaved");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 1, Workform.Dag);
 
@@ -73,13 +68,13 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionNullOrder()
         {
-            Assignment assignment = controller.CreateAssignment(null, 0, Workform.Dag);
+            controller.CreateAssignment(null, 0, Workform.Dag);
         }
 
         [TestMethod]
         public void CorrectWorkforeIsSaved()
         {
-            Workteam workteam = controller.CreateWorkteam("CreateAssignment5");
+            Workteam workteam = controller.CreateWorkteam("CorrectWorkforeIsSaved");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
 

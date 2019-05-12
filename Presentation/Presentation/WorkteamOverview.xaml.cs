@@ -211,8 +211,9 @@ namespace Presentation
 
             for (int i = 0; i < TotalDays; i++)
             {
-                Border btn = new Border();
-                btn.DataContext = dateRoller;
+                Button btn = new Button();
+                btn.DataContext = new KeyValuePair<Order, DateTime>(order, dateRoller);
+                btn.Click += Reschedule;
                 btn.ToolTip = $"{dateRoller.Day}/{dateRoller.Month}/{dateRoller.Year}";
 
                 grid.Children.Add(btn);
@@ -277,6 +278,23 @@ namespace Presentation
             }
         }
 
+        private void Reschedule(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is KeyValuePair<Order, DateTime> orderAndDateToReschedule)
+                {
+                    Console.WriteLine("Womba");
+                    Order order = orderAndDateToReschedule.Key;
+                    DateTime rescheduleDate = orderAndDateToReschedule.Value;
+
+                    controller.Reschedule(workteam, order, rescheduleDate);
+
+                    UpdateDataGrid();
+                }
+            }
+        }
+
         private void DisplayCurrentDay(Grid grid, DateTime dateRoller, int column)
         {
             if (dateRoller.Date == DateTime.Today)
@@ -324,9 +342,6 @@ namespace Presentation
 
         private void UpdateDataGrid()
         {
-            // testing
-            controller.Reschedule(workteam, workteam.orders[0], DateTime.Today);
-
             DeleteRows();
 
             Grid grid = InitializeGridRow();

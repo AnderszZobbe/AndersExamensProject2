@@ -135,25 +135,24 @@ namespace Application_layer
         {
             List<Order> orders = workteam.orders;
 
-
             if (!orders.Exists(o => o == orderToRescheduleFrom))
             {
                 throw new NotFoundException("The order was not found in the workteam provided.");
             }
 
-            int orderIndex = orders.IndexOf(orderToRescheduleFrom);
-
             SetStartDateOnOrder(orderToRescheduleFrom, startDate);
 
-            for (int i = orderIndex; i < orders.Count - 1; i++)
+            DateTime nextAvailableDate = workteam.GetNextAvailableDate(orderToRescheduleFrom);
+
+            for (int i = orders.IndexOf(orderToRescheduleFrom) + 1; i < orders.Count; i++)
             {
-                Order order = orders[i];
+                Order currentOrder = orders[i];
 
-                if (order.StartDate != null) // Is it assigned to the board?
+                if (currentOrder.StartDate != null) // Is it assigned to the board?
                 {
-                    DateTime nextAvailableDate = workteam.GetNextAvailableDate(order);
+                    SetStartDateOnOrder(currentOrder, nextAvailableDate);
 
-                    SetStartDateOnOrder(orders[i + 1], nextAvailableDate);
+                    nextAvailableDate = workteam.GetNextAvailableDate(currentOrder);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using Application_layer;
 using Application_layer.Exceptions;
 using Domain;
+using Persistence.DataClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace Persistence
         public Workteam CreateWorkteam(string foreman)
         {
             // Add
-            Workteam workteam = new Workteam(foreman);
+            Workteam workteam = new WorkteamData(this, foreman);
             workteams.Add(workteam, workteamID++);
 
             // Return

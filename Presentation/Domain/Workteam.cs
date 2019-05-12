@@ -9,7 +9,7 @@ namespace Domain
 {
     public class Workteam
     {
-        public string Foreman { get; set; }
+        public virtual string Foreman { get; set; }
         public readonly List<Offday> offdays = new List<Offday>();
         public readonly List<Order> orders = new List<Order>();
 

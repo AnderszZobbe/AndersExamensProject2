@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataClasses\WorkteamData.cs" />
     <Compile Include="DBConnector.cs" />
     <Compile Include="DBTestConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
