@@ -159,7 +159,7 @@ namespace Application_layer
                 throw new ArgumentException();
             }
 
-            if (Connector.GetAllWorkteams().Any(o => o.Foreman == foreman))
+            if (Connector.GetAllWorkteams().Any(o => o != workteam && o.Foreman == foreman))
             {
                 throw new DuplicateObjectException();
             }
