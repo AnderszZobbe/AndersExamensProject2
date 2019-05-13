@@ -4,6 +4,7 @@ using Domain;
 using Application_layer;
 using Application_layer.Exceptions;
 using Persistence;
+using Persistence.DataClasses;
 
 namespace UnitTesting
 {

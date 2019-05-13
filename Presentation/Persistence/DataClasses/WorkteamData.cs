@@ -17,10 +17,6 @@ namespace Persistence.DataClasses
             this.connector = connector;
         }
 
-        public override string Foreman
-        {
-            get => base.Foreman;
-            set => base.Foreman = value;
-        }
+        public new string Foreman { get => base.Foreman; set => base.Foreman = value; }
     }
 }

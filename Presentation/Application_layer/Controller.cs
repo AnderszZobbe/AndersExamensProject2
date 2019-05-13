@@ -28,11 +28,6 @@ namespace Application_layer
             }
         }
 
-        public bool DeleteOrder(Workteam workteam, Order order)
-        {
-            return Connector.DeleteOrder(workteam, order);
-        }
-
         public Order CreateOrder(Workteam workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
             if (!Connector.WorkteamExists(workteam))
@@ -177,11 +172,26 @@ namespace Application_layer
             return Connector.DeleteWorkteam(workteam);
         }
 
+        public bool DeleteOffday(Workteam workteam, Offday offday)
+        {
+            return Connector.DeleteOffday(workteam, offday);
+        }
+
+        public bool DeleteOrder(Workteam workteam, Order order)
+        {
+            return Connector.DeleteOrder(workteam, order);
+        }
+
+        public bool DeleteAssignment(Order order, Assignment assignment)
+        {
+            return Connector.DeleteAssignment(order, assignment);
+        }
+
         public bool DeleteOffdayByDate(Workteam workteam, DateTime date)
         {
             Offday offday = workteam.GetOffday(date);
 
-            return Connector.DeleteOffday(workteam, offday);
+            return DeleteOffday(workteam, offday);
         }
     }
 }
