@@ -34,18 +34,6 @@ namespace UnitTesting
             Assert.AreEqual(DateTime.Today.AddDays(1), order.StartDate);
         }
 
-        
-
-        [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
-        public void StartDateAfterDeadline()
-        {
-            string foreman = "SetStartDateOnOrder2";
-            Workteam workteam = controller.CreateWorkteam(foreman);
-            Order order = controller.CreateOrder(workteam, 6, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
-            controller.SetStartDateOnOrder(order, DateTime.Today.AddDays(1));
-        }
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void StartDateAtEndOfTime()
