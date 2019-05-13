@@ -42,7 +42,7 @@
                 <Label Content="Kunde" Grid.Column="7" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="Maskine" Grid.Column="8" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Label Content="Asfaltværk" Grid.Column="9" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Grid Grid.Column="6"/>
+                <Grid Grid.Column="10"/>
             </Grid>
         </StackPanel>
         <Button Content="Dokumentér ny arbejdsordre" Margin="10,0,0,10" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="DocumentNewWorkorder" BorderBrush="{x:Null}" BorderThickness="0" Width="195" Foreground="White" FontSize="14">
@@ -53,7 +53,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Button Content="Fjern arbejdshold" Margin="0,0,10,10" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="128" BorderBrush="{x:Null}" Foreground="White" BorderThickness="0" FontSize="14">
+        <Button Content="Fjern arbejdshold" Margin="0,0,10,10" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="128" Click="DeleteCurrentWorkteam" BorderBrush="{x:Null}" Foreground="White" BorderThickness="0" FontSize="14">
             <Button.Background>
                 <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
                     <GradientStop Color="#FFE67070" Offset="1"/>

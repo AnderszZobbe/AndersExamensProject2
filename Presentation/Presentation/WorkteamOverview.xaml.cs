@@ -30,6 +30,8 @@ namespace Presentation
         private int clearRowFrom = 1;
         private DateTime startDate = DateTime.Now.AddDays(-14);
         //private DateTime startDate = DateTime.Now.AddDays(0);
+        public Brush[] OffdayBrushes = { Brushes.Red, Brushes.DarkRed, Brushes.DarkRed };
+        public Brush[] WorkformBrushes = { Brushes.Orange, Brushes.DarkCyan, Brushes.LightGray };
 
         public WorkteamOverview(Workteam workteam)
         {
@@ -173,18 +175,7 @@ namespace Presentation
 
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    switch (workteam.GetOffday(dateRoller).OffdayReason)
-                    {
-                        case OffdayReason.Weekend:
-                            btn.Background = Brushes.Red;
-                            break;
-                        case OffdayReason.Fredagsfri:
-                        case OffdayReason.Helligdag:
-                        default:
-                            btn.Background = Brushes.DarkRed;
-                            break;
-                    }
-
+                    btn.Background = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
                     btn.Click += RemoveOffday;
                 }
                 else
@@ -221,34 +212,11 @@ namespace Presentation
 
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    switch (workteam.GetOffday(dateRoller).OffdayReason)
-                    {
-                        case OffdayReason.Weekend:
-                            btn.Background = Brushes.Red;
-                            break;
-                        case OffdayReason.Fredagsfri:
-                        case OffdayReason.Helligdag:
-                        default:
-                            btn.Background = Brushes.DarkRed;
-                            break;
-                    }
+                    btn.Background = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
                 }
                 else if (workteam.IsAWorkday(order, dateRoller)) // Is the date a workday?
                 {
-                    switch (workteam.GetWorkform(order, dateRoller))
-                    {
-                        case Workform.Dag:
-                            btn.Background = Brushes.Orange;
-                            break;
-                        case Workform.Nat:
-                            btn.Background = Brushes.DarkCyan;
-                            break;
-                        case Workform.Flytning:
-                            btn.Background = Brushes.LightGray;
-                            break;
-                        default:
-                            break;
-                    }
+                    btn.Background = WorkformBrushes[(int)workteam.GetWorkform(order, dateRoller)];
                 }
                 else
                 {
@@ -284,7 +252,6 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is KeyValuePair<Order, DateTime> orderAndDateToReschedule)
                 {
-                    Console.WriteLine("Womba");
                     Order order = orderAndDateToReschedule.Key;
                     DateTime rescheduleDate = orderAndDateToReschedule.Value;
 
@@ -352,7 +319,7 @@ namespace Presentation
 
             InitializeOffdaysGrid(grid, startDate);
 
-            foreach (Order order in this.workteam.orders)
+            foreach (Order order in workteam.orders)
             {
                 grid = InitializeGridRow();
 
@@ -461,6 +428,20 @@ namespace Presentation
                             break;
                     }
                 }
+            }
+        }
+
+        private void DeleteCurrentWorkteam(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Er du sikker på du vil fjerne dette arbejdshold?", "Fjernelse af arbejdshold", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    controller.DeleteWorkteam(workteam);
+                    Close();
+                    break;
+                case MessageBoxResult.No:
+                    break;
             }
         }
     }
