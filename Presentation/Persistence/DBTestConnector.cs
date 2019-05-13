@@ -76,8 +76,11 @@ namespace Persistence
 
         public bool DeleteAssignment(Order order, Assignment assignment)
         {
-            order.assignments.Remove(assignment);
-            return assignments.Remove(assignment);
+            if (order.assignments.Remove(assignment))
+            {
+                return assignments.Remove(assignment);
+            }
+            return false;
         }
 
         public bool DeleteOffday(Workteam workteam, Offday offday)
