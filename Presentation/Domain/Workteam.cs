@@ -9,7 +9,6 @@ namespace Domain
 {
     public class Workteam
     {
-        public string Foreman { get; set; }
         public readonly List<Offday> offdays = new List<Offday>();
         public readonly List<Order> orders = new List<Order>();
 
@@ -22,6 +21,8 @@ namespace Domain
 
             Foreman = foreman ?? throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
         }
+
+        public string Foreman { get; set; }
 
         public DateTime GetNextAvailableDate(Order order)
         {

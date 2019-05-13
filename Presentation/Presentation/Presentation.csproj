@@ -58,6 +58,7 @@
     <Compile Include="AddOffday.xaml.cs">
       <DependentUpon>AddOffday.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DBTestConnector.cs" />
     <Compile Include="DocumentNewWorkorder.xaml.cs">
       <DependentUpon>DocumentNewWorkorder.xaml</DependentUpon>
     </Compile>
