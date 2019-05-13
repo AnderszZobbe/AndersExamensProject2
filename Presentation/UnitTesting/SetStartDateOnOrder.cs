@@ -47,7 +47,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DateOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void StartDateAtEndOfTime()
         {
             string foreman = "SetStartDateOnOrder3";
