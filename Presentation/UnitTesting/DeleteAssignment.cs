@@ -36,8 +36,8 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("DeleteAssignment2");
             Workteam workteamtwo = controller.CreateWorkteam("DeleteAssignment3");
-            Order order = controller.CreateOrder(workteam, 1234, "", "", 1234, 123, "", DateTime.Today, null, null, null, null);
-            Order ordertwo = controller.CreateOrder(workteamtwo, 1234, "", "", 1234, 123, "", DateTime.Today, null, null, null, null);
+            Order order = controller.CreateOrder(workteam, null, "", "", 1234, 123, "", DateTime.Today, null, null, null, null);
+            Order ordertwo = controller.CreateOrder(workteamtwo, null, "", "", 1234, 123, "", DateTime.Today, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 1, Workform.Dag);
             Assert.IsFalse(controller.DeleteAssignment(ordertwo, assignment));
         }
