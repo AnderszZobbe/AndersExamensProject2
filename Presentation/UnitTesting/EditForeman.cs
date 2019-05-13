@@ -23,8 +23,8 @@ namespace UnitTesting
         [TestMethod]
         public void EditNameOfForemanOnAWorkteam()
         {
-            string oldName = "Bans";
-            string newName = "Fans";
+            string oldName = "EditForman1";
+            string newName = "EditForman2";
 
             Workteam workteam = controller.CreateWorkteam(oldName);
             controller.EditForeman(workteam, newName);
@@ -36,7 +36,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionChangeNameToNull()
         {
-            Workteam workteam = controller.CreateWorkteam("Hans");
+            Workteam workteam = controller.CreateWorkteam("EditForman3");
             controller.EditForeman(workteam, null);
         }
 
@@ -44,18 +44,27 @@ namespace UnitTesting
         [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionChangeNameToAlreadyExsistingName()
         {
-            Workteam workteam = controller.CreateWorkteam("Tom");
-            Workteam workteam2 = controller.CreateWorkteam("Jan");
+            Workteam workteam = controller.CreateWorkteam("EditForman4");
+            Workteam workteam2 = controller.CreateWorkteam("EditForman5");
 
-            controller.EditForeman(workteam, "Jan");
+            controller.EditForeman(workteam, "EditForman5");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToEmptyString()
         {
-            Workteam workteam = controller.CreateWorkteam("Jim");
+            Workteam workteam = controller.CreateWorkteam("EditForman6");
             controller.EditForeman(workteam, "");
         }
+
+        [TestMethod]
+        public void CangeToSameName()
+        {
+            Workteam workteam = controller.CreateWorkteam("EditForman7");
+            controller.EditForeman(workteam, "EditForman7");
+        }
+
+
     }
 }
