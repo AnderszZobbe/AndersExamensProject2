@@ -1,0 +1,17 @@
+﻿<Window x:Class="Presentation.EditWorkteamForeman"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="Redigér arbejdshold" Width="256" SizeToContent="Height" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid>
+        <StackPanel Margin="10">
+            <Label Content="Formand:" VerticalAlignment="Top"/>
+            <TextBox x:Name="Foreman" Height="23" VerticalAlignment="Top" Margin="0,0,0,10"/>
+            <Button Content="Gem" Click="SaveAndExit"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

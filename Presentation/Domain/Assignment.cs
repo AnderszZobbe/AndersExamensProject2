@@ -8,7 +8,6 @@ namespace Domain
 {
     public class Assignment
     {
-        private Workform workform;
         private int duration;
 
         public Assignment(Workform workform, int duration)

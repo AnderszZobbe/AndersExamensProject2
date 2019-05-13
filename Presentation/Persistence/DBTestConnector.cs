@@ -139,7 +139,7 @@ namespace Persistence
             return orders.ContainsKey(order);
         }
 
-        public void UpdateOrderStartDate(Order order, DateTime startDate)
+        public void UpdateOrderStartDate(Order order, DateTime? startDate)
         {
             order.StartDate = startDate;
         }

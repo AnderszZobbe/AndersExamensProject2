@@ -43,7 +43,7 @@ namespace Application_layer
             return Connector.CreateOrder(workteam, orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
         }
 
-        public void SetStartDateOnOrder(Order order, DateTime startDate)
+        public void SetStartDateOnOrder(Order order, DateTime? startDate)
         {
             Connector.UpdateOrderStartDate(order, startDate);
         }

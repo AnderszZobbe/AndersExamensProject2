@@ -23,8 +23,8 @@ namespace Presentation
     /// </summary>
     public partial class WorkteamOverview : Window
     {
-        private Workteam workteam;
-        private Controller controller = Controller.Instance;
+        private readonly Workteam workteam;
+        private readonly Controller controller = Controller.Instance;
         private int totalWeeks = 7;
         private int startColumn = 0;
         private int clearRowFrom = 1;
@@ -39,7 +39,7 @@ namespace Presentation
 
             this.workteam = workteam;
 
-            Title = $"{workteam.Foreman} - {Title}";
+            SetTitle();
 
             InitializeDaysColumns(TotalDays);
 
@@ -65,9 +65,10 @@ namespace Presentation
 
         private Grid InitializeGridRow()
         {
-            Grid grid = new Grid();
-
-            grid.Height = 30;
+            Grid grid = new Grid
+            {
+                Height = 30
+            };
 
             foreach (ColumnDefinition columnDefinition in GridTemplate.ColumnDefinitions)
             {
@@ -140,9 +141,11 @@ namespace Presentation
 
             for (int i = 0; i < TotalDays; i++)
             {
-                Button btn = new Button();
-                btn.DataContext = dateRoller;
-                btn.ToolTip = $"{dateRoller.Day}/{dateRoller.Month}/{dateRoller.Year}";
+                Button btn = new Button
+                {
+                    DataContext = dateRoller,
+                    ToolTip = $"{dateRoller.Day}/{dateRoller.Month}/{dateRoller.Year}"
+                };
 
                 grid.Children.Add(btn);
                 Grid.SetColumn(btn, i + startColumn);
@@ -202,8 +205,10 @@ namespace Presentation
 
             for (int i = 0; i < TotalDays; i++)
             {
-                Button btn = new Button();
-                btn.DataContext = new KeyValuePair<Order, DateTime>(order, dateRoller);
+                Button btn = new Button
+                {
+                    DataContext = new KeyValuePair<Order, DateTime>(order, dateRoller)
+                };
                 btn.Click += Reschedule;
                 btn.ToolTip = $"{dateRoller.Day}/{dateRoller.Month}/{dateRoller.Year}";
 
@@ -362,8 +367,10 @@ namespace Presentation
 
         private void DocumentNewWorkorder(object sender, RoutedEventArgs e)
         {
-            DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam);
-            dnw.Owner = this;
+            DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam)
+            {
+                Owner = this
+            };
             dnw.ShowDialog();
 
             UpdateDataGrid();
@@ -443,6 +450,21 @@ namespace Presentation
                 case MessageBoxResult.No:
                     break;
             }
+        }
+
+        private void EditWorkteamForeman(object sender, RoutedEventArgs e)
+        {
+            EditWorkteamForeman ewf = new EditWorkteamForeman(workteam)
+            {
+                Owner = this
+            };
+            ewf.ShowDialog();
+            SetTitle();
+        }
+
+        private void SetTitle()
+        {
+            Title = $"{workteam.Foreman} - {Title}";
         }
     }
 }
