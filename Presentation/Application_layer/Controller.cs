@@ -193,5 +193,15 @@ namespace Application_layer
 
             return DeleteOffday(workteam, offday);
         }
+
+        public void MoveOrderUp(Workteam workteam, Order orderToMove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MoveOrderDown(Workteam workteam, Order orderToMove)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

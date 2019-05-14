@@ -7,22 +7,24 @@
         mc:Ignorable="d"
         Title="Oversigt" Height="450" Width="1200" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
     <Grid>
-        <StackPanel Margin="10,10,10,45" x:Name="OrderStack">
-            <Grid x:Name="GridTemplate">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="90"/>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="90"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </StackPanel>
+        <ScrollViewer Margin="10,10,10,45" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="OrderStack">
+                <Grid x:Name="GridTemplate">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
         <Button Content="Dokumentér ny arbejdsordre" Margin="10,0,0,10" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="DocumentNewWorkorder" BorderBrush="{x:Null}" BorderThickness="0" Width="195" Foreground="White" FontSize="14">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
