@@ -26,14 +26,6 @@ namespace Domain
             set
             {
                 value = value.Date;
-                if (value < DateTime.Today)
-                {
-                    throw new ArgumentOutOfRangeException("Duration is not allowed to be lower than current day");
-                }
-                if (value > DateTime.Today.AddYears(1))
-                {
-                    throw new ArgumentOutOfRangeException("Duration is not allowed to be more than a year from current day");
-                }
                 startDate = value;
             }
         }
@@ -46,10 +38,6 @@ namespace Domain
                 if (value < 0)
                 {
                     throw new ArgumentOutOfRangeException("Duration is not allowed to be lower than 0");
-                }
-                if (value > 365)
-                {
-                    throw new ArgumentOutOfRangeException("Duration is not allowed to be higher than 365");
                 }
                 duration = value;
             }
