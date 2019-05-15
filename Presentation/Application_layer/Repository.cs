@@ -8,6 +8,11 @@ namespace Application_layer
 {
     public class Repository
     {
-        public static IConnector Connector;
+        private IConnector connector;
+
+        public Repository(IConnector connector)
+        {
+            this.connector = connector ?? throw new ArgumentNullException(nameof(connector));
+        }
     }
 }
