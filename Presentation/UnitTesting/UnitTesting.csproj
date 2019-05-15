@@ -64,6 +64,7 @@
     <Compile Include="DeleteWorkteam.cs" />
     <Compile Include="GetNextAvailableDate.cs" />
     <Compile Include="MoveUp.cs" />
+    <Compile Include="MoveDown.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
