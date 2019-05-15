@@ -67,7 +67,13 @@ namespace Application_layer
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
 
-            order.EditOrder(orderNumber, address,remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
+            order.OrderNumber = orderNumber;
+            order.Address = address;
+            order.Remark = remark;
+            order.Area = area;
+            order.Amount = amount;
+            order.Prescription = prescription;
+            order.Deadline = deadline;
         }
 
         public void FillWorkteamWithOrders(Workteam workteam)
