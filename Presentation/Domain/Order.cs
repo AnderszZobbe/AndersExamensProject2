@@ -25,6 +25,17 @@ namespace Domain
             AsphaltWork = asphaltWork;
         }
 
+        public void EditOrder(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
+        {
+            OrderNumber = orderNumber;
+            Address = address;
+            Remark = remark;
+            Area = area;
+            Amount = amount;
+            Prescription = prescription;
+            Deadline = deadline;
+        }
+
         public int? OrderNumber { get; set; }
 
         public string Address { get; set; }

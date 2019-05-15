@@ -58,7 +58,7 @@ namespace Application_layer
             return Connector.CreateAssignment(order, workform, duration);
         }
 
-        public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
+        public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
             List<Order> orders = Connector.GetAllOrders();
 
@@ -67,13 +67,7 @@ namespace Application_layer
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
 
-            order.OrderNumber = orderNumber;
-            order.Address = address;
-            order.Remark = remark;
-            order.Area = area;
-            order.Amount = amount;
-            order.Prescription = prescription;
-            order.Deadline = deadline;
+            order.EditOrder(orderNumber, address,remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
         }
 
         public void FillWorkteamWithOrders(Workteam workteam)
