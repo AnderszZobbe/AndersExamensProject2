@@ -309,7 +309,7 @@ namespace Presentation
                     Content = "+",
                     DataContext = order,
                 };
-                up.Click += MoveOrderUp;
+                up.Click += MoveOrderDown;
                 element.Children.Add(up);
 
                 Button down = new Button
@@ -317,7 +317,7 @@ namespace Presentation
                     Content = "-",
                     DataContext = order,
                 };
-                up.Click += MoveOrderDown;
+                up.Click += MoveOrderUp;
                 element.Children.Add(down);
                 Grid.SetRow(down, 1);
 
@@ -503,7 +503,15 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is Order orderToMove)
                 {
-                    controller.MoveOrderUp(workteam, orderToMove);
+                    try
+                    {
+                        controller.MoveOrderUp(workteam, orderToMove);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+
+                    }
+                    UpdateDataGrid();
                 }
             }
         }
@@ -514,14 +522,22 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is Order orderToMove)
                 {
-                    controller.MoveOrderDown(workteam, orderToMove);
+                    try
+                    {
+                        controller.MoveOrderDown(workteam, orderToMove);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+
+                    }
+                    UpdateDataGrid();
                 }
             }
         }
 
         private void SetTitle()
         {
-            Title = $"{workteam.Foreman} - {Title}";
+            Title = $"{workteam.Foreman}";
         }
     }
 }

@@ -196,14 +196,38 @@ namespace Application_layer
             return DeleteOffday(workteam, offday);
         }
 
-        public void MoveOrderUp(Workteam workteam, Order orderToMove)
+        public void MoveOrderUp(Workteam workteam, Order firstOrder)
         {
-            throw new NotImplementedException();
+            if (!workteam.orders.Contains(firstOrder))
+            {
+                throw new ArgumentException("Order does not exist in workteam");
+            }
+
+            SwapOrders(workteam, firstOrder, workteam.orders[workteam.orders.IndexOf(firstOrder) - 1]);
         }
 
-        public void MoveOrderDown(Workteam workteam, Order orderToMove)
+        public void MoveOrderDown(Workteam workteam, Order firstOrder)
         {
-            throw new NotImplementedException();
+            if (!workteam.orders.Contains(firstOrder))
+            {
+                throw new ArgumentException("Order does not exist in workteam");
+            }
+
+            SwapOrders(workteam, firstOrder, workteam.orders[workteam.orders.IndexOf(firstOrder) + 1]);
+        }
+
+        private void SwapOrders(Workteam workteam, Order firstOrder, Order secondOrder)
+        {
+            // TODO: Move them around
+            List<Order> orders = workteam.orders;
+
+            int indexOfFirstOrder = orders.IndexOf(firstOrder);
+            int indexOfSecondOrder = orders.IndexOf(secondOrder);
+
+            orders[indexOfFirstOrder] = secondOrder;
+            orders[indexOfSecondOrder] = firstOrder;
+
+            Connector.SwitchOrdersPriority(firstOrder, secondOrder);
         }
     }
 }

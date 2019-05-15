@@ -144,7 +144,6 @@ namespace Persistence
 
         public void SwitchOrdersPriority(Order firstOrder, Order secondOrder)
         {
-            throw new NotImplementedException();
         }
 
         public void UpdateOrderStartDate(Order order, DateTime? startDate)
