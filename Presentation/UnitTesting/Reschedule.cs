@@ -26,6 +26,42 @@ namespace UnitTesting
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
            controller.Reschedule(workteam,order,DateTime.Today);
         }
+
+        [TestMethod]
+        public void RescheduleAfterNewAssignment()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule2");
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.Reschedule(workteam, order, DateTime.Today);
+        }
+
+        [TestMethod]
+        public void RescheduleAfterTwoOrders()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule3");
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            Order orderTwo = controller.CreateOrder(workteam, 2, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(orderTwo, 5, Workform.Dag);
+            controller.Reschedule(workteam, order, DateTime.Today);
+            Assert.AreEqual(DateTime.Today.AddDays(6), orderTwo.StartDate);
+        }
+
+        [TestMethod]
+        public void RescheduleAfterTwoOrdersWithNoAssignments()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule4");
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            Order orderTwo = controller.CreateOrder(workteam, 2, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            Order orderThree = controller.CreateOrder(workteam, 3, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.Reschedule(workteam, order, DateTime.Today);
+            Assert.AreEqual(DateTime.Today.AddDays(6), orderTwo.StartDate);
+            Assert.AreEqual(DateTime.Today.AddDays(6), orderThree.StartDate);
+        }
+
         
+
     }
 }
