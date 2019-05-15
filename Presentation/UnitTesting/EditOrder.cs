@@ -26,7 +26,7 @@ namespace UnitTesting
 
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, 6, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
-            controller.EditOrder(order,6,"","",1,1,"",DateTime.Today);
+            controller.EditOrder(order,6,"","",1,1,"",DateTime.Today, null, null, null, null);
             Assert.IsNotNull(order);
         }
 
@@ -40,7 +40,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam(foreman);
             controller.CreateOrder(workteam, 7, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
             Order order = controller.CreateOrder(workteam, 0, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
-            controller.EditOrder(order, 7, "", "", 1, 1, "", DateTime.Today);
+            controller.EditOrder(order, 7, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace UnitTesting
 
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, 80, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
-            controller.EditOrder(order, 9, "1", "1", 2, 2, "1", DateTime.Today.AddDays(1));
+            controller.EditOrder(order, 9, "1", "1", 2, 2, "1", DateTime.Today.AddDays(1), null, null, null, null);
 
             Assert.AreEqual(order.OrderNumber, 9);
             Assert.AreEqual(order.Address, "1");

@@ -142,6 +142,11 @@ namespace Persistence
             return orders.ContainsKey(order);
         }
 
+        public void SwitchOrdersPriority(Order firstOrder, Order secondOrder)
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateOrderStartDate(Order order, DateTime? startDate)
         {
             order.StartDate = startDate;
