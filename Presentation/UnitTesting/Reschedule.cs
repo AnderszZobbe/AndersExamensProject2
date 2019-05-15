@@ -61,7 +61,58 @@ namespace UnitTesting
             Assert.AreEqual(DateTime.Today.AddDays(6), orderThree.StartDate);
         }
 
-        
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void WrongWorkTeam()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule5");
+            Workteam workteamTwo = controller.CreateWorkteam("Reschedule6");
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.Reschedule(workteamTwo, order, DateTime.Today);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void nullWorkTeam()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule7");
+            
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.Reschedule(null, order, DateTime.Today);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void nullOrder()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule8");
+
+            controller.Reschedule(workteam, null, DateTime.Today);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MaxTime()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule9");
+
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.Reschedule(workteam, order, DateTime.MaxValue);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MinTime()
+        {
+            Workteam workteam = controller.CreateWorkteam("Reschedule9");
+
+            Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
+            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.Reschedule(workteam, order, DateTime.MinValue);
+        }
     }
 }
