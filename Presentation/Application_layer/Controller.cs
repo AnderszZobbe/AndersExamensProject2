@@ -14,9 +14,11 @@ namespace Application_layer
     {
         private static Controller instance;
         public static IConnector Connector;
+        private readonly Repository repository;
 
         private Controller()
         {
+            repository = new Repository(Connector);
         }
 
         public static Controller Instance
@@ -58,7 +60,7 @@ namespace Application_layer
             return Connector.CreateAssignment(order, workform, duration);
         }
 
-        public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline)
+        public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
             List<Order> orders = Connector.GetAllOrders();
 
@@ -192,6 +194,16 @@ namespace Application_layer
             Offday offday = workteam.GetOffday(date);
 
             return DeleteOffday(workteam, offday);
+        }
+
+        public void MoveOrderUp(Workteam workteam, Order orderToMove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MoveOrderDown(Workteam workteam, Order orderToMove)
+        {
+            throw new NotImplementedException();
         }
     }
 }

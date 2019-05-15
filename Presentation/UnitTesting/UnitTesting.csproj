@@ -63,6 +63,7 @@
     <Compile Include="EditForeman.cs" />
     <Compile Include="DeleteWorkteam.cs" />
     <Compile Include="GetNextAvailableDate.cs" />
+    <Compile Include="MoveUp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -74,7 +74,8 @@ namespace Presentation
             {
                 ColumnDefinition cd = new ColumnDefinition
                 {
-                    Width = columnDefinition.Width
+                    Width = columnDefinition.Width,
+                    MinWidth = 20,
                 };
                 grid.ColumnDefinitions.Add(cd);
             }
@@ -288,6 +289,39 @@ namespace Presentation
         {
             if (order != null)
             {
+                // Priority buttons
+                Grid element = new Grid();
+
+                for (int i = 0; i < 2; i++)
+                {
+                    RowDefinition rd = new RowDefinition
+                    {
+                        Height = new GridLength(50, GridUnitType.Star)
+                    };
+                    element.RowDefinitions.Add(rd);
+                }
+
+                grid.Children.Add(element);
+                Grid.SetColumn(element, 0);
+
+                Button up = new Button
+                {
+                    Content = "+",
+                    DataContext = order,
+                };
+                up.Click += MoveOrderUp;
+                element.Children.Add(up);
+
+                Button down = new Button
+                {
+                    Content = "-",
+                    DataContext = order,
+                };
+                up.Click += MoveOrderDown;
+                element.Children.Add(down);
+                Grid.SetRow(down, 1);
+
+                // Simple stuff
                 AddSimpleColumnLabel(grid, order.OrderNumber, 1);
                 AddSimpleColumnLabel(grid, order.Address, 2);
                 AddSimpleColumnLabel(grid, order.Remark, 3);
@@ -300,6 +334,7 @@ namespace Presentation
             }
             else
             {
+                AddSimpleColumnLabel(grid, null, 0);
                 AddSimpleColumnLabel(grid, "Order nummer", 1);
                 AddSimpleColumnLabel(grid, "Strækning", 2);
                 AddSimpleColumnLabel(grid, "Bemærkning", 3);
@@ -460,6 +495,28 @@ namespace Presentation
             };
             ewf.ShowDialog();
             SetTitle();
+        }
+
+        private void MoveOrderUp(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is Order orderToMove)
+                {
+                    controller.MoveOrderUp(workteam, orderToMove);
+                }
+            }
+        }
+
+        private void MoveOrderDown(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is Order orderToMove)
+                {
+                    controller.MoveOrderDown(workteam, orderToMove);
+                }
+            }
         }
 
         private void SetTitle()

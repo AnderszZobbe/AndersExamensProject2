@@ -36,6 +36,7 @@ namespace Application_layer
         // Update
         void UpdateWorkteamForeman(Workteam workteam, string foreman);
         void UpdateOrderStartDate(Order order, DateTime? startDate);
+        void SwitchOrdersPriority(Order firstOrder, Order secondOrder);
 
         // Delete
         bool DeleteWorkteam(Workteam workteam);

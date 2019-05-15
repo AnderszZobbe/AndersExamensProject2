@@ -93,7 +93,7 @@ namespace UnitTesting
             string foreman = "Gert";
 
             Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.MinValue, 2);
+            controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.MinValue.AddDays(-1), 2);
         }
 
        
