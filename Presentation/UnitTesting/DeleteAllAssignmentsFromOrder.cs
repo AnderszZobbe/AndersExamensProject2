@@ -47,9 +47,9 @@ namespace UnitTesting
         [TestMethod]
         public void TestDeletionOfNullObject()
         {
-            Workteam workteam = controller.CreateWorkteam("DeleteAllAssignmentsFromOrder2");
+            controller.CreateWorkteam("DeleteAllAssignmentsFromOrder2");
             Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
-            Assert.AreEqual(false, controller.DeleteAllAssignmentsFromOrder(order));
+            Assert.AreEqual(true, controller.DeleteAllAssignmentsFromOrder(order));
         }
 
         [TestMethod]
