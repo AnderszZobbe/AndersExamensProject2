@@ -123,14 +123,18 @@ namespace Domain
             throw new NullReferenceException("There's no workform on this date");
         }
 
-        public bool IsThereAHigherPriorityOrderWithAStartDate(Order order)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool IsThereAHigherPriorityOrderWithAStartDate(Order order)
+        //{
+        //    List<Order> ordersBeforeOrder = orders.GetRange(0, orders.IndexOf(order));
+        //    ordersBeforeOrder.Reverse();
+        //    return orders.Any(o => o.StartDate != null);
+        //}
 
-        public Order GetNextHigherPriorityOrderWithAStartDate(Order order)
-        {
-            throw new NotImplementedException();
-        }
+        //public Order GetNextHigherPriorityOrderWithAStartDate(Order order)
+        //{
+        //    List<Order> ordersBeforeOrder = orders.GetRange(0, orders.IndexOf(order));
+        //    ordersBeforeOrder.Reverse();
+        //    return orders.Find(o => o.StartDate != null);
+        //}
     }
 }
