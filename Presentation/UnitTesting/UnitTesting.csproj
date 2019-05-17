@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CreateAsignment.cs" />
     <Compile Include="CreateOffDay.cs" />
+    <Compile Include="DeleteAllAssignmentsFromOrder.cs" />
     <Compile Include="Reschedule.cs" />
     <Compile Include="DeleteOffDay.cs" />
     <Compile Include="DeleteAssignment.cs" />
