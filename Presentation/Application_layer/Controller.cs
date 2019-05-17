@@ -158,11 +158,11 @@ namespace Application_layer
 
         public bool WorkteamExists(Workteam workteam)
         {
-            return WorkteamExists(workteam);
+            return Connector.WorkteamExists(workteam);
         }
         public bool OffdayExists(Offday offday)
         {
-            return OffdayExists(offday);
+            return Connector.OffdayExists(offday);
         }
         public bool OrderExists(Order order)
         {
