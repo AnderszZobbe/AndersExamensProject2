@@ -18,7 +18,7 @@ namespace Presentation
     {
         public App()
         {
-            Controller.Connector = new DBConnector();
+            Controller.Connector = new Persistence.Repository();
 
             //Debug();
         }

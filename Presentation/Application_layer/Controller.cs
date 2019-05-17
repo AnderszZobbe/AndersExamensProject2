@@ -14,11 +14,9 @@ namespace Application_layer
     {
         private static Controller instance;
         public static IConnector Connector;
-        private readonly Repository repository;
 
         private Controller()
         {
-            repository = new Repository(Connector);
         }
 
         public static Controller Instance

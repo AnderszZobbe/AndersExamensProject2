@@ -23,7 +23,7 @@ CREATE TABLE CS02PExam_Offday (
 
 CREATE TABLE CS02PExam_Order (
 	id				INT				NOT NULL	IDENTITY	PRIMARY KEY,
-	[priority]		INT,
+	[priority]		INT										UNIQUE,
 	workteam		INT				NOT NULL,
 	orderNumber		INT,
 	street			NVARCHAR(128),
@@ -45,7 +45,7 @@ CREATE TABLE CS02PExam_Order (
 
 CREATE TABLE CS02PExam_Assignment (
 	id				INT				NOT NULL	IDENTITY	PRIMARY KEY,
-	[priority]		INT,
+	[priority]		INT										UNIQUE,
 	[order]			INT				NOT NULL,
 	workform		INT				NOT NULL,
 	duration		INT				NOT NULL,

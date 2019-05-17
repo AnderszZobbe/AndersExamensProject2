@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class DBConnector : IConnector
+    public class Repository : IConnector
     {
         private static readonly string connectionString = string.Format("Server={0}; Database={1}; User Id={2}; Password={3};", Settings.Default.dbserver, Settings.Default.dbname, Settings.Default.dbuser, Settings.Default.dbpassword);
 
