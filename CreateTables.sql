@@ -23,19 +23,19 @@ CREATE TABLE CS02PExam_Offday (
 
 CREATE TABLE CS02PExam_Order (
 	id				INT				NOT NULL	IDENTITY	PRIMARY KEY,
-	[priority]		INT				NULL,
+	[priority]		INT,
 	workteam		INT				NOT NULL,
-	orderNumber		INT				NULL,
-	street			NVARCHAR(128)	NULL,
-	remark			NVARCHAR(128)	NULL,
-	area			INT				NULL,
-	amount			INT				NULL,
-	prescription	NVARCHAR(128)	NULL,
-	deadline		DATETIME2		NULL,
-	startDate		DATETIME2		NULL,
-	customer		NVARCHAR(64)	NULL,
-	machine			NVARCHAR(64)	NULL,
-	asphaltWork		NVARCHAR(64)	NULL,
+	orderNumber		INT,
+	street			NVARCHAR(128),
+	remark			NVARCHAR(128),
+	area			INT,
+	amount			INT,
+	prescription	NVARCHAR(128),
+	deadline		DATETIME2,
+	startDate		DATETIME2,
+	customer		NVARCHAR(64),
+	machine			NVARCHAR(64),
+	asphaltWork		NVARCHAR(64),
 
 	CONSTRAINT FK_CS02PExam_Order_Workteam FOREIGN KEY (workteam)
 		REFERENCES CS02PExam_Workteam (id)
@@ -45,7 +45,7 @@ CREATE TABLE CS02PExam_Order (
 
 CREATE TABLE CS02PExam_Assignment (
 	id				INT				NOT NULL	IDENTITY	PRIMARY KEY,
-	[priority]		INT				NULL,
+	[priority]		INT,
 	[order]			INT				NOT NULL,
 	workform		INT				NOT NULL,
 	duration		INT				NOT NULL,
