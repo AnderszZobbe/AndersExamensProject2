@@ -52,6 +52,9 @@ namespace Presentation
                 {
                     AddWorkform(assignment.Workform, assignment.Duration);
                 }
+
+                DeleteOrderButton.Visibility = Visibility.Visible;
+                DeleteOrderButton.DataContext = previousOrder;
             }
         }
 
@@ -266,6 +269,24 @@ namespace Presentation
             grid.Children.Add(btnDel);
             Grid.SetColumn(btnDel, 3);
             Grid.SetRowSpan(btnDel, 2);
+        }
+
+        private void DeleteOrderConfirm(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is Order order)
+                {
+                    MessageBoxResult result = MessageBox.Show("Vil du slette denne arbejdsorder?", "Slet arbejdsorder", MessageBoxButton.YesNo);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            controller.DeleteOrder(workteam, order);
+                            Close();
+                            break;
+                    }
+                }
+            }
         }
     }
 }

@@ -294,6 +294,7 @@ namespace Presentation
                 {
                     DataContext = order
                 };
+                cb.IsChecked = order.StartDate != null;
                 cb.Click += ToggleEnable;
                 grid.Children.Add(cb);
                 Grid.SetColumn(cb, 0);
@@ -370,15 +371,17 @@ namespace Presentation
                     }
                     else
                     {
-                        if (workteam.IsThereAHigherPriorityOrderWithAStartDate(order))
-                        {
-                            controller.SetStartDateOnOrder(order, workteam.GetNextHigherPriorityOrderWithAStartDate(order).StartDate);
-                        }
-                        else
-                        {
-                            controller.SetStartDateOnOrder(order, DateTime.Today);
-                        }
+                        controller.SetStartDateOnOrder(order, DateTime.Today);
+                        //if (workteam.IsThereAHigherPriorityOrderWithAStartDate(order))
+                        //{
+                        //    controller.SetStartDateOnOrder(order, workteam.GetNextAvailableDate(workteam.GetNextHigherPriorityOrderWithAStartDate(order)));
+                        //}
+                        //else
+                        //{
+                        //    controller.SetStartDateOnOrder(order, DateTime.Today);
+                        //}
                     }
+                    UpdateDataGrid();
                 }
             }
         }
