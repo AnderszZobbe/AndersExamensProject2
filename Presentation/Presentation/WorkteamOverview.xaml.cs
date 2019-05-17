@@ -289,6 +289,15 @@ namespace Presentation
         {
             if (order != null)
             {
+                // enable button
+                CheckBox cb = new CheckBox
+                {
+                    DataContext = order
+                };
+                cb.Click += ToggleEnable;
+                grid.Children.Add(cb);
+                Grid.SetColumn(cb, 0);
+
                 // Priority buttons
                 Grid element = new Grid();
 
@@ -302,14 +311,14 @@ namespace Presentation
                 }
 
                 grid.Children.Add(element);
-                Grid.SetColumn(element, 0);
+                Grid.SetColumn(element, 1);
 
                 Button up = new Button
                 {
                     Content = "+",
                     DataContext = order,
                 };
-                up.Click += MoveOrderDown;
+                up.Click += MoveOrderUp;
                 element.Children.Add(up);
 
                 Button down = new Button
@@ -317,33 +326,60 @@ namespace Presentation
                     Content = "-",
                     DataContext = order,
                 };
-                up.Click += MoveOrderUp;
+                down.Click += MoveOrderDown;
                 element.Children.Add(down);
                 Grid.SetRow(down, 1);
 
                 // Simple stuff
-                AddSimpleColumnButton(grid, order.OrderNumber, 1, order);
-                AddSimpleColumnButton(grid, order.Address, 2, order);
-                AddSimpleColumnButton(grid, order.Remark, 3, order);
-                AddSimpleColumnButton(grid, order.Area, 4, order);
-                AddSimpleColumnButton(grid, order.Amount, 5, order);
-                AddSimpleColumnButton(grid, order.Prescription, 6, order);
-                AddSimpleColumnButton(grid, order.Customer, 7, order);
-                AddSimpleColumnButton(grid, order.Machine, 8, order);
-                AddSimpleColumnButton(grid, order.AsphaltWork, 9, order);
+                AddSimpleColumnLabel(grid, null, 0);
+                AddSimpleColumnButton(grid, order.OrderNumber, 2, order);
+                AddSimpleColumnButton(grid, order.Address, 3, order);
+                AddSimpleColumnButton(grid, order.Remark, 4, order);
+                AddSimpleColumnButton(grid, order.Area, 5, order);
+                AddSimpleColumnButton(grid, order.Amount, 6, order);
+                AddSimpleColumnButton(grid, order.Prescription, 7, order);
+                AddSimpleColumnButton(grid, order.Customer, 8, order);
+                AddSimpleColumnButton(grid, order.Machine, 9, order);
+                AddSimpleColumnButton(grid, order.AsphaltWork, 10, order);
             }
             else
             {
                 AddSimpleColumnLabel(grid, null, 0);
-                AddSimpleColumnLabel(grid, "Order nummer", 1);
-                AddSimpleColumnLabel(grid, "Strækning", 2);
-                AddSimpleColumnLabel(grid, "Bemærkning", 3);
-                AddSimpleColumnLabel(grid, "m2", 4);
-                AddSimpleColumnLabel(grid, "tons", 5);
-                AddSimpleColumnLabel(grid, "Recept", 6);
-                AddSimpleColumnLabel(grid, "Kunde", 7);
-                AddSimpleColumnLabel(grid, "Maskine", 8);
-                AddSimpleColumnLabel(grid, "Asfaltværk", 9);
+                AddSimpleColumnLabel(grid, null, 1);
+                AddSimpleColumnLabel(grid, "Order nummer", 2);
+                AddSimpleColumnLabel(grid, "Strækning", 3);
+                AddSimpleColumnLabel(grid, "Bemærkning", 4);
+                AddSimpleColumnLabel(grid, "m2", 5);
+                AddSimpleColumnLabel(grid, "tons", 6);
+                AddSimpleColumnLabel(grid, "Recept", 7);
+                AddSimpleColumnLabel(grid, "Kunde", 8);
+                AddSimpleColumnLabel(grid, "Maskine", 9);
+                AddSimpleColumnLabel(grid, "Asfaltværk", 10);
+            }
+        }
+
+        private void ToggleEnable(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is Order order)
+                {
+                    if (order.StartDate != null)
+                    {
+                        controller.SetStartDateOnOrder(order, null);
+                    }
+                    else
+                    {
+                        if (workteam.IsThereAHigherPriorityOrderWithAStartDate(order))
+                        {
+                            controller.SetStartDateOnOrder(order, workteam.GetNextHigherPriorityOrderWithAStartDate(order).StartDate);
+                        }
+                        else
+                        {
+                            controller.SetStartDateOnOrder(order, DateTime.Today);
+                        }
+                    }
+                }
             }
         }
 
@@ -379,6 +415,7 @@ namespace Presentation
             {
                 BorderThickness = new Thickness(1),
                 BorderBrush = Brushes.LightGray,
+                IsHitTestVisible = false,
             };
             grid.Children.Add(border);
             Grid.SetColumn(border, columnIndex);
@@ -389,6 +426,7 @@ namespace Presentation
                 Padding = new Thickness(0),
                 VerticalContentAlignment = VerticalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
+                IsHitTestVisible = false,
             };
             grid.Children.Add(label);
             Grid.SetColumn(label, columnIndex);

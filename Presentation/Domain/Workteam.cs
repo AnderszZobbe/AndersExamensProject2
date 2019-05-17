@@ -122,5 +122,15 @@ namespace Domain
 
             throw new NullReferenceException("There's no workform on this date");
         }
+
+        public bool IsThereAHigherPriorityOrderWithAStartDate(Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Order GetNextHigherPriorityOrderWithAStartDate(Order order)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
