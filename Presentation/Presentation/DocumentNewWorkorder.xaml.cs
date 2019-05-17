@@ -24,13 +24,35 @@ namespace Presentation
     {
         private readonly Controller controller = Controller.Instance;
         private readonly Workteam workteam;
+        private readonly Order previousOrder;
         public Order Order;
 
-        public DocumentNewWorkorder(Workteam workteam)
+        public DocumentNewWorkorder(Workteam workteam, Order order = null)
         {
             InitializeComponent();
 
             this.workteam = workteam;
+
+            previousOrder = order;
+
+            if (previousOrder != null)
+            {
+                orderNumberInput.Text = previousOrder.OrderNumber.ToString() ?? "";
+                customerInput.Text = previousOrder.Customer;
+                machineInput.Text = previousOrder.Machine;
+                addressInput.Text = previousOrder.Address;
+                remarkInput.Text = previousOrder.Remark;
+                areaInput.Text = previousOrder.Area.ToString() ?? "";
+                amountInput.Text = previousOrder.Amount.ToString() ?? "";
+                prescriptionInput.Text = previousOrder.Prescription;
+                AsphaltWorkInput.Text = previousOrder.AsphaltWork;
+                deadlineInput.SelectedDate = previousOrder.Deadline;
+
+                foreach (Assignment assignment in order.assignments)
+                {
+                    AddWorkform(assignment.Workform, assignment.Duration);
+                }
+            }
         }
 
         private int? ParseToIntOrNull(string s)
@@ -59,7 +81,7 @@ namespace Presentation
             int? area;
             try
             {
-                area = ParseToIntOrNull(orderNumberInput.Text);
+                area = ParseToIntOrNull(areaInput.Text);
             }
             catch
             {
@@ -70,7 +92,7 @@ namespace Presentation
             int? amount;
             try
             {
-                amount = ParseToIntOrNull(orderNumberInput.Text);
+                amount = ParseToIntOrNull(amountInput.Text);
             }
             catch
             {
@@ -94,15 +116,24 @@ namespace Presentation
                 }
             }
 
-            Order orderCreated = controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, null, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
-
+            Order holdOrder;
+            if (previousOrder == null)
+            {
+                holdOrder = controller.CreateOrder(workteam, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, null, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
+            }
+            else
+            {
+                controller.EditOrder(previousOrder, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, null, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
+                holdOrder = previousOrder;
+                controller.DeleteAllAssignmentsFromOrder(holdOrder);
+            }
 
             foreach (Grid assignment in AssignmentsStackPanel.Children)
             {
                 int duration = ParseToIntOrNull(((TextBox)assignment.Children[5]).Text).Value - 1;
                 Workform workform = (Workform)((ComboBox)assignment.Children[4]).SelectedItem;
 
-                controller.CreateAssignment(orderCreated, duration, workform);
+                controller.CreateAssignment(holdOrder, duration, workform);
             }
 
             Close();
@@ -155,10 +186,10 @@ namespace Presentation
 
         private void AddWorkform(object sender, RoutedEventArgs e)
         {
-            AddWorkform();
+            AddWorkform(Workform.Dag, 0);
         }
 
-        private void AddWorkform()
+        private void AddWorkform(Workform workform, int duration)
         {
             Grid grid = new Grid();
             AssignmentsStackPanel.Children.Add(grid);
@@ -188,21 +219,21 @@ namespace Presentation
             grid.Children.Add(btnDown);
             Grid.SetRow(btnDown, 1);
 
-            Label workform = new Label
+            Label workformLabel = new Label
             {
                 Padding = new Thickness(0),
                 Content = "Arbejdsform:"
             };
-            grid.Children.Add(workform);
-            Grid.SetColumn(workform, 1);
+            grid.Children.Add(workformLabel);
+            Grid.SetColumn(workformLabel, 1);
 
-            Label duration = new Label
+            Label durationLabel = new Label
             {
                 Padding = new Thickness(0),
                 Content = "Dage:"
             };
-            grid.Children.Add(duration);
-            Grid.SetColumn(duration, 2);
+            grid.Children.Add(durationLabel);
+            Grid.SetColumn(durationLabel, 2);
 
 
 
@@ -210,7 +241,7 @@ namespace Presentation
             {
             };
             workformComboBox.ItemsSource = Enum.GetValues(typeof(Workform));
-            workformComboBox.SelectedItem = Workform.Dag;
+            workformComboBox.SelectedItem = workform;
             grid.Children.Add(workformComboBox);
             Grid.SetColumn(workformComboBox, 1);
             Grid.SetRow(workformComboBox, 1);
@@ -218,7 +249,7 @@ namespace Presentation
             TextBox durationBox = new TextBox
             {
                 Padding = new Thickness(0),
-                Text = "1",
+                Text = (duration + 1).ToString(),
             };
             grid.Children.Add(durationBox);
             Grid.SetColumn(durationBox, 2);

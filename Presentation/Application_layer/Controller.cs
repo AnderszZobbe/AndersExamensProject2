@@ -76,6 +76,9 @@ namespace Application_layer
             order.Amount = amount;
             order.Prescription = prescription;
             order.Deadline = deadline;
+            order.Customer = customer;
+            order.Machine = machine;
+            order.AsphaltWork = asphaltWork;
         }
 
         public void FillWorkteamWithOrders(Workteam workteam)
@@ -191,7 +194,7 @@ namespace Application_layer
 
         public bool DeleteAllAssignmentsFromOrder(Order order)
         {
-            List<Assignment> assignments = order.assignments;
+            List<Assignment> assignments = order.assignments.ToList();
 
             bool allAssignmentsDeleted = true;
 

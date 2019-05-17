@@ -322,15 +322,15 @@ namespace Presentation
                 Grid.SetRow(down, 1);
 
                 // Simple stuff
-                AddSimpleColumnLabel(grid, order.OrderNumber, 1);
-                AddSimpleColumnLabel(grid, order.Address, 2);
-                AddSimpleColumnLabel(grid, order.Remark, 3);
-                AddSimpleColumnLabel(grid, order.Area, 4);
-                AddSimpleColumnLabel(grid, order.Amount, 5);
-                AddSimpleColumnLabel(grid, order.Prescription, 6);
-                AddSimpleColumnLabel(grid, order.Customer, 7);
-                AddSimpleColumnLabel(grid, order.Machine, 8);
-                AddSimpleColumnLabel(grid, order.AsphaltWork, 9);
+                AddSimpleColumnButton(grid, order.OrderNumber, 1, order);
+                AddSimpleColumnButton(grid, order.Address, 2, order);
+                AddSimpleColumnButton(grid, order.Remark, 3, order);
+                AddSimpleColumnButton(grid, order.Area, 4, order);
+                AddSimpleColumnButton(grid, order.Amount, 5, order);
+                AddSimpleColumnButton(grid, order.Prescription, 6, order);
+                AddSimpleColumnButton(grid, order.Customer, 7, order);
+                AddSimpleColumnButton(grid, order.Machine, 8, order);
+                AddSimpleColumnButton(grid, order.AsphaltWork, 9, order);
             }
             else
             {
@@ -392,6 +392,44 @@ namespace Presentation
             };
             grid.Children.Add(label);
             Grid.SetColumn(label, columnIndex);
+        }
+
+        private void AddSimpleColumnButton(Grid grid, object content, int columnIndex, Order order)
+        {
+            // Border
+            Border border = new Border()
+            {
+                BorderThickness = new Thickness(1),
+                BorderBrush = Brushes.LightGray,
+            };
+            grid.Children.Add(border);
+            Grid.SetColumn(border, columnIndex);
+
+            Button btn = new Button()
+            {
+                Content = content,
+                DataContext = order,
+                Padding = new Thickness(0),
+                VerticalContentAlignment = VerticalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+            };
+            btn.Click += EditOrder;
+            grid.Children.Add(btn);
+            Grid.SetColumn(btn, columnIndex);
+        }
+
+        private void EditOrder(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.DataContext is Order order)
+                {
+                    DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam, order);
+                    dnw.Owner = this;
+                    dnw.ShowDialog();
+                    UpdateDataGrid();
+                }
+            }
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

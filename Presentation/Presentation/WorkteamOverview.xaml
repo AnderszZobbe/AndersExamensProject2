@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Oversigt" Height="450" Width="1200" WindowStartupLocation="CenterScreen" Closing="WindowClosing">
+        Title="Oversigt" Height="450" Width="1200" WindowStartupLocation="CenterScreen" Closing="WindowClosing" WindowState="Maximized">
     <Grid>
         <ScrollViewer Margin="10,10,10,45" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="OrderStack">
