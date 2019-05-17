@@ -85,9 +85,35 @@ namespace Application_layer
 
         // Delete
 
+        /// <summary>
+        /// Deletes the workteam along with all things associated with it
+        /// </summary>
+        /// <param name="workteam"></param>
+        /// <returns></returns>
         bool DeleteWorkteam(Workteam workteam);
+
+        /// <summary>
+        /// Deletes the Offday
+        /// </summary>
+        /// <param name="workteam"></param>
+        /// <param name="offday"></param>
+        /// <returns></returns>
         bool DeleteOffday(Workteam workteam, Offday offday);
+
+        /// <summary>
+        /// Deletes the order along with all assignments associated with it
+        /// </summary>
+        /// <param name="workteam"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
         bool DeleteOrder(Workteam workteam, Order order);
+
+        /// <summary>
+        /// Deletes the Assignment
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="assignment"></param>
+        /// <returns></returns>
         bool DeleteAssignment(Order order, Assignment assignment);
     }
 }
