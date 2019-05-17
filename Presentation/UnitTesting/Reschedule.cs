@@ -94,7 +94,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void MaxTime()
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule9");
@@ -105,14 +105,14 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void MinTime()
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule9");
 
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
             controller.CreateAssignment(order, 5, Workform.Dag);
-            controller.Reschedule(workteam, order, DateTime.MinValue);
+            controller.Reschedule(workteam, order, DateTime.MinValue.AddDays(-1));
         }
     }
 }
