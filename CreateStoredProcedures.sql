@@ -69,12 +69,3 @@ BEGIN
 	WHERE id = SCOPE_IDENTITY()
 END
 GO
-
-/* CS02PExam_GetAllWorkteams */
-CREATE OR ALTER PROCEDURE CS02PExam_GetAllWorkteams
-AS
-BEGIN
-	SELECT id, foreman
-	FROM CS02PExam_Workteam
-END
-GO

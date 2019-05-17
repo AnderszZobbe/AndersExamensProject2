@@ -58,9 +58,28 @@ namespace Application_layer
         // Read
         // > Get All
 
+        /// <summary>
+        /// Gets all workteams
+        /// </summary>
+        /// <returns></returns>
         List<Workteam> GetAllWorkteams();
+
+        /// <summary>
+        /// Gets all offdays
+        /// </summary>
+        /// <returns></returns>
         List<Offday> GetAllOffdays();
+
+        /// <summary>
+        /// Gets all orders
+        /// </summary>
+        /// <returns></returns>
         List<Order> GetAllOrders();
+
+        /// <summary>
+        /// Gets all assignments
+        /// </summary>
+        /// <returns></returns>
         List<Assignment> GetAllAssignments();
 
         // > Exists
