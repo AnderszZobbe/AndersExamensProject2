@@ -22,19 +22,13 @@ namespace UnitTesting
         [TestMethod]
         public void ReturnWorkteam()
         {
-            string foreman = "Sven";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
-
-            Assert.IsNotNull(workteam);
+            Assert.IsNotNull(controller.CreateWorkteam("Test"));
         }
 
         [TestMethod]
         public void EstablishMoreWorkteam()
         {
-            string foreman = "Knud";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
+            Workteam workteam = controller.CreateWorkteam("Test");
 
             Workteam workteamFound = controller.GetAllWorkteams().Find(o => o.Foreman == workteam.Foreman);
 
@@ -45,16 +39,15 @@ namespace UnitTesting
         [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionDuplicateName()
         {
-            controller.CreateWorkteam("Knud");
-            controller.CreateWorkteam("Knud");
+            controller.CreateWorkteam("Test");
+            controller.CreateWorkteam("Test");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionEmptyName()
         {
-            string foreman = "";
-            controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam("");
         }
 
         [TestMethod]

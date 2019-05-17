@@ -76,38 +76,5 @@ namespace Persistence
                 workteams.Add(workteam, id);
             }
         }
-
-        public void CreateOrder(Dictionary<Order, int> orders, Order order)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand cmd = new SqlCommand("CS02PExam_CreateOrder", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                throw new NotImplementedException();
-                /*cmd.Parameters.Add(new SqlParameter("@foreman", workteam.Foreman));
-
-                int id = (int)cmd.ExecuteScalar();
-
-                workteams.Add(workteam, id);*/
-            }
-        }
-
-        public void FillWorkteamWithOrders(Dictionary<Order, int> orders, Workteam workteam)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAllAssignemntsByOrder(Dictionary<Order, int> orders, Workteam workteam)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateAssignment(Dictionary<Assignment, int> assignments, Assignment assignment)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

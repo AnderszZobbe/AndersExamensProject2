@@ -2,6 +2,7 @@
 using Application_layer;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Persistence;
 
 namespace UnitTesting
 {
@@ -9,17 +10,20 @@ namespace UnitTesting
     public class MoveDown
     {
         Controller controller;
+        Workteam workteam;
+
         [TestInitialize]
         public void TestInitialize()
         {
+            Controller.Connector = new DBTestConnector();
             controller = Controller.Instance;
+            workteam = controller.CreateWorkteam("Test");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void MoveUnderMin()
         {
-            Workteam workteam = controller.CreateWorkteam("MoveUnderMin");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.MoveOrderDown(workteam, order);
         }
@@ -27,7 +31,6 @@ namespace UnitTesting
         [TestMethod]
         public void SuccesfulMoveDown()
         {
-            Workteam workteam = controller.CreateWorkteam("SuccesfulMoveDown");
             Order order1 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Order order2 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
 
@@ -40,10 +43,9 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentException))]
         public void MoveOrderNotInWorkteam()
         {
-            Workteam workteam1 = controller.CreateWorkteam("MoveOrderNotInWorkteam1");
-            Workteam workteam2 = controller.CreateWorkteam("MoveOrderNotInWorkteam2");
+            Workteam workteam2 = controller.CreateWorkteam("Test2");
             Order order = controller.CreateOrder(workteam2, null, null, null, null, null, null, null, null, null, null, null);
-            controller.MoveOrderDown(workteam1, order);
+            controller.MoveOrderDown(workteam, order);
         }
     }
 }

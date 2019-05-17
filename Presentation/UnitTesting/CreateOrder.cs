@@ -11,50 +11,55 @@ namespace UnitTesting
     public class CreateOrder
     {
         Controller controller;
+        Workteam workteam;
 
         [TestInitialize]
         public void TestInitialize()
         {
             Controller.Connector = new DBTestConnector();
             controller = Controller.Instance;
+            workteam = controller.CreateWorkteam("CreateOrder");
         }
 
         [TestMethod]
         public void ReturnOrder()
         {
-            string foreman = "Alpha";
-
-            Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOrder(workteam,8,"","",1,1,"",DateTime.Today, null, null, null, null);
-            controller.FillWorkteamWithOrders(workteam);
-            Order order = workteam.orders[0];
-
-            Assert.IsNotNull(order);
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            Assert.IsNotNull(workteam.orders[0]);
         }
 
-        
+        [TestMethod]
+        public void CountCorrect()
+        {
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            Assert.AreEqual(1, workteam.orders.Count);
+        }
+
+        [TestMethod]
+        public void SameOrder()
+        {
+            Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            Assert.AreEqual(order, workteam.orders[0]);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(DuplicateObjectException))]
         public void ExpectExceptionDuplicateOrder()
         {
-            string foreman = "Bravo";
-            Workteam workteam = controller.CreateWorkteam(foreman);
-            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
-            controller.CreateOrder(workteam, 1, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
+            controller.CreateOrder(workteam, 1, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam, 1, null, null, null, null, null, null, null, null, null, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionEmptyNoName()
         {
-            controller.CreateOrder(null, 2, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
+            controller.CreateOrder(null, null, null, null, null, null, null, null, null, null, null, null);
         }
 
         [TestMethod]
         public void CanAddTwoOrdersWithNull()
         {
-            Workteam workteam = controller.CreateWorkteam("Frank");
             controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
         }
