@@ -137,7 +137,7 @@ namespace Application_layer
 
             if (!orders.Exists(o => o == orderToRescheduleFrom))
             {
-                throw new NotFoundException("The order was not found in the workteam provided.");
+                throw new ArgumentException("The order was not found in the workteam provided.");
             }
 
             SetStartDateOnOrder(orderToRescheduleFrom, startDate);

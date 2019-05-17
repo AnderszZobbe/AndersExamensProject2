@@ -74,7 +74,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(NullReferenceException))]
         public void nullWorkTeam()
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule7");
