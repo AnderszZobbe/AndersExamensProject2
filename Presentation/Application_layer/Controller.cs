@@ -62,23 +62,7 @@ namespace Application_layer
 
         public void EditOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
-            List<Order> orders = Connector.GetAllOrders();
-
-            if (orders.Any(o => o.OrderNumber == orderNumber && o != order))
-            {
-                throw new DuplicateObjectException("There already exists an order with that order number");
-            }
-
-            order.OrderNumber = orderNumber;
-            order.Address = address;
-            order.Remark = remark;
-            order.Area = area;
-            order.Amount = amount;
-            order.Prescription = prescription;
-            order.Deadline = deadline;
-            order.Customer = customer;
-            order.Machine = machine;
-            order.AsphaltWork = asphaltWork;
+            Connector.UpdateOrder(order, orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
         }
 
         public void FillWorkteamWithOrders(Workteam workteam)
@@ -174,11 +158,11 @@ namespace Application_layer
 
         public bool WorkteamExists(Workteam workteam)
         {
-            return WorkteamExists(workteam);
+            return Connector.WorkteamExists(workteam);
         }
         public bool OffdayExists(Offday offday)
         {
-            return OffdayExists(offday);
+            return Connector.OffdayExists(offday);
         }
         public bool OrderExists(Order order)
         {

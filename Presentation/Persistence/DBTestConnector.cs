@@ -146,6 +146,26 @@ namespace Persistence
         {
         }
 
+        public void UpdateOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
+        {
+            if (orders.Keys.Any(o => o.OrderNumber == orderNumber && o != order))
+            {
+                throw new DuplicateObjectException("There already exists an order with that order number");
+            }
+
+            order.OrderNumber = orderNumber;
+            order.Address = address;
+            order.Remark = remark;
+            order.Area = area;
+            order.Amount = amount;
+            order.Prescription = prescription;
+            order.Deadline = deadline;
+            order.Customer = customer;
+            order.StartDate = startDate;
+            order.Machine = machine;
+            order.AsphaltWork = asphaltWork;
+        }
+
         public void UpdateOrderStartDate(Order order, DateTime? startDate)
         {
             order.StartDate = startDate;
