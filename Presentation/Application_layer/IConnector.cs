@@ -34,9 +34,10 @@ namespace Application_layer
         void FillOrderWithAssignments(Order order);
 
         // Update
-        void UpdateWorkteamForeman(Workteam workteam, string foreman);
+        void UpdateWorkteam(Workteam workteam, string foreman);
         void UpdateOrderStartDate(Order order, DateTime? startDate);
         void SwitchOrdersPriority(Order firstOrder, Order secondOrder);
+        void UpdateOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);
 
         // Delete
         bool DeleteWorkteam(Workteam workteam);

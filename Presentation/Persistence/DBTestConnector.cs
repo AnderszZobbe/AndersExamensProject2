@@ -151,7 +151,7 @@ namespace Persistence
             order.StartDate = startDate;
         }
 
-        public void UpdateWorkteamForeman(Workteam workteam, string foreman)
+        public void UpdateWorkteam(Workteam workteam, string foreman)
         {
             workteam.Foreman = foreman;
         }

@@ -169,7 +169,7 @@ namespace Application_layer
                 throw new DuplicateObjectException();
             }
 
-            Connector.UpdateWorkteamForeman(workteam, foreman ?? throw new ArgumentNullException());
+            Connector.UpdateWorkteam(workteam, foreman ?? throw new ArgumentNullException());
         }
 
         public bool DeleteWorkteam(Workteam workteam)
