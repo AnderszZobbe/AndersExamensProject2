@@ -22,7 +22,7 @@ namespace Persistence
 
         public bool AssignmentExists(Assignment assignment)
         {
-            return GetAllAssignments().Any(o => o == assignment);
+            return assignments.Keys.Any(o => o == assignment);
         }
 
         public Assignment CreateAssignment(Order order, Workform workform, int duration)
@@ -274,12 +274,12 @@ namespace Persistence
 
         public bool OffdayExists(Offday offday)
         {
-            throw new NotImplementedException();
+            return offdays.Keys.Any(o => o == offday);
         }
 
         public bool OrderExists(Order order)
         {
-            throw new NotImplementedException();
+            return orders.Keys.Any(o => o == order);
         }
 
         public void SwitchOrdersPriority(Order firstOrder, Order secondOrder)
@@ -304,7 +304,7 @@ namespace Persistence
 
         public bool WorkteamExists(Workteam workteam)
         {
-            throw new NotImplementedException();
+            return workteams.Keys.Any(o => o == workteam);
         }
     }
 }
