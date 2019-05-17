@@ -18,9 +18,9 @@ namespace Presentation
     {
         public App()
         {
-            //Controller.Connector = new DBConnector();
+            Controller.Connector = new DBConnector();
 
-            Debug();
+            //Debug();
         }
 
         private void Debug()
