@@ -172,6 +172,23 @@ namespace Application_layer
             Connector.UpdateWorkteam(workteam, foreman ?? throw new ArgumentNullException());
         }
 
+        public bool WorkteamExists(Workteam workteam)
+        {
+            return WorkteamExists(workteam);
+        }
+        public bool OffdayExists(Offday offday)
+        {
+            return OffdayExists(offday);
+        }
+        public bool OrderExists(Order order)
+        {
+            return Connector.OrderExists(order);
+        }
+        public bool AssignmentExists(Assignment assignment)
+        {
+            return Connector.AssignmentExists(assignment);
+        }
+
         public bool DeleteWorkteam(Workteam workteam)
         {
             return Connector.DeleteWorkteam(workteam);
