@@ -189,6 +189,25 @@ namespace Application_layer
             return Connector.DeleteAssignment(order, assignment);
         }
 
+        public bool DeleteAllAssignmentsFromOrder(Order order)
+        {
+            List<Assignment> assignments = order.assignments;
+
+            bool allAssignmentsDeleted = true;
+
+            foreach (Assignment assignment in assignments)
+            {
+                allAssignmentsDeleted = DeleteAssignment(order, assignment);
+
+                if (!allAssignmentsDeleted)
+                {
+                    return allAssignmentsDeleted;
+                }
+            }
+
+            return allAssignmentsDeleted;
+        }
+
         public bool DeleteOffdayByDate(Workteam workteam, DateTime date)
         {
             Offday offday = workteam.GetOffday(date);
