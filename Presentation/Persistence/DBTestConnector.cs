@@ -117,14 +117,29 @@ namespace Persistence
             return assignments.Keys.ToList();
         }
 
+        public List<Assignment> GetAllAssignmentsFromOrder(Order order)
+        {
+            return order.assignments;
+        }
+
         public List<Offday> GetAllOffdays()
         {
             return offdays.Keys.ToList();
         }
 
+        public List<Offday> GetAllOffdaysFromWorkteam(Workteam workteam)
+        {
+            return workteam.offdays;
+        }
+
         public List<Order> GetAllOrders()
         {
             return orders.Keys.ToList();
+        }
+
+        public List<Order> GetAllOrdersFromWorkteam(Workteam workteam)
+        {
+            return workteam.orders;
         }
 
         public List<Workteam> GetAllWorkteams()
@@ -142,8 +157,15 @@ namespace Persistence
             return orders.ContainsKey(order);
         }
 
-        public void SwitchOrdersPriority(Order firstOrder, Order secondOrder)
+        public void SwapOrdersPriority(Workteam workteam, Order firstOrder, Order secondOrder)
         {
+            List<Order> orders = workteam.orders;
+
+            int indexOfFirstOrder = orders.IndexOf(firstOrder);
+            int indexOfSecondOrder = orders.IndexOf(secondOrder);
+
+            orders[indexOfFirstOrder] = secondOrder;
+            orders[indexOfSecondOrder] = firstOrder;
         }
 
         public void UpdateOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)

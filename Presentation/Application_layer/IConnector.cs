@@ -82,6 +82,14 @@ namespace Application_layer
         /// <returns></returns>
         List<Assignment> GetAllAssignments();
 
+        // > Get Specific
+
+        List<Order> GetAllOrdersFromWorkteam(Workteam workteam);
+
+        List<Offday> GetAllOffdaysFromWorkteam(Workteam workteam);
+
+        List<Assignment> GetAllAssignmentsFromOrder(Order order);
+
         // > Exists
 
         bool WorkteamExists(Workteam workteam);
@@ -99,7 +107,7 @@ namespace Application_layer
 
         void UpdateWorkteam(Workteam workteam, string foreman);
         void UpdateOrderStartDate(Order order, DateTime? startDate);
-        void SwitchOrdersPriority(Order firstOrder, Order secondOrder);
+        void SwapOrdersPriority(Workteam workteam, Order firstOrder, Order secondOrder);
         void UpdateOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);
 
         // Delete

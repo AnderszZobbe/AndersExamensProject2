@@ -1,6 +1,6 @@
 /* CS02PExam_CreateWorkteam */
 CREATE OR ALTER PROCEDURE CS02PExam_CreateWorkteam
-	@foreman		NVARCHAR(64)
+	@foreman		NVARCHAR(64)	= NULL
 AS
 BEGIN
 	INSERT INTO CS02PExam_Workteam (foreman)
@@ -12,10 +12,10 @@ GO
 
 /* CS02PExam_CreateOffday */
 CREATE OR ALTER PROCEDURE CS02PExam_CreateOffday
-	@workteam		INT,
-	@reason			INT,
-	@startDate		DATETIME2,
-	@duration		INT
+	@workteam		INT				= NULL,
+	@reason			INT				= NULL,
+	@startDate		DATETIME2		= NULL,
+	@duration		INT				= NULL
 AS
 BEGIN
 	INSERT INTO CS02PExam_Offday (workteam, reason, startDate, duration)
@@ -27,24 +27,24 @@ GO
 
 /* CS02PExam_CreateOrder */
 CREATE OR ALTER PROCEDURE CS02PExam_CreateOrder
-	@workteam		INT,
-	@orderNumber	INT,
-	@street			NVARCHAR(128),
-	@remark			NVARCHAR(128),
-	@area			INT,
-	@amount			INT,
-	@prescription	NVARCHAR(128),
-	@deadline		DATETIME2,
-	@startDate		DATETIME2,
-	@customer		NVARCHAR(64),
-	@machine		NVARCHAR(64),
-	@asphaltWork	NVARCHAR(64)
+	@workteam		INT				= NULL,
+	@orderNumber	INT				= NULL,
+	@address		NVARCHAR(128)	= NULL,
+	@remark			NVARCHAR(128)	= NULL,
+	@area			INT				= NULL,
+	@amount			INT				= NULL,
+	@prescription	NVARCHAR(128)	= NULL,
+	@deadline		DATETIME2		= NULL,
+	@startDate		DATETIME2		= NULL,
+	@customer		NVARCHAR(64)	= NULL,
+	@machine		NVARCHAR(64)	= NULL,
+	@asphaltWork	NVARCHAR(64)	= NULL
 AS
 BEGIN
-	INSERT INTO CS02PExam_Order (workteam, orderNumber, street, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork)
+	INSERT INTO CS02PExam_Order (workteam, orderNumber, [address], remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork)
 	OUTPUT Inserted.id
 	VALUES
-	(@workteam, @orderNumber, @street, @remark, @area, @amount, @prescription, @deadline, @startDate, @customer, @machine, @asphaltWork)
+	(@workteam, @orderNumber, @address, @remark, @area, @amount, @prescription, @deadline, @startDate, @customer, @machine, @asphaltWork)
 	
 	UPDATE CS02PExam_Order
 	SET [priority] = SCOPE_IDENTITY()
@@ -54,9 +54,9 @@ GO
 
 /* CS02PExam_CreateAssignment */
 CREATE OR ALTER PROCEDURE CS02PExam_CreateAssignment
-	@order			INT,
-	@workform		INT,
-	@duration		INT
+	@order			INT				= NULL,
+	@workform		INT				= NULL,
+	@duration		INT				= NULL
 AS
 BEGIN
 	INSERT INTO CS02PExam_Assignment ([order], workform, duration)

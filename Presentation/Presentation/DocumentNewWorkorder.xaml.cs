@@ -126,7 +126,7 @@ namespace Presentation
             }
             else
             {
-                controller.EditOrder(previousOrder, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, null, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
+                controller.EditOrder(previousOrder, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, previousOrder.StartDate, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
                 holdOrder = previousOrder;
                 controller.DeleteAllAssignmentsFromOrder(holdOrder);
             }

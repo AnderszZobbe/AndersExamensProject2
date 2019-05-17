@@ -239,16 +239,7 @@ namespace Application_layer
 
         private void SwapOrders(Workteam workteam, Order firstOrder, Order secondOrder)
         {
-            // TODO: Move them around
-            List<Order> orders = workteam.orders;
-
-            int indexOfFirstOrder = orders.IndexOf(firstOrder);
-            int indexOfSecondOrder = orders.IndexOf(secondOrder);
-
-            orders[indexOfFirstOrder] = secondOrder;
-            orders[indexOfSecondOrder] = firstOrder;
-
-            Connector.SwitchOrdersPriority(firstOrder, secondOrder);
+            Connector.SwapOrdersPriority(workteam, firstOrder, secondOrder);
         }
     }
 }
