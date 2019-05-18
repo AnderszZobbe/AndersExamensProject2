@@ -10,7 +10,7 @@ namespace Persistence
 {
     public class Manager : IConnector
     {
-        private readonly DataProvider dataProvider = new DataProvider();
+        private readonly IDataProvider dataProvider = new DataProvider();
 
         private readonly Dictionary<Order, int> orders = new Dictionary<Order, int>();
         private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();

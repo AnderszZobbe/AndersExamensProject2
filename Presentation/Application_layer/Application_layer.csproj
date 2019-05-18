@@ -42,10 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="Exceptions\DateOutOfRangeException.cs" />
-    <Compile Include="Exceptions\DuplicateObjectException.cs" />
     <Compile Include="IConnector.cs" />
-    <Compile Include="Exceptions\OverlapException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
