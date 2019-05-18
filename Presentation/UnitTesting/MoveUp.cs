@@ -15,7 +15,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
             workteam = controller.CreateWorkteam("Test");
         }
@@ -31,12 +31,12 @@ namespace UnitTesting
         [TestMethod]
         public void SuccesfulMoveUp()
         {
-            Order order1 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Order order2 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
 
             controller.MoveOrderUp(workteam, order2);
 
-            Assert.AreEqual(order2, workteam.orders[0]);
+            Assert.AreEqual(order2, controller.GetAllOrdersFromWorkteam(workteam)[0]);
         }
 
         [TestMethod]

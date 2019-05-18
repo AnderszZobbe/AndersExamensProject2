@@ -48,7 +48,7 @@ namespace Presentation
                 AsphaltWorkInput.Text = previousOrder.AsphaltWork;
                 deadlineInput.SelectedDate = previousOrder.Deadline;
 
-                foreach (Assignment assignment in order.assignments)
+                foreach (Assignment assignment in controller.GetAllAssignmentsFromOrder(order))
                 {
                     AddWorkform(assignment.Workform, assignment.Duration);
                 }

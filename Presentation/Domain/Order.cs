@@ -8,7 +8,7 @@ namespace Domain
 {
     public class Order
     {
-        public readonly List<Assignment> assignments = new List<Assignment>();
+        public List<Assignment> assignments { get; } = new List<Assignment>();
 
         public Order(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {

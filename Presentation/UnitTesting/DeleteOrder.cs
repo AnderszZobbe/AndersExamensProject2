@@ -16,7 +16,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 
@@ -27,8 +27,7 @@ namespace UnitTesting
             Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today, null, null, null, null);
             
             Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
-            controller.FillWorkteamWithOrders(workteam);
-            Assert.AreEqual(false, workteam.orders.Exists(o => o == order));
+            Assert.AreEqual(false, controller.GetAllOrdersFromWorkteam(workteam).Exists(o => o == order));
         }
 
         [TestMethod]

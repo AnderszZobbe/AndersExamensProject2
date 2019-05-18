@@ -16,7 +16,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 
@@ -27,7 +27,7 @@ namespace UnitTesting
             Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today, null, null, null, null);
             Assignment assignment = controller.CreateAssignment(order, 1, Workform.Dag);
             Assert.IsTrue(controller.DeleteAssignment(order, assignment));
-            Assert.AreEqual(0, order.assignments.Count);
+            Assert.AreEqual(0, controller.GetAllAssignmentsFromOrder(order).Count);
           
         }
 

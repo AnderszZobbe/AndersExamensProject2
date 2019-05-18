@@ -16,7 +16,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 
@@ -29,7 +29,7 @@ namespace UnitTesting
             controller.CreateAssignment(order, 2, Workform.Dag);
 
             Assert.AreEqual(true, controller.DeleteAllAssignmentsFromOrder(order));
-            Assert.AreEqual(0, order.assignments.Count);
+            Assert.AreEqual(0, controller.GetAllAssignmentsFromOrder(order).Count);
 
         }
 
@@ -40,7 +40,7 @@ namespace UnitTesting
             Order order = controller.CreateOrder(workteam, 1234, "", "", 1234, 123, "", DateTime.Today, null, null, null, null);
 
             Assert.AreEqual(true, controller.DeleteAllAssignmentsFromOrder(order));
-            Assert.AreEqual(0, order.assignments.Count);
+            Assert.AreEqual(0, controller.GetAllAssignmentsFromOrder(order).Count);
 
         }
 

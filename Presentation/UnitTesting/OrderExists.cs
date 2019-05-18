@@ -14,7 +14,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 

@@ -16,7 +16,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 
@@ -26,7 +26,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("DeleteOffDay1");
             Offday offday = controller.CreateOffday(workteam,OffdayReason.Fredagsfri,DateTime.Today,1);
             Assert.IsTrue(controller.DeleteOffday(workteam, offday));
-            Assert.AreEqual(0, workteam.offdays.Count);
+            Assert.AreEqual(0, controller.GetAllOffdaysFromWorkteam(workteam).Count);
           
         }
 

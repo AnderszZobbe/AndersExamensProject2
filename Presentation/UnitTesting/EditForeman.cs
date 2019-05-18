@@ -4,7 +4,6 @@ using Domain;
 using Application_layer;
 using Application_layer.Exceptions;
 using Persistence;
-using Persistence.DataClasses;
 
 namespace UnitTesting
 {
@@ -16,7 +15,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 
@@ -45,7 +44,7 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToAlreadyExsistingName()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman4");
-            Workteam workteam2 = controller.CreateWorkteam("EditForman5");
+            controller.CreateWorkteam("EditForman5");
 
             controller.EditForeman(workteam, "EditForman5");
         }

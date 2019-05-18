@@ -137,6 +137,7 @@ namespace Presentation
 
         private void InitializeOffdaysGrid(Grid grid, DateTime dateRoller)
         {
+            controller.GetAllOffdaysFromWorkteam(workteam);
             // Data
             FillGridData(grid);
 
@@ -200,6 +201,8 @@ namespace Presentation
 
         private void InitializeOrderGrid(Grid grid, Order order, DateTime dateRoller)
         {
+            controller.GetAllAssignmentsFromOrder(order);
+
             // Includes data
             FillGridData(grid, order);
 
@@ -398,7 +401,7 @@ namespace Presentation
 
             InitializeOffdaysGrid(grid, startDate);
 
-            foreach (Order order in workteam.orders)
+            foreach (Order order in controller.GetAllOrdersFromWorkteam(workteam))
             {
                 grid = InitializeGridRow();
 
@@ -465,8 +468,10 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is Order order)
                 {
-                    DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam, order);
-                    dnw.Owner = this;
+                    DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam, order)
+                    {
+                        Owner = this
+                    };
                     dnw.ShowDialog();
                     UpdateDataGrid();
                 }

@@ -16,7 +16,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
             workteam = controller.CreateWorkteam("CreateOrder");
         }
@@ -25,21 +25,21 @@ namespace UnitTesting
         public void ReturnOrder()
         {
             controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assert.IsNotNull(workteam.orders[0]);
+            Assert.IsNotNull(controller.GetAllOrdersFromWorkteam(workteam)[0]);
         }
 
         [TestMethod]
         public void CountCorrect()
         {
             controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assert.AreEqual(1, workteam.orders.Count);
+            Assert.AreEqual(1, controller.GetAllOrdersFromWorkteam(workteam).Count);
         }
 
         [TestMethod]
         public void SameOrder()
         {
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assert.AreEqual(order, workteam.orders[0]);
+            Assert.AreEqual(order, controller.GetAllOrdersFromWorkteam(workteam)[0]);
         }
 
         [TestMethod]

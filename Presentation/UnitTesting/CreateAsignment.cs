@@ -15,7 +15,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new TestManagerAndProvider();
             controller = Controller.Instance;
         }
 
@@ -37,7 +37,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("NegativDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, -1, Workform.Dag);
+            controller.CreateAssignment(order, -1, Workform.Dag);
 
         }
 
@@ -47,7 +47,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("TooLongDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, int.MaxValue, Workform.Dag);
+            controller.CreateAssignment(order, int.MaxValue, Workform.Dag);
 
         }
         [TestMethod]
@@ -91,7 +91,7 @@ namespace UnitTesting
         public void OrderDoesNotExist()
         {
             Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
+            controller.CreateAssignment(order, 0, Workform.Dag);
 
         }
     }
