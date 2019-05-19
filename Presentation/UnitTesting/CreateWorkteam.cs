@@ -12,6 +12,7 @@ namespace UnitTesting
     {
         Controller controller;
         Workteam workteam;
+        string foreman;
 
         [TestInitialize]
         public void TestInitialize()
@@ -19,18 +20,25 @@ namespace UnitTesting
             Controller.Connector = new Manager();
             Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            foreman = "CreateWorkteam";
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            controller.DeleteWorkteam(workteam);
         }
 
         [TestMethod]
         public void CanCreate()
         {
-            controller.CreateWorkteam("CreateWorkteam");
+            workteam = controller.CreateWorkteam(foreman);
         }
 
         [TestMethod]
         public void ReturnWorkteam()
         {
-            workteam = controller.CreateWorkteam("CreateWorkteam");
+            workteam = controller.CreateWorkteam(foreman);
             Assert.IsNotNull(workteam);
         }
 
@@ -38,21 +46,21 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentException))]
         public void DuplicateWorkteamForeman()
         {
-            controller.CreateWorkteam("CreateWorkteam");
-            controller.CreateWorkteam("CreateWorkteam");
+            controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
         }
 
         [TestMethod]
         public void WorkteamCount()
         {
-            controller.CreateWorkteam("CreateWorkteam");
+            controller.CreateWorkteam(foreman);
             Assert.AreEqual(1, controller.GetAllWorkteams().Count);
         }
 
         [TestMethod]
         public void CanFindWorkteam()
         {
-            Workteam workteam = controller.CreateWorkteam("CreateWorkteam");
+            Workteam workteam = controller.CreateWorkteam(foreman);
             Assert.IsTrue(controller.GetAllWorkteams().Contains(workteam));
         }
 
@@ -60,7 +68,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionEmptyName()
         {
-            controller.CreateWorkteam("");
+            controller.CreateWorkteam(string.Empty);
         }
 
         [TestMethod]

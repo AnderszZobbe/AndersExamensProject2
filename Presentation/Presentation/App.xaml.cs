@@ -19,7 +19,7 @@ namespace Presentation
         public App()
         {
             Controller.Connector = new Manager();
-            Manager.DataProvider = new TestDataProvider();
+            Manager.DataProvider = new DataProvider();
         }
     }
 }
