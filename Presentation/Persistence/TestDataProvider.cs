@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Persistence.DataClasses;
 
 namespace Persistence
 {
@@ -22,7 +23,7 @@ namespace Persistence
 
         public KeyValuePair<Assignment, int> CreateAssignment(int order, Workform workform, int duration)
         {
-            Assignment assignment = new Assignment(workform, duration);
+            Assignment assignment = new DataAssignment(workform, duration);
 
             assignments.Add(assignment, ++assignmentID);
 
@@ -31,7 +32,7 @@ namespace Persistence
 
         public KeyValuePair<Offday, int> CreateOffday(int workteam, OffdayReason reason, DateTime startDate, int duration)
         {
-            Offday offday = new Offday(reason, startDate, duration);
+            Offday offday = new DataOffday(reason, startDate, duration);
 
             offdays.Add(offday, ++offdayID);
 
@@ -40,7 +41,7 @@ namespace Persistence
 
         public KeyValuePair<Order, int> CreateOrder(int workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
-            Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
+            Order order = new DataOrder(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
 
             var pair = new KeyValuePair<Order, int>(order, ++orderID);
 
@@ -51,9 +52,9 @@ namespace Persistence
 
         public KeyValuePair<Workteam, int> CreateWorkteam(string foreman)
         {
-            Workteam workteam = new Workteam(foreman);
+            Workteam workteam = new DataWorkteam(this, ++workteamID, foreman);
 
-            workteams.Add(workteam, ++workteamID);
+            workteams.Add(workteam, workteamID);
 
             return workteams.First(o => o.Key == workteam);
         }

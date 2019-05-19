@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
+using Persistence.DataClasses;
 using Persistence.Properties;
 
 namespace Persistence
@@ -77,7 +78,7 @@ namespace Persistence
                 "CS02PExam_CreateWorkteam",
                 new SqlParameter("@foreman", foreman));
 
-            return new KeyValuePair<Workteam, int>(new Workteam(foreman), id);
+            return new KeyValuePair<Workteam, int>(new DataWorkteam(this, id, foreman), id);
         }
 
         public void DeleteWorkteam(int id)
@@ -108,7 +109,7 @@ namespace Persistence
                         int id = (int)reader["id"];
                         string foreman = (string)reader["foreman"];
 
-                        workteams.Add(new Workteam(foreman), id);
+                        workteams.Add(new DataWorkteam(this, id, foreman), id);
                     }
                 }
             }
@@ -133,7 +134,7 @@ namespace Persistence
                 new SqlParameter("@startDate", startDate),
                 new SqlParameter("@duration", duration));
 
-            return new KeyValuePair<Offday, int>(new Offday(reason, startDate, duration), id);
+            return new KeyValuePair<Offday, int>(new DataOffday(reason, startDate, duration), id);
         }
 
         public Dictionary<Offday, int> GetAllOffdaysByWorkteam(int workteam)
@@ -160,7 +161,7 @@ namespace Persistence
                         DateTime startDate = (DateTime)reader["startDate"];
                         int duration = (int)reader["duration"];
 
-                        Offday offday = new Offday(reason, startDate, duration);
+                        Offday offday = new DataOffday(reason, startDate, duration);
 
                         offdays.Add(offday, id);
                     }
@@ -185,7 +186,7 @@ namespace Persistence
                 new SqlParameter("@workform", workform),
                 new SqlParameter("@duration", duration));
 
-            return new KeyValuePair<Assignment, int>(new Assignment(workform, duration), id);
+            return new KeyValuePair<Assignment, int>(new DataAssignment(workform, duration), id);
         }
 
         public Dictionary<Assignment, int> GetAllAssignmentsByOrder(int order)
@@ -211,7 +212,7 @@ namespace Persistence
                         Workform workform = (Workform)reader["workform"];
                         int duration = (int)reader["duration"];
 
-                        Assignment assignment = new Assignment(workform, duration);
+                        Assignment assignment = new DataAssignment(workform, duration);
 
                         assignments.Add(assignment, id);
                     }
@@ -245,7 +246,7 @@ namespace Persistence
                 new SqlParameter("@machine", machine),
                 new SqlParameter("@asphaltWork", asphaltWork));
 
-            Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
+            Order order = new DataOrder(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
 
             return new KeyValuePair<Order, int>(order, id);
         }
@@ -282,7 +283,7 @@ namespace Persistence
                         string machine = (string)reader["machine"];
                         string asphaltWork = (string)reader["asphaltWork"];
 
-                        Order order = new Order(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
+                        Order order = new DataOrder(orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
 
                         orders.Add(order, id);
                     }

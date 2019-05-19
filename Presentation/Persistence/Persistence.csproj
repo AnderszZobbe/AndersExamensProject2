@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataClasses\DataAssignment.cs" />
+    <Compile Include="DataClasses\DataOffday.cs" />
+    <Compile Include="DataClasses\DataOrder.cs" />
+    <Compile Include="DataClasses\DataWorkteam.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="IDataProvider.cs" />
     <Compile Include="TestDataProvider.cs" />

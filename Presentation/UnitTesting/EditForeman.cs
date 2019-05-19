@@ -4,6 +4,7 @@ using Domain;
 using Application_layer;
 using Domain.Exceptions;
 using Persistence;
+using Persistence.DataClasses;
 
 namespace UnitTesting
 {
@@ -11,6 +12,7 @@ namespace UnitTesting
     public class EditForeman
     {
         Controller controller;
+        Workteam workteam1, workteam2;
 
         [TestInitialize]
         public void TestInitialize()
@@ -18,51 +20,50 @@ namespace UnitTesting
             Controller.Connector = new Manager();
             Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            workteam1 = controller.CreateWorkteam("EditForeman1");
+            workteam2 = controller.CreateWorkteam("EditForeman2");
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            DataWorkteam.workteams.Clear();
         }
 
         [TestMethod]
         public void EditNameOfForemanOnAWorkteam()
         {
-            string oldName = "EditForman1";
-            string newName = "EditForman2";
+            string newForeman = "newForeman";
+            workteam1.Foreman = newForeman;
 
-            Workteam workteam = controller.CreateWorkteam(oldName);
-            controller.UpdateWorkteam(workteam, newName);
-
-            Assert.AreEqual(newName, workteam.Foreman);
+            Assert.AreEqual(newForeman, workteam1.Foreman);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionChangeNameToNull()
         {
-            Workteam workteam = controller.CreateWorkteam("EditForman3");
-            controller.UpdateWorkteam(workteam, null);
+            workteam1.Foreman = null;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToAlreadyExsistingName()
         {
-            Workteam workteam = controller.CreateWorkteam("EditForman4");
-            controller.CreateWorkteam("EditForman5");
-
-            controller.UpdateWorkteam(workteam, "EditForman5");
+            workteam1.Foreman = workteam2.Foreman;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToEmptyString()
         {
-            Workteam workteam = controller.CreateWorkteam("EditForman6");
-            controller.UpdateWorkteam(workteam, "");
+            workteam1.Foreman = "";
         }
 
         [TestMethod]
         public void CangeToSameName()
         {
-            Workteam workteam = controller.CreateWorkteam("EditForman7");
-            controller.UpdateWorkteam(workteam, "EditForman7");
+            workteam1.Foreman = workteam1.Foreman;
         }
     }
 }
