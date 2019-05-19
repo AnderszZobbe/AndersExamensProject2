@@ -10,7 +10,7 @@ using Persistence.Properties;
 
 namespace Persistence
 {
-    internal class DataProvider : IDataProvider
+    public class DataProvider : IDataProvider
     {
         private static readonly string connectionString = string.Format("Server={0}; Database={1}; User Id={2}; Password={3};", Settings.Default.dbserver, Settings.Default.dbname, Settings.Default.dbuser, Settings.Default.dbpassword);
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -15,7 +15,8 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new TestManagerAndProvider();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
         }
 
@@ -36,7 +37,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate2");
             Workteam workteamTwo = controller.CreateWorkteam("GetNextAvailableDate3");
             Order order = controller.CreateOrder(workteamTwo, null, null, null, null, null, null, null, null, null, null, null);
-            controller.SetStartDateOnOrder(order, DateTime.Today);
+            controller.UpdateOrderStartDate(order, DateTime.Today);
             workteam.GetNextAvailableDate(order);
         }
         [TestMethod]
@@ -44,8 +45,8 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate4");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, 1, Workform.Dag);
-            controller.SetStartDateOnOrder(order, DateTime.Today);
+            controller.CreateAssignment(order, Workform.Dag, 1);
+            controller.UpdateOrderStartDate(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(2), workteam.GetNextAvailableDate(order));
         }
         [TestMethod]
@@ -53,9 +54,9 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate5");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, 1, Workform.Dag);
-            controller.CreateAssignment(order, 0, Workform.Nat);
-            controller.SetStartDateOnOrder(order, DateTime.Today);
+            controller.CreateAssignment(order, Workform.Dag, 1);
+            controller.CreateAssignment(order, Workform.Nat, 0);
+            controller.UpdateOrderStartDate(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(3), workteam.GetNextAvailableDate(order));
         }
         [TestMethod]
@@ -63,7 +64,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate6");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.SetStartDateOnOrder(order, DateTime.Today);
+            controller.UpdateOrderStartDate(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(0), workteam.GetNextAvailableDate(order));
         }
         
@@ -73,7 +74,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate7");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, 0, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 0);
             order.StartDate = DateTime.MaxValue;
             workteam.GetNextAvailableDate(order);
         }

@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_layer
+namespace Domain
 {
     public interface IConnector
     {
-        // Create
-
         /// <summary>
         /// Constructs a workteam
         /// </summary>
@@ -55,34 +53,11 @@ namespace Application_layer
         /// <returns></returns>
         Assignment CreateAssignment(Order order, Workform workform, int duration);
 
-        // Read
-        // > Get All
-
         /// <summary>
         /// Gets all workteams
         /// </summary>
         /// <returns></returns>
         List<Workteam> GetAllWorkteams();
-
-        /// <summary>
-        /// Gets all offdays
-        /// </summary>
-        /// <returns></returns>
-        List<Offday> GetAllOffdays();
-
-        /// <summary>
-        /// Gets all orders
-        /// </summary>
-        /// <returns></returns>
-        List<Order> GetAllOrders();
-
-        /// <summary>
-        /// Gets all assignments
-        /// </summary>
-        /// <returns></returns>
-        List<Assignment> GetAllAssignments();
-
-        // > Get Specific
 
         List<Order> GetAllOrdersFromWorkteam(Workteam workteam);
 
@@ -90,27 +65,22 @@ namespace Application_layer
 
         List<Assignment> GetAllAssignmentsFromOrder(Order order);
 
-        // > Exists
+        void Reschedule(Workteam workteam, Order orderToRescheduleFrom, DateTime startDate);
+
+        bool DeleteAllAssignmentsFromOrder(Order order);
 
         bool WorkteamExists(Workteam workteam);
         bool OffdayExists(Offday offday);
         bool OrderExists(Order order);
         bool AssignmentExists(Assignment assignment);
-
-        // > Fill
-
-        void FillWorkteamWithOrders(Workteam workteam);
-        void FillWorkteamWithOffdays(Workteam workteam);
-        void FillOrderWithAssignments(Order order);
-
-        // Update
+        bool DeleteOffdayByDate(Workteam workteam, DateTime date);
+        void MoveOrderUp(Workteam workteam, Order firstOrder);
+        void MoveOrderDown(Workteam workteam, Order firstOrder);
 
         void UpdateWorkteam(Workteam workteam, string foreman);
         void UpdateOrderStartDate(Order order, DateTime? startDate);
         void SwapOrdersPriority(Workteam workteam, Order firstOrder, Order secondOrder);
         void UpdateOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);
-
-        // Delete
 
         /// <summary>
         /// Deletes the workteam along with all things associated with it

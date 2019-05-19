@@ -29,12 +29,19 @@ namespace Presentation
         private int startColumn = 0;
         private int clearRowFrom = 1;
         private DateTime startDate = DateTime.Now.AddDays(-14);
+        private DayOfWeek startDay = DayOfWeek.Monday;
         //private DateTime startDate = DateTime.Now.AddDays(0);
         public Brush[] OffdayBrushes = { Brushes.Red, Brushes.DarkRed, Brushes.DarkRed };
         public Brush[] WorkformBrushes = { Brushes.Orange, Brushes.DarkCyan, Brushes.LightGray };
 
         public WorkteamOverview(Workteam workteam)
         {
+            // Setback if day is in the middle of a week
+            while (startDate.DayOfWeek != startDay)
+            {
+                startDate = startDate.AddDays(-1);
+            }
+
             InitializeComponent();
 
             this.workteam = workteam;
@@ -370,11 +377,11 @@ namespace Presentation
                 {
                     if (order.StartDate != null)
                     {
-                        controller.SetStartDateOnOrder(order, null);
+                        controller.UpdateOrderStartDate(order, null);
                     }
                     else
                     {
-                        controller.SetStartDateOnOrder(order, DateTime.Today);
+                        controller.UpdateOrderStartDate(order, DateTime.Today);
                         //if (workteam.IsThereAHigherPriorityOrderWithAStartDate(order))
                         //{
                         //    controller.SetStartDateOnOrder(order, workteam.GetNextAvailableDate(workteam.GetNextHigherPriorityOrderWithAStartDate(order)));

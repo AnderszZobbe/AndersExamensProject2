@@ -3,9 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Application_layer;
 using Domain;
 using System.Collections.Generic;
-using Application_layer.Exceptions;
-using Persistence;
 using Domain.Exceptions;
+using Persistence;
 
 namespace UnitTesting
 {
@@ -13,37 +12,60 @@ namespace UnitTesting
     public class DeleteWorkteam
     {
         Controller controller;
+        Workteam workteam1, workteam2, workteam3;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new TestManagerAndProvider();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            workteam1 = controller.CreateWorkteam("DeleteWorkteam1");
+            workteam2 = controller.CreateWorkteam("DeleteWorkteam2");
+            workteam3 = controller.CreateWorkteam("DeleteWorkteam3");
+            controller.CreateOrder(workteam1, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam1, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam1, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam2, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam2, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam2, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam3, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam3, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateOrder(workteam3, null, null, null, null, null, null, null, null, null, null, null);
         }
 
         [TestMethod]
-        public void TestSuccesfulDeletion()
+        public void CanDelete()
         {
-            Workteam workteam = controller.CreateWorkteam("Derp");
-            Assert.AreEqual(true, controller.DeleteWorkteam(workteam));
-            Assert.AreEqual(false, controller.DeleteWorkteam(workteam));
+            controller.DeleteWorkteam(workteam1);
+            controller.DeleteWorkteam(workteam2);
+            controller.DeleteWorkteam(workteam3);
         }
 
         [TestMethod]
-        public void DeleteNonExistentWorkteam()
+        public void ReturnTrue()
         {
-            string foreman = "Gert";
-
-            Workteam workteam = new Workteam(foreman);
-
-            Assert.AreEqual(false, controller.DeleteWorkteam(workteam));
+            Assert.IsTrue(controller.DeleteWorkteam(workteam1));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void ExpectedExceptionDeleteNull()
+        public void ReturnFalse()
         {
-            controller.DeleteWorkteam(null);
+            Assert.IsFalse(controller.DeleteWorkteam(null));
+        }
+
+        [TestMethod]
+        public void SuccesfulDeletionCount()
+        {
+            controller.DeleteWorkteam(workteam1);
+            Assert.AreEqual(2, controller.GetAllWorkteams().Count);
+        }
+
+        [TestMethod]
+        public void SuccesfulDeletion()
+        {
+            controller.DeleteWorkteam(workteam1);
+            Assert.AreEqual(workteam2, controller.GetAllWorkteams()[0]);
         }
     }
 }

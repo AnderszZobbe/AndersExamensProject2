@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    interface IOrderConnector
+    public interface IOrderConnector
     {
         KeyValuePair<Order, int> CreateOrder(int workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);
 

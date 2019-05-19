@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    interface IOffdayConnector
+    public interface IOffdayConnector
     {
         KeyValuePair<Offday, int> CreateOffday(int workteam, OffdayReason reason, DateTime startDate, int duration);
 

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domain;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Persistence;
 
 namespace UnitTesting
@@ -15,7 +15,8 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new TestManagerAndProvider();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
         }
 
@@ -26,7 +27,7 @@ namespace UnitTesting
             string newName = "EditForman2";
 
             Workteam workteam = controller.CreateWorkteam(oldName);
-            controller.EditForeman(workteam, newName);
+            controller.UpdateWorkteam(workteam, newName);
 
             Assert.AreEqual(newName, workteam.Foreman);
         }
@@ -36,17 +37,17 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToNull()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman3");
-            controller.EditForeman(workteam, null);
+            controller.UpdateWorkteam(workteam, null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DuplicateObjectException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToAlreadyExsistingName()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman4");
             controller.CreateWorkteam("EditForman5");
 
-            controller.EditForeman(workteam, "EditForman5");
+            controller.UpdateWorkteam(workteam, "EditForman5");
         }
 
         [TestMethod]
@@ -54,16 +55,14 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToEmptyString()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman6");
-            controller.EditForeman(workteam, "");
+            controller.UpdateWorkteam(workteam, "");
         }
 
         [TestMethod]
         public void CangeToSameName()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman7");
-            controller.EditForeman(workteam, "EditForman7");
+            controller.UpdateWorkteam(workteam, "EditForman7");
         }
-
-
     }
 }

@@ -9,20 +9,29 @@ namespace Domain
 {
     public class Workteam
     {
+        private string foreman;
+
         public List<Offday> Offdays { get; } = new List<Offday>();
         public List<Order> Orders { get; } = new List<Order>();
 
         public Workteam(string foreman)
         {
-            if (foreman == "")
-            {
-                throw new ArgumentException("String argument for CreateWorkteam cannot be empty");
-            }
-
             Foreman = foreman ?? throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
         }
 
-        public string Foreman { get; set; }
+        public string Foreman
+        {
+            get => foreman;
+            set
+            {
+                if (value == string.Empty)
+                {
+                    throw new ArgumentException("Foreman cannot be empty");
+                }
+
+                foreman = value ?? throw new ArgumentNullException("Foreman cannot be null");
+            }
+        }
 
         public DateTime GetNextAvailableDate(Order order)
         {

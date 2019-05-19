@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    interface IAssignmentConnector
+    public interface IAssignmentConnector
     {
         KeyValuePair<Assignment, int> CreateAssignment(int order, Workform workform, int duration);
 

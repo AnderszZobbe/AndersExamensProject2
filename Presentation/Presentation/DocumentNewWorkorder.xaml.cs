@@ -126,7 +126,7 @@ namespace Presentation
             }
             else
             {
-                controller.EditOrder(previousOrder, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, previousOrder.StartDate, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
+                controller.UpdateOrder(previousOrder, orderNumber, addressInput.Text, remarkInput.Text, area, amount, prescriptionInput.Text, deadlineInput.SelectedDate, previousOrder.StartDate, customerInput.Text, machineInput.Text, AsphaltWorkInput.Text);
                 holdOrder = previousOrder;
                 controller.DeleteAllAssignmentsFromOrder(holdOrder);
             }
@@ -136,7 +136,7 @@ namespace Presentation
                 int duration = ParseToIntOrNull(((TextBox)assignment.Children[5]).Text).Value - 1;
                 Workform workform = (Workform)((ComboBox)assignment.Children[4]).SelectedItem;
 
-                controller.CreateAssignment(holdOrder, duration, workform);
+                controller.CreateAssignment(holdOrder, workform, duration);
             }
 
             Close();

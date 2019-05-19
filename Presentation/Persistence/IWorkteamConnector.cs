@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    internal interface IWorkteamConnector
+    public interface IWorkteamConnector
     {
         KeyValuePair<Workteam, int> CreateWorkteam(string foreman);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    interface IDataProvider : IWorkteamConnector, IOffdayConnector, IOrderConnector, IAssignmentConnector
+    public interface IDataProvider : IWorkteamConnector, IOffdayConnector, IOrderConnector, IAssignmentConnector
     {
     }
 }
