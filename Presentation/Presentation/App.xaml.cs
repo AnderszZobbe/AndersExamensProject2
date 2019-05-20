@@ -20,6 +20,8 @@ namespace Presentation
         {
             Controller.Connector = new Manager();
             Manager.DataProvider = new DataProvider();
+
+            Controller.Instance.PrintToPDF();
         }
     }
 }

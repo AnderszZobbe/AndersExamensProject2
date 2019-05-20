@@ -1,7 +1,10 @@
 ﻿using Domain;
 using Domain.Exceptions;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -404,6 +407,20 @@ namespace Persistence
             }
 
             SwapOrdersPriority(workteam, firstOrder, GetAllOrdersFromWorkteam(workteam)[GetAllOrdersFromWorkteam(workteam).IndexOf(firstOrder) + 1]);
+        }
+
+        public void PrintToPDF()
+        {
+            PdfDocument document = new PdfDocument();
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+            gfx.DrawString("You just lost the game!", font, XBrushes.Black,
+                new XRect(0, 0, page.Width, page.Height),
+                XStringFormats.Center);
+            string filename = "HelloWorld.pdf";
+            document.Save(filename);
+            //Process.Start(filename);
         }
     }
 }

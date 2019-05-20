@@ -10,10 +10,10 @@ namespace Persistence
 {
     public class TestDataProvider : IDataProvider
     {
-        private List<KeyValuePair<Order, int>> orders = new List<KeyValuePair<Order, int>>();
-        private Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
-        private Dictionary<Assignment, int> assignments = new Dictionary<Assignment, int>();
-        private Dictionary<Offday, int> offdays = new Dictionary<Offday, int>();
+        private readonly List<KeyValuePair<Order, int>> orders = new List<KeyValuePair<Order, int>>();
+        private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
+        private readonly Dictionary<Assignment, int> assignments = new Dictionary<Assignment, int>();
+        private readonly Dictionary<Offday, int> offdays = new Dictionary<Offday, int>();
 
         private int orderID;
         private int workteamID;
