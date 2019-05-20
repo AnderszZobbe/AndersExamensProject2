@@ -9,9 +9,9 @@ namespace Persistence
 {
     public interface IWorkteamConnector
     {
-        KeyValuePair<Workteam, int> CreateWorkteam(string foreman);
+        KeyValuePair<Workteam, int> CreateWorkteam(IConnector connector, string foreman);
 
-        Dictionary<Workteam, int> GetAllWorkteams();
+        Dictionary<Workteam, int> GetAllWorkteams(IConnector connector);
 
         void UpdateWorkteamForeman(int workteam, string foreman);
 

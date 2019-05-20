@@ -9,16 +9,13 @@ namespace Persistence.DataClasses
 {
     public class DataWorkteam : Workteam
     {
-        public static readonly List<DataWorkteam> workteams = new List<DataWorkteam>();
-
         private int id;
-        private IDataProvider dataProvider;
+        private IConnector connector;
 
-        public DataWorkteam(IDataProvider dataProvider, int id, string foreman) : base(foreman)
+        public DataWorkteam(IConnector connector, int id, string foreman) : base(foreman)
         {
-            this.dataProvider = dataProvider;
+            this.connector = connector;
             this.id = id;
-            workteams.Add(this);
         }
 
         public override string Foreman
@@ -26,19 +23,14 @@ namespace Persistence.DataClasses
             get => base.Foreman;
             set
             {
-                if (workteams.Any(o => o != this && o.Foreman == value))
-                {
-                    throw new ArgumentException("Another workteam already exists with that foreman");
-                }
-
                 string oldForeman = Foreman;
                 base.Foreman = value;
 
-                if (dataProvider != null)
+                if (connector != null)
                 {
                     try
                     {
-                        dataProvider.UpdateWorkteamForeman(id, Foreman);
+                        connector.UpdateWorkteam(this, Foreman);
                     }
                     catch (Exception)
                     {

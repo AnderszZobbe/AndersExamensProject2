@@ -72,13 +72,13 @@ namespace Persistence
         //    }
         //}
 
-        public KeyValuePair<Workteam, int> CreateWorkteam(string foreman)
+        public KeyValuePair<Workteam, int> CreateWorkteam(IConnector connector, string foreman)
         {
             int id = ExecuteScalarInt(
                 "CS02PExam_CreateWorkteam",
                 new SqlParameter("@foreman", foreman));
 
-            return new KeyValuePair<Workteam, int>(new DataWorkteam(this, id, foreman), id);
+            return new KeyValuePair<Workteam, int>(new DataWorkteam(connector, id, foreman), id);
         }
 
         public void DeleteWorkteam(int id)
@@ -88,7 +88,7 @@ namespace Persistence
                 new SqlParameter("@id", id));
         }
 
-        public Dictionary<Workteam, int> GetAllWorkteams()
+        public Dictionary<Workteam, int> GetAllWorkteams(IConnector connector)
         {
             Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
 
@@ -109,7 +109,7 @@ namespace Persistence
                         int id = (int)reader["id"];
                         string foreman = (string)reader["foreman"];
 
-                        workteams.Add(new DataWorkteam(this, id, foreman), id);
+                        workteams.Add(new DataWorkteam(connector, id, foreman), id);
                     }
                 }
             }

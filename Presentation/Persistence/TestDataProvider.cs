@@ -50,9 +50,9 @@ namespace Persistence
             return pair;
         }
 
-        public KeyValuePair<Workteam, int> CreateWorkteam(string foreman)
+        public KeyValuePair<Workteam, int> CreateWorkteam(IConnector connector, string foreman)
         {
-            Workteam workteam = new DataWorkteam(this, ++workteamID, foreman);
+            Workteam workteam = new DataWorkteam(connector, ++workteamID, foreman);
 
             workteams.Add(workteam, workteamID);
 
@@ -144,7 +144,7 @@ namespace Persistence
             return keyValuePairs;
         }
 
-        public Dictionary<Workteam, int> GetAllWorkteams()
+        public Dictionary<Workteam, int> GetAllWorkteams(IConnector connector)
         {
             return workteams;
         }

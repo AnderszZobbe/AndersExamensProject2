@@ -24,12 +24,6 @@ namespace UnitTesting
             workteam2 = controller.CreateWorkteam("EditForeman2");
         }
 
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            DataWorkteam.workteams.Clear();
-        }
-
         [TestMethod]
         public void EditNameOfForemanOnAWorkteam()
         {

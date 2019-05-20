@@ -128,7 +128,7 @@ namespace Persistence
                 throw new ArgumentException("There already exsits a workteam with a foreman by that name");
             }
 
-            KeyValuePair<Workteam, int> WorkteamData = DataProvider.CreateWorkteam(foreman);
+            KeyValuePair<Workteam, int> WorkteamData = DataProvider.CreateWorkteam(this, foreman);
 
             workteams.Add(WorkteamData.Key, WorkteamData.Value);
 
@@ -256,7 +256,7 @@ namespace Persistence
 
         public List<Workteam> GetAllWorkteams()
         {
-            Dictionary<Workteam, int> workteamsData = DataProvider.GetAllWorkteams();
+            Dictionary<Workteam, int> workteamsData = DataProvider.GetAllWorkteams(this);
 
             foreach (KeyValuePair<Workteam, int> workteamData in workteamsData)
             {
@@ -338,8 +338,6 @@ namespace Persistence
                 throw new ArgumentException("There already exists a workteam with that foreman");
             }
 
-            workteam.Foreman = foreman;
-
             DataProvider.UpdateWorkteamForeman(workteams[workteam], foreman);
         }
 
@@ -404,6 +402,11 @@ namespace Persistence
             }
 
             SwapOrdersPriority(workteam, firstOrder, GetAllOrdersFromWorkteam(workteam)[GetAllOrdersFromWorkteam(workteam).IndexOf(firstOrder) + 1]);
+        }
+
+        public void PrintToPDF()
+        {
+            throw new NotImplementedException();
         }
     }
 }
