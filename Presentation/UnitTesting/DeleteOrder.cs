@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Application_layer;
 using Domain;
 using System.Collections.Generic;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Persistence;
 
 namespace UnitTesting
@@ -12,38 +12,75 @@ namespace UnitTesting
     public class DeleteOrder
     {
         Controller controller;
+        Workteam workteam;
+        Order order1, order2, order3;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            workteam = controller.CreateWorkteam("DeleteAssignment");
+            order1 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            order2 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            order3 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            controller.CreateAssignment(order1, Workform.Dag, 0);
+            controller.CreateAssignment(order1, Workform.Dag, 0);
+            controller.CreateAssignment(order1, Workform.Dag, 0);
+            controller.CreateAssignment(order2, Workform.Dag, 0);
+            controller.CreateAssignment(order2, Workform.Dag, 0);
+            controller.CreateAssignment(order2, Workform.Dag, 0);
+            controller.CreateAssignment(order3, Workform.Dag, 0);
+            controller.CreateAssignment(order3, Workform.Dag, 0);
+            controller.CreateAssignment(order3, Workform.Dag, 0);
         }
 
-        [TestMethod]
-        public void TestSuccesfulDeletion()
+        [TestCleanup]
+        public void TestCleanup()
         {
-            Workteam workteam = controller.CreateWorkteam("Adam");
-            Order order = controller.CreateOrder(workteam,1234,"","",1234,123,"",DateTime.Today, null, null, null, null);
-            
-            Assert.AreEqual(true, controller.DeleteOrder(workteam, order));
-            controller.FillWorkteamWithOrders(workteam);
-            Assert.AreEqual(false, workteam.orders.Exists(o => o == order));
+            controller.DeleteWorkteam(workteam);
         }
 
         [TestMethod]
-        public void TestDeletionOfNullObject()
+        public void CanDelete()
         {
-            Workteam workteam = controller.CreateWorkteam("TestDeletionOfNullObject");
-            Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
-            Assert.AreEqual(false, controller.DeleteOrder(workteam, order));
+            controller.DeleteOrder(workteam, order1);
+            controller.DeleteOrder(workteam, order2);
+            controller.DeleteOrder(workteam, order3);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        public void ReturnTrue()
+        {
+            Assert.IsTrue(controller.DeleteOrder(workteam, order1));
+        }
+
+        [TestMethod]
+        public void ReturnFalse()
+        {
+            Assert.IsFalse(controller.DeleteOrder(workteam, null));
+        }
+
+        [TestMethod]
+        public void SuccesfulDeletionCount()
+        {
+            controller.DeleteOrder(workteam, order1);
+            Assert.AreEqual(2, controller.GetAllOrdersFromWorkteam(workteam).Count);
+        }
+
+        [TestMethod]
+        public void SuccesfulDeletion()
+        {
+            controller.DeleteOrder(workteam, order1);
+            Assert.AreEqual(order2, controller.GetAllOrdersFromWorkteam(workteam)[0]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectedExceptionDeleteNull()
         {
-            Assert.AreEqual(false, controller.DeleteOrder(null, null));
+            controller.DeleteOrder(null, order1);
         }
     }
-    }
+}

@@ -66,6 +66,10 @@
     <Compile Include="GetNextAvailableDate.cs" />
     <Compile Include="MoveUp.cs" />
     <Compile Include="MoveDown.cs" />
+    <Compile Include="OffDayExists.cs" />
+    <Compile Include="OrderExists.cs" />
+    <Compile Include="AssignmentExists.cs" />
+    <Compile Include="WorkteamExists.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

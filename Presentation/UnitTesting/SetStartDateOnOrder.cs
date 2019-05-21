@@ -1,6 +1,6 @@
 ﻿using System;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -15,7 +15,8 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
         }
 
@@ -26,10 +27,10 @@ namespace UnitTesting
 
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, 6, "", "", 1, 1, "", null, null, null, null, null);
-            controller.SetStartDateOnOrder(order, DateTime.Today);
+            controller.UpdateOrderStartDate(order, DateTime.Today);
 
             Assert.AreEqual(DateTime.Today,order.StartDate);
-            controller.SetStartDateOnOrder(order, DateTime.Today.AddDays(1));
+            controller.UpdateOrderStartDate(order, DateTime.Today.AddDays(1));
 
             Assert.AreEqual(DateTime.Today.AddDays(1), order.StartDate);
         }
@@ -40,7 +41,7 @@ namespace UnitTesting
             string foreman = "SetStartDateOnOrder2";
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, 6, "", "", 1, 1, "", DateTime.Today, null, null, null, null);
-            controller.SetStartDateOnOrder(order, DateTime.Today.AddDays(1));
+            controller.UpdateOrderStartDate(order, DateTime.Today.AddDays(1));
         }
 
         [TestMethod]
@@ -51,7 +52,7 @@ namespace UnitTesting
 
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, 6, "", "", 1, 1, "",null, null, null, null, null);
-            controller.SetStartDateOnOrder(order, DateTime.MaxValue.AddDays(1));
+            controller.UpdateOrderStartDate(order, DateTime.MaxValue.AddDays(1));
         }
         [TestMethod]
         public void CanNullStartDate()
@@ -60,7 +61,7 @@ namespace UnitTesting
 
             Workteam workteam = controller.CreateWorkteam(foreman);
             Order order = controller.CreateOrder(workteam, 6, "", "", 1, 1, "", null,DateTime.Today, null, null, null);
-            controller.SetStartDateOnOrder(order, null);
+            controller.UpdateOrderStartDate(order, null);
             Assert.AreEqual(null, order.StartDate);
         }
     }

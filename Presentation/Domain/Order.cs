@@ -8,7 +8,10 @@ namespace Domain
 {
     public class Order
     {
-        public readonly List<Assignment> assignments = new List<Assignment>();
+        private DateTime? deadline;
+        private DateTime? startDate;
+
+        public List<Assignment> assignments { get; } = new List<Assignment>();
 
         public Order(int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork)
         {
@@ -37,9 +40,37 @@ namespace Domain
 
         public string Prescription { get; set; }
 
-        public DateTime? Deadline { get; set; }
+        public DateTime? Deadline
+        {
+            get => deadline;
+            set
+            {
+                if (value.HasValue)
+                {
+                    deadline = value.Value.Date;
+                }
+                else
+                {
+                    deadline = null;
+                }
+            }
+        }
 
-        public DateTime? StartDate { get; set; }
+        public DateTime? StartDate
+        {
+            get => startDate;
+            set
+            {
+                if (value.HasValue)
+                {
+                    startDate = value.Value.Date;
+                }
+                else
+                {
+                    startDate = null;
+                }
+            }
+        }
 
         public string Customer { get; set; }
 

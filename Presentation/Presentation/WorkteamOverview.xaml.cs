@@ -29,12 +29,19 @@ namespace Presentation
         private int startColumn = 0;
         private int clearRowFrom = 1;
         private DateTime startDate = DateTime.Now.AddDays(-14);
+        private DayOfWeek startDay = DayOfWeek.Monday;
         //private DateTime startDate = DateTime.Now.AddDays(0);
         public Brush[] OffdayBrushes = { Brushes.Red, Brushes.DarkRed, Brushes.DarkRed };
         public Brush[] WorkformBrushes = { Brushes.Orange, Brushes.DarkCyan, Brushes.LightGray };
 
         public WorkteamOverview(Workteam workteam)
         {
+            // Setback if day is in the middle of a week
+            while (startDate.DayOfWeek != startDay)
+            {
+                startDate = startDate.AddDays(-1);
+            }
+
             InitializeComponent();
 
             this.workteam = workteam;
@@ -137,6 +144,7 @@ namespace Presentation
 
         private void InitializeOffdaysGrid(Grid grid, DateTime dateRoller)
         {
+            controller.GetAllOffdaysFromWorkteam(workteam);
             // Data
             FillGridData(grid);
 
@@ -200,6 +208,8 @@ namespace Presentation
 
         private void InitializeOrderGrid(Grid grid, Order order, DateTime dateRoller)
         {
+            controller.GetAllAssignmentsFromOrder(order);
+
             // Includes data
             FillGridData(grid, order);
 
@@ -367,11 +377,11 @@ namespace Presentation
                 {
                     if (order.StartDate != null)
                     {
-                        controller.SetStartDateOnOrder(order, null);
+                        controller.UpdateOrderStartDate(order, null);
                     }
                     else
                     {
-                        controller.SetStartDateOnOrder(order, DateTime.Today);
+                        controller.UpdateOrderStartDate(order, DateTime.Today);
                         //if (workteam.IsThereAHigherPriorityOrderWithAStartDate(order))
                         //{
                         //    controller.SetStartDateOnOrder(order, workteam.GetNextAvailableDate(workteam.GetNextHigherPriorityOrderWithAStartDate(order)));
@@ -398,7 +408,7 @@ namespace Presentation
 
             InitializeOffdaysGrid(grid, startDate);
 
-            foreach (Order order in workteam.orders)
+            foreach (Order order in controller.GetAllOrdersFromWorkteam(workteam))
             {
                 grid = InitializeGridRow();
 
@@ -465,8 +475,10 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is Order order)
                 {
-                    DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam, order);
-                    dnw.Owner = this;
+                    DocumentNewWorkorder dnw = new DocumentNewWorkorder(workteam, order)
+                    {
+                        Owner = this
+                    };
                     dnw.ShowDialog();
                     UpdateDataGrid();
                 }

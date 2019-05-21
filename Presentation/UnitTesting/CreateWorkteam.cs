@@ -1,6 +1,6 @@
 ﻿using System;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -11,43 +11,64 @@ namespace UnitTesting
     public class CreateWorkteam
     {
         Controller controller;
+        Workteam workteam;
+        string foreman;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            foreman = "CreateWorkteam";
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            controller.DeleteWorkteam(workteam);
+        }
+
+        [TestMethod]
+        public void CanCreate()
+        {
+            workteam = controller.CreateWorkteam(foreman);
         }
 
         [TestMethod]
         public void ReturnWorkteam()
         {
-            Assert.IsNotNull(controller.CreateWorkteam("Test"));
+            workteam = controller.CreateWorkteam(foreman);
+            Assert.IsNotNull(workteam);
         }
 
         [TestMethod]
-        public void EstablishMoreWorkteam()
+        [ExpectedException(typeof(ArgumentException))]
+        public void DuplicateWorkteamForeman()
         {
-            Workteam workteam = controller.CreateWorkteam("Test");
-
-            Workteam workteamFound = controller.GetAllWorkteams().Find(o => o.Foreman == workteam.Foreman);
-
-            Assert.AreEqual(workteam, workteamFound);
+            controller.CreateWorkteam(foreman);
+            controller.CreateWorkteam(foreman);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DuplicateObjectException))]
-        public void ExpectExceptionDuplicateName()
+        public void WorkteamCount()
         {
-            controller.CreateWorkteam("Test");
-            controller.CreateWorkteam("Test");
+            controller.CreateWorkteam(foreman);
+            Assert.AreEqual(1, controller.GetAllWorkteams().Count);
+        }
+
+        [TestMethod]
+        public void CanFindWorkteam()
+        {
+            Workteam workteam = controller.CreateWorkteam(foreman);
+            Assert.IsTrue(controller.GetAllWorkteams().Contains(workteam));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionEmptyName()
         {
-            controller.CreateWorkteam("");
+            controller.CreateWorkteam(string.Empty);
         }
 
         [TestMethod]

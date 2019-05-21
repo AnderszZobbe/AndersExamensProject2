@@ -1,6 +1,6 @@
 ﻿using System;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -16,30 +16,37 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
             workteam = controller.CreateWorkteam("CreateOrder");
         }
 
         [TestMethod]
-        public void ReturnOrder()
+        public void CreateOrderSuccess()
         {
-            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assert.IsNotNull(workteam.orders[0]);
+            Assert.IsNotNull(controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null));
         }
 
         [TestMethod]
         public void CountCorrect()
         {
             controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assert.AreEqual(1, workteam.orders.Count);
+            Assert.AreEqual(1, controller.GetAllOrdersFromWorkteam(workteam).Count);
+        }
+
+        [TestMethod]
+        public void ReturnOrder()
+        {
+            controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
+            Assert.IsNotNull(controller.GetAllOrdersFromWorkteam(workteam)[0]);
         }
 
         [TestMethod]
         public void SameOrder()
         {
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assert.AreEqual(order, workteam.orders[0]);
+            Assert.AreEqual(order, controller.GetAllOrdersFromWorkteam(workteam)[0]);
         }
 
         [TestMethod]

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Application_layer;
 using Domain;
 using System.Collections.Generic;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Persistence;
 
 namespace UnitTesting
@@ -12,39 +12,66 @@ namespace UnitTesting
     public class DeleteOffDay
     {
         Controller controller;
+        Workteam workteam;
+        Offday offday1, offday2, offday3;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            workteam = controller.CreateWorkteam("DeleteOffDay");
+            offday1 = controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, 0);
+            offday2 = controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today.AddDays(1), 0);
+            offday3 = controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today.AddDays(2), 0);
         }
 
-        [TestMethod]
-        public void TestSuccesfulDeletion()
+        [TestCleanup]
+        public void TestCleanup()
         {
-            Workteam workteam = controller.CreateWorkteam("DeleteOffDay1");
-            Offday offday = controller.CreateOffday(workteam,OffdayReason.Fredagsfri,DateTime.Today,1);
-            Assert.IsTrue(controller.DeleteOffday(workteam, offday));
-            Assert.AreEqual(0, workteam.offdays.Count);
-          
+            controller.DeleteWorkteam(workteam);
         }
 
         [TestMethod]
-        public void TestDeletionOfOffdayOnWrongWorkteam()
+        public void CanDelete()
         {
-            Workteam workteam = controller.CreateWorkteam("DeleteDeleteOffDay2");
-            Workteam workteamtwo = controller.CreateWorkteam("DeleteDeleteOffDay3");
-            Offday offday = controller.CreateOffday(workteam, OffdayReason.Fredagsfri, DateTime.Today, 1);
-            Assert.IsTrue(controller.DeleteOffday(workteamtwo, offday));
-
+            controller.DeleteOffday(workteam, offday1);
+            controller.DeleteOffday(workteam, offday2);
+            controller.DeleteOffday(workteam, offday3);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        public void ReturnTrue()
+        {
+            Assert.IsTrue(controller.DeleteOffday(workteam, offday1));
+        }
+
+        [TestMethod]
+        public void ReturnFalse()
+        {
+            Assert.IsFalse(controller.DeleteOffday(workteam, null));
+        }
+
+        [TestMethod]
+        public void SuccesfulDeletionCount()
+        {
+            controller.DeleteOffday(workteam, offday2);
+            Assert.AreEqual(2, controller.GetAllOffdaysFromWorkteam(workteam).Count);
+        }
+
+        [TestMethod]
+        public void SuccesfulDeletion()
+        {
+            controller.DeleteOffday(workteam, offday1);
+            Assert.AreEqual(offday2, controller.GetAllOffdaysFromWorkteam(workteam)[0]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectedExceptionDeleteNull()
         {
-            Assert.AreEqual(false, controller.DeleteOffday(null, null));
+            controller.DeleteOffday(null, offday1);
         }
     }
-    }
+}

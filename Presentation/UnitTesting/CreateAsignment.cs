@@ -1,6 +1,6 @@
 ﻿using System;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -15,7 +15,8 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
         }
 
@@ -24,7 +25,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("AssignmentIsMade");
             Order order = controller.CreateOrder(workteam,null,null,null,null,null,null,null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 0);
 
 
             Assert.IsNotNull(assignment);
@@ -37,7 +38,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("NegativDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, -1, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, -1);
 
         }
 
@@ -47,7 +48,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("TooLongDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, int.MaxValue, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, int.MaxValue);
 
         }
         [TestMethod]
@@ -55,12 +56,12 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("CorrectDurationIsSaved");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, 1, Workform.Dag);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 1);
 
             Assert.AreEqual(1, assignment.Duration);
-            assignment = controller.CreateAssignment(order, 0, Workform.Dag);
+            assignment = controller.CreateAssignment(order, Workform.Dag, 0);
             Assert.AreEqual(0, assignment.Duration);
-            assignment = controller.CreateAssignment(order, 10, Workform.Dag);
+            assignment = controller.CreateAssignment(order, Workform.Dag, 10);
             Assert.AreEqual(10, assignment.Duration);
         }
 
@@ -68,7 +69,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionNullOrder()
         {
-            controller.CreateAssignment(null, 0, Workform.Dag);
+            controller.CreateAssignment(null, Workform.Dag, 0);
         }
 
         [TestMethod]
@@ -76,22 +77,22 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("CorrectWorkforeIsSaved");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 0);
 
             Assert.AreEqual(Workform.Dag, assignment.Workform);
-            assignment = controller.CreateAssignment(order, 0, Workform.Nat);
+            assignment = controller.CreateAssignment(order, Workform.Nat, 0);
             Assert.AreEqual(Workform.Nat, assignment.Workform);
-            assignment = controller.CreateAssignment(order, 0, Workform.Flytning);
+            assignment = controller.CreateAssignment(order, Workform.Flytning, 0);
             Assert.AreEqual(Workform.Flytning, assignment.Workform);
         }
 
         //IndexOutOfRangeException might not be correct
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void OrderDoesNotExist()
         {
             Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, 0, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 0);
 
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 using Application_layer;
-using Application_layer.Exceptions;
+using Domain.Exceptions;
 using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -15,7 +15,8 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new DBTestConnector();
+            Controller.Connector = new Manager();
+            Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
         }
 
@@ -32,7 +33,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule2");
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             controller.Reschedule(workteam, order, DateTime.Today);
         }
 
@@ -41,9 +42,9 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule3");
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             Order orderTwo = controller.CreateOrder(workteam, 2, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(orderTwo, 5, Workform.Dag);
+            controller.CreateAssignment(orderTwo, Workform.Dag, 5);
             controller.Reschedule(workteam, order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(6), orderTwo.StartDate);
         }
@@ -53,7 +54,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule4");
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             Order orderTwo = controller.CreateOrder(workteam, 2, "", "", null, null, "", null, DateTime.Today, "", "", "");
             Order orderThree = controller.CreateOrder(workteam, 3, "", "", null, null, "", null, DateTime.Today, "", "", "");
             controller.Reschedule(workteam, order, DateTime.Today);
@@ -69,24 +70,24 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("Reschedule5");
             Workteam workteamTwo = controller.CreateWorkteam("Reschedule6");
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             controller.Reschedule(workteamTwo, order, DateTime.Today);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void nullWorkTeam()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullWorkTeam()
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule7");
             
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             controller.Reschedule(null, order, DateTime.Today);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void nullOrder()
+        public void NullOrder()
         {
             Workteam workteam = controller.CreateWorkteam("Reschedule8");
 
@@ -100,7 +101,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("Reschedule9");
 
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             controller.Reschedule(workteam, order, DateTime.MaxValue);
         }
 
@@ -111,7 +112,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("Reschedule9");
 
             Order order = controller.CreateOrder(workteam, 1, "", "", null, null, "", null, DateTime.Today, "", "", "");
-            controller.CreateAssignment(order, 5, Workform.Dag);
+            controller.CreateAssignment(order, Workform.Dag, 5);
             controller.Reschedule(workteam, order, DateTime.MinValue.AddDays(-1));
         }
     }

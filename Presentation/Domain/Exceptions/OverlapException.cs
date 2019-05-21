@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application_layer
+namespace Domain.Exceptions
 {
     public class OverlapException : Exception
     {

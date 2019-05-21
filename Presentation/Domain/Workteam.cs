@@ -9,24 +9,33 @@ namespace Domain
 {
     public class Workteam
     {
-        public readonly List<Offday> offdays = new List<Offday>();
-        public readonly List<Order> orders = new List<Order>();
+        private string foreman;
+
+        public List<Offday> Offdays { get; } = new List<Offday>();
+        public List<Order> Orders { get; } = new List<Order>();
 
         public Workteam(string foreman)
         {
-            if (foreman == "")
-            {
-                throw new ArgumentException("String argument for CreateWorkteam cannot be empty");
-            }
-
             Foreman = foreman ?? throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
         }
 
-        public string Foreman { get; set; }
+        public string Foreman
+        {
+            get => foreman;
+            set
+            {
+                if (value == string.Empty)
+                {
+                    throw new ArgumentException("Foreman cannot be empty");
+                }
+
+                foreman = value ?? throw new ArgumentNullException("Foreman cannot be null");
+            }
+        }
 
         public DateTime GetNextAvailableDate(Order order)
         {
-            if (!orders.Exists(o => o == order))
+            if (!Orders.Exists(o => o == order))
             {
                 throw new NullReferenceException("The order provided was not found in this workteam.");
             }
@@ -51,12 +60,12 @@ namespace Domain
 
         public bool IsAnOffday(DateTime date)
         {
-            return offdays.Any(o => o.IsOffday(date));
+            return Offdays.Any(o => o.IsOffday(date));
         }
 
         public Offday GetOffday(DateTime date)
         {
-            return offdays.Find(o => o.IsOffday(date));
+            return Offdays.Find(o => o.IsOffday(date));
         }
 
         public bool IsAWorkday(Order order, DateTime date)
