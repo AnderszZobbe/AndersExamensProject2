@@ -16,9 +16,9 @@ namespace Domain
             Duration = duration;
         }
 
-        public Workform Workform { get; set; }
+        public virtual Workform Workform { get; set; }
 
-        public int Duration
+        public virtual int Duration
         {
             get => duration;
             set

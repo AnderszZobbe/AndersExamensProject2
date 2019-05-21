@@ -19,7 +19,7 @@ namespace Domain
             Foreman = foreman ?? throw new ArgumentNullException("String argument for CreateWorkteam cannot be null");
         }
 
-        public string Foreman
+        public virtual string Foreman
         {
             get => foreman;
             set

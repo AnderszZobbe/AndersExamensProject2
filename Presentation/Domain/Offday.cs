@@ -18,19 +18,18 @@ namespace Domain
             Duration = duration;
         }
 
-        public OffdayReason OffdayReason { get; set; }
+        public virtual OffdayReason OffdayReason { get; set; }
 
-        public DateTime StartDate
+        public virtual DateTime StartDate
         {
             get => startDate;
             set
             {
-                value = value.Date;
-                startDate = value;
+                startDate = value.Date;
             }
         }
 
-        public int Duration
+        public virtual int Duration
         {
             get => duration;
             set

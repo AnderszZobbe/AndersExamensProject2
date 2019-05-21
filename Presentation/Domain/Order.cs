@@ -28,19 +28,19 @@ namespace Domain
             AsphaltWork = asphaltWork;
         }
 
-        public int? OrderNumber { get; set; }
+        public virtual int? OrderNumber { get; set; }
 
-        public string Address { get; set; }
+        public virtual string Address { get; set; }
 
-        public string Remark { get; set; }
+        public virtual string Remark { get; set; }
 
-        public int? Area { get; set; }
+        public virtual int? Area { get; set; }
 
-        public int? Amount { get; set; }
+        public virtual int? Amount { get; set; }
 
-        public string Prescription { get; set; }
+        public virtual string Prescription { get; set; }
 
-        public DateTime? Deadline
+        public virtual DateTime? Deadline
         {
             get => deadline;
             set
@@ -56,7 +56,7 @@ namespace Domain
             }
         }
 
-        public DateTime? StartDate
+        public virtual DateTime? StartDate
         {
             get => startDate;
             set
@@ -72,10 +72,10 @@ namespace Domain
             }
         }
 
-        public string Customer { get; set; }
+        public virtual string Customer { get; set; }
 
-        public string Machine { get; set; }
+        public virtual string Machine { get; set; }
 
-        public string AsphaltWork { get; set; }
+        public virtual string AsphaltWork { get; set; }
     }
 }
