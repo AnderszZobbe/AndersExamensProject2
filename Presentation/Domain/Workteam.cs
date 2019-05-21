@@ -132,6 +132,30 @@ namespace Domain
             throw new NullReferenceException("There's no workform on this date");
         }
 
+        public void Reschedule(Order orderToRescheduleFrom, DateTime startDate)
+        {
+            if (!Orders.Exists(o => o == orderToRescheduleFrom))
+            {
+                throw new ArgumentException("The order was not found in the workteam provided.");
+            }
+
+            orderToRescheduleFrom.StartDate = startDate;
+
+            DateTime nextAvailableDate = GetNextAvailableDate(orderToRescheduleFrom);
+
+            for (int i = Orders.IndexOf(orderToRescheduleFrom) + 1; i < Orders.Count; i++)
+            {
+                Order currentOrder = Orders[i];
+
+                if (currentOrder.StartDate != null) // Is it assigned to the board?
+                {
+                    currentOrder.StartDate = nextAvailableDate;
+
+                    nextAvailableDate = GetNextAvailableDate(currentOrder);
+                }
+            }
+        }
+
         //public bool IsThereAHigherPriorityOrderWithAStartDate(Order order)
         //{
         //    List<Order> ordersBeforeOrder = orders.GetRange(0, orders.IndexOf(order));

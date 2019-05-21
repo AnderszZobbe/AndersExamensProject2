@@ -71,25 +71,11 @@ namespace Persistence
         {
             List<Order> orders = GetAllOrdersFromWorkteam(workteam);
 
-            if (!orders.Exists(o => o == orderToRescheduleFrom))
+            workteam.Reschedule(orderToRescheduleFrom, startDate);
+
+            foreach (Order order in orders)
             {
-                throw new ArgumentException("The order was not found in the workteam provided.");
-            }
-
-            UpdateOrderStartDate(orderToRescheduleFrom, startDate);
-
-            DateTime nextAvailableDate = workteam.GetNextAvailableDate(orderToRescheduleFrom);
-
-            for (int i = orders.IndexOf(orderToRescheduleFrom) + 1; i < orders.Count; i++)
-            {
-                Order currentOrder = orders[i];
-
-                if (currentOrder.StartDate != null) // Is it assigned to the board?
-                {
-                    UpdateOrderStartDate(currentOrder, nextAvailableDate);
-
-                    nextAvailableDate = workteam.GetNextAvailableDate(currentOrder);
-                }
+                UpdateOrderStartDate(order, order.StartDate);
             }
         }
 
