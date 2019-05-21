@@ -38,7 +38,7 @@
             <DatePicker FirstDayOfWeek="Monday"  x:Name="deadlineInput"/>
         </StackPanel>
         <StackPanel Margin="10,10,10,45" x:Name="AssignmentsStackPanel" Grid.Column="1"/>
-        <Button Content="Tilføj arbejdsform" Grid.Column="1" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" Click="AddWorkform"/>
+        <Button Content="Tilføj arbejdsform" Grid.Column="1" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" Click="AddAssignment"/>
         <DockPanel Margin="10,0,10,10" Grid.Row="1" Grid.ColumnSpan="2" Height="30" VerticalAlignment="Bottom">
             <Button Click="DeleteOrderConfirm" x:Name="DeleteOrderButton" Content="Slet arbejdsorderen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" Height="30" Foreground="White" DockPanel.Dock="Right" Margin="10,0,0,0" Visibility="Collapsed">
                 <Button.Background>

@@ -50,11 +50,15 @@ namespace Presentation
 
                 foreach (Assignment assignment in controller.GetAllAssignmentsFromOrder(order))
                 {
-                    AddWorkform(assignment.Workform, assignment.Duration);
+                    AddAssignment(assignment.Workform, assignment.Duration);
                 }
 
                 DeleteOrderButton.Visibility = Visibility.Visible;
                 DeleteOrderButton.DataContext = previousOrder;
+            }
+            else
+            {
+                AddAssignment(Workform.Dagsarbejde, 0);
             }
         }
 
@@ -148,7 +152,10 @@ namespace Presentation
             {
                 if (frameworkElement.DataContext is Grid assignmentGrid)
                 {
-                    AssignmentsStackPanel.Children.Remove(assignmentGrid);
+                    if (AssignmentsStackPanel.Children.Count > 1)
+                    {
+                        AssignmentsStackPanel.Children.Remove(assignmentGrid);
+                    }
                 }
             }
         }
@@ -187,12 +194,12 @@ namespace Presentation
             }
         }
 
-        private void AddWorkform(object sender, RoutedEventArgs e)
+        private void AddAssignment(object sender, RoutedEventArgs e)
         {
-            AddWorkform(Workform.Dagsarbejde, 0);
+            AddAssignment(Workform.Dagsarbejde, 0);
         }
 
-        private void AddWorkform(Workform workform, int duration)
+        private void AddAssignment(Workform workform, int duration)
         {
             Grid grid = new Grid();
             AssignmentsStackPanel.Children.Add(grid);
