@@ -24,7 +24,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("AssignementDoesExist");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 1);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
             Assert.AreEqual(true, controller.AssignmentExists(assignment));
         }
 
@@ -33,7 +33,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("AssignmentDoesntExists");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 1);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
             controller.DeleteAssignment(order, assignment);
             Assert.AreEqual(false, controller.AssignmentExists(assignment));
 

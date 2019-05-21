@@ -10,6 +10,7 @@ namespace UnitTesting
     public class OrderExists
     {
         Controller controller;
+        Workteam workteam;
 
         [TestInitialize]
         public void TestInitialize()
@@ -17,12 +18,12 @@ namespace UnitTesting
             Controller.Connector = new Manager();
             Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            workteam = controller.CreateWorkteam("OrderExists");
         }
 
         [TestMethod]
         public void OrderDoesExist()
         {
-            Workteam workteam = controller.CreateWorkteam("OrderDoesExist");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             Assert.AreEqual(true, controller.OrderExists(order));
         }
@@ -30,7 +31,6 @@ namespace UnitTesting
         [TestMethod]
         public void OrderDoesntExists()
         {
-            Workteam workteam = controller.CreateWorkteam("OrderDoesntExists");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.DeleteOrder(workteam, order);
             Assert.AreEqual(false, controller.OrderExists(order));

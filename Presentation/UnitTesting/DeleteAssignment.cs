@@ -24,9 +24,9 @@ namespace UnitTesting
             controller = Controller.Instance;
             workteam = controller.CreateWorkteam("DeleteAssignment");
             order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            assignment1 = controller.CreateAssignment(order, Workform.Dag, 0);
-            assignment2 = controller.CreateAssignment(order, Workform.Dag, 0);
-            assignment3 = controller.CreateAssignment(order, Workform.Dag, 0);
+            assignment1 = controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
+            assignment2 = controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
+            assignment3 = controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
         }
 
         [TestCleanup]

@@ -189,7 +189,7 @@ namespace Presentation
 
         private void AddWorkform(object sender, RoutedEventArgs e)
         {
-            AddWorkform(Workform.Dag, 0);
+            AddWorkform(Workform.Dagsarbejde, 0);
         }
 
         private void AddWorkform(Workform workform, int duration)

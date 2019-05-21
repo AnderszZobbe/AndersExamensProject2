@@ -25,15 +25,15 @@ namespace UnitTesting
             order1 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             order2 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             order3 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order1, Workform.Dag, 0);
-            controller.CreateAssignment(order1, Workform.Dag, 0);
-            controller.CreateAssignment(order1, Workform.Dag, 0);
-            controller.CreateAssignment(order2, Workform.Dag, 0);
-            controller.CreateAssignment(order2, Workform.Dag, 0);
-            controller.CreateAssignment(order2, Workform.Dag, 0);
-            controller.CreateAssignment(order3, Workform.Dag, 0);
-            controller.CreateAssignment(order3, Workform.Dag, 0);
-            controller.CreateAssignment(order3, Workform.Dag, 0);
+            controller.CreateAssignment(order1, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order1, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order1, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order2, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order2, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order2, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order3, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order3, Workform.Dagsarbejde, 0);
+            controller.CreateAssignment(order3, Workform.Dagsarbejde, 0);
         }
 
         [TestCleanup]

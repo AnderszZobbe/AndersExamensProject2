@@ -26,8 +26,8 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("DeleteAllAssignmentsFromOrder1");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, 2);
-            controller.CreateAssignment(order, Workform.Dag, 2);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, 2);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, 2);
 
             Assert.AreEqual(true, controller.DeleteAllAssignmentsFromOrder(order));
             Assert.AreEqual(0, controller.GetAllAssignmentsFromOrder(order).Count);

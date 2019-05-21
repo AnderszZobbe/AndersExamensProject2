@@ -45,7 +45,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate4");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, 1);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
             controller.UpdateOrderStartDate(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(2), workteam.GetNextAvailableDate(order));
         }
@@ -54,8 +54,8 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate5");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, 1);
-            controller.CreateAssignment(order, Workform.Nat, 0);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
+            controller.CreateAssignment(order, Workform.Nattearbejde, 0);
             controller.UpdateOrderStartDate(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(3), workteam.GetNextAvailableDate(order));
         }
@@ -74,7 +74,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate7");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, 0);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
             order.StartDate = DateTime.MaxValue;
             workteam.GetNextAvailableDate(order);
         }

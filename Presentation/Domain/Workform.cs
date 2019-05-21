@@ -9,8 +9,7 @@ namespace Domain
 {
     public enum Workform
     {
-        Dag,
-        Nat,
-        Flytning
+        Dagsarbejde,
+        Nattearbejde
     }
 }

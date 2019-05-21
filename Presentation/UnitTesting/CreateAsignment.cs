@@ -25,7 +25,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("AssignmentIsMade");
             Order order = controller.CreateOrder(workteam,null,null,null,null,null,null,null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 0);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
 
 
             Assert.IsNotNull(assignment);
@@ -38,7 +38,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("NegativDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, -1);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, -1);
 
         }
 
@@ -48,7 +48,7 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("TooLongDuration");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, int.MaxValue);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, int.MaxValue);
 
         }
         [TestMethod]
@@ -56,12 +56,12 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("CorrectDurationIsSaved");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 1);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
 
             Assert.AreEqual(1, assignment.Duration);
-            assignment = controller.CreateAssignment(order, Workform.Dag, 0);
+            assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
             Assert.AreEqual(0, assignment.Duration);
-            assignment = controller.CreateAssignment(order, Workform.Dag, 10);
+            assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 10);
             Assert.AreEqual(10, assignment.Duration);
         }
 
@@ -69,7 +69,7 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionNullOrder()
         {
-            controller.CreateAssignment(null, Workform.Dag, 0);
+            controller.CreateAssignment(null, Workform.Dagsarbejde, 0);
         }
 
         [TestMethod]
@@ -77,11 +77,11 @@ namespace UnitTesting
         {
             Workteam workteam = controller.CreateWorkteam("CorrectWorkforeIsSaved");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            Assignment assignment = controller.CreateAssignment(order, Workform.Dag, 0);
+            Assignment assignment = controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
 
-            Assert.AreEqual(Workform.Dag, assignment.Workform);
-            assignment = controller.CreateAssignment(order, Workform.Nat, 0);
-            Assert.AreEqual(Workform.Nat, assignment.Workform);
+            Assert.AreEqual(Workform.Dagsarbejde, assignment.Workform);
+            assignment = controller.CreateAssignment(order, Workform.Nattearbejde, 0);
+            Assert.AreEqual(Workform.Nattearbejde, assignment.Workform);
             assignment = controller.CreateAssignment(order, Workform.Flytning, 0);
             Assert.AreEqual(Workform.Flytning, assignment.Workform);
         }
@@ -92,7 +92,7 @@ namespace UnitTesting
         public void OrderDoesNotExist()
         {
             Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
-            controller.CreateAssignment(order, Workform.Dag, 0);
+            controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
 
         }
     }

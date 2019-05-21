@@ -343,7 +343,7 @@ namespace Presentation
 
                 Button up = new Button
                 {
-                    Content = "+",
+                    Content = "▲",
                     DataContext = order,
                 };
                 up.Click += MoveOrderUp;
@@ -351,7 +351,7 @@ namespace Presentation
 
                 Button down = new Button
                 {
-                    Content = "-",
+                    Content = "▼",
                     DataContext = order,
                 };
                 down.Click += MoveOrderDown;
