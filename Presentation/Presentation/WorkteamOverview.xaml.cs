@@ -236,7 +236,7 @@ namespace Presentation
                 {
                     Border deadline = new Border
                     {
-                        BorderThickness = new Thickness(1),
+                        BorderThickness = new Thickness(2),
                         BorderBrush = Brushes.Black,
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
