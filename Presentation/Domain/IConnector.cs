@@ -26,7 +26,7 @@ namespace Domain
         bool DeleteOffdayByDate(Workteam workteam, DateTime date);
         void MoveOrderUp(Workteam workteam, Order firstOrder);
         void MoveOrderDown(Workteam workteam, Order firstOrder);
-        void UpdateWorkteam(Workteam workteam, string foreman);
+        void UpdateWorkteamForeman(Workteam workteam, string foreman);
         void UpdateOrderStartDate(Order order, DateTime? startDate);
         void SwapOrdersPriority(Workteam workteam, Order firstOrder, Order secondOrder);
         void UpdateOrder(Order order, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);

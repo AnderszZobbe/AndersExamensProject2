@@ -320,7 +320,7 @@ namespace Persistence
             order.StartDate = startDate;
         }
 
-        public void UpdateWorkteam(Workteam workteam, string foreman)
+        public void UpdateWorkteamForeman(Workteam workteam, string foreman)
         {
             if (GetAllWorkteams().Any(o => o != workteam && o.Foreman == foreman))
             {

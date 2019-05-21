@@ -67,9 +67,9 @@ namespace Application_layer
             Connector.Reschedule(workteam, orderToRescheduleFrom, startDate);
         }
 
-        public void UpdateWorkteam(Workteam workteam, string foreman)
+        public void UpdateWorkteamForeman(Workteam workteam, string foreman)
         {
-            Connector.UpdateWorkteam(workteam, foreman);
+            Connector.UpdateWorkteamForeman(workteam, foreman);
         }
 
         public bool WorkteamExists(Workteam workteam)

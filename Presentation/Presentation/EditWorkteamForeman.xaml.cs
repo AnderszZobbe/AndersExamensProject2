@@ -35,7 +35,7 @@ namespace Presentation
 
         private void SaveAndExit(object sender, RoutedEventArgs e)
         {
-            controller.UpdateWorkteam(workteam, Foreman.Text);
+            controller.UpdateWorkteamForeman(workteam, Foreman.Text);
             Close();
         }
     }

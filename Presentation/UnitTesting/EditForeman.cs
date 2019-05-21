@@ -27,7 +27,7 @@ namespace UnitTesting
             string newName = "EditForman2";
 
             Workteam workteam = controller.CreateWorkteam(oldName);
-            controller.UpdateWorkteam(workteam, newName);
+            controller.UpdateWorkteamForeman(workteam, newName);
 
             Assert.AreEqual(newName, workteam.Foreman);
         }
@@ -37,7 +37,7 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToNull()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman3");
-            controller.UpdateWorkteam(workteam, null);
+            controller.UpdateWorkteamForeman(workteam, null);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace UnitTesting
             Workteam workteam = controller.CreateWorkteam("EditForman4");
             controller.CreateWorkteam("EditForman5");
 
-            controller.UpdateWorkteam(workteam, "EditForman5");
+            controller.UpdateWorkteamForeman(workteam, "EditForman5");
         }
 
         [TestMethod]
@@ -55,14 +55,14 @@ namespace UnitTesting
         public void ExpectExceptionChangeNameToEmptyString()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman6");
-            controller.UpdateWorkteam(workteam, "");
+            controller.UpdateWorkteamForeman(workteam, "");
         }
 
         [TestMethod]
         public void CangeToSameName()
         {
             Workteam workteam = controller.CreateWorkteam("EditForman7");
-            controller.UpdateWorkteam(workteam, "EditForman7");
+            controller.UpdateWorkteamForeman(workteam, "EditForman7");
         }
     }
 }
