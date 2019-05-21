@@ -282,7 +282,7 @@ namespace Persistence
         {
             Workteam workteam = workteams.First(o => o.Key.Orders.Contains(order)).Key;
 
-            if (GetAllOrdersFromWorkteam(workteam).Any(o => o != order && o.OrderNumber == orderNumber))
+            if (GetAllOrdersFromWorkteam(workteam).Any(o => o != order && orderNumber != null && o.OrderNumber == orderNumber))
             {
                 throw new ArgumentException("There already exists an order with that ordernumber!");
             }

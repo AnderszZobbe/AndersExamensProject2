@@ -262,6 +262,23 @@ namespace Presentation
             }
         }
 
+        private void InitializeNewOrderButton(Grid grid)
+        {
+            Grid localGrid = InitializeGridRow();
+
+            Button btn = new Button
+            {
+                Content = "Dokumentér ny order",
+                FontSize = 14,
+            };
+            btn.Click += DocumentNewWorkorder;
+            btn.ToolTip = $"UwU what is this?";
+
+            localGrid.Children.Add(btn);
+            Grid.SetColumn(btn, 0);
+            Grid.SetColumnSpan(btn, startColumn);
+        }
+
         private void Reschedule(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement frameworkElement)
@@ -414,6 +431,8 @@ namespace Presentation
 
                 InitializeOrderGrid(grid, order, startDate);
             }
+
+            InitializeNewOrderButton(grid);
         }
 
         private void DeleteRows()
