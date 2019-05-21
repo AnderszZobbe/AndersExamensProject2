@@ -40,14 +40,25 @@ namespace UnitTesting
         public void SavesChanges()
         {
             controller.UpdateOrder(order, 1, "address", "remark", 10, 100, "prescription", DateTime.Now, DateTime.Now, "customer", "machine", "asphaltWork");
+            /*order.OrderNumber = 1;
+            order.Address = "address";
+            order.Remark = "remark";
+            order.Area = 10;
+            order.Amount = 100;
+            order.Prescription = "prescription";
+            order.Deadline = DateTime.Now;
+            order.StartDate = DateTime.Now;
+            order.Customer = "customer";
+            order.Machine = "machine";
+            order.AsphaltWork = "asphaltWork";*/
             Assert.AreEqual(1, order.OrderNumber);
             Assert.AreEqual("address", order.Address);
             Assert.AreEqual("remark", order.Remark);
             Assert.AreEqual(10, order.Area);
             Assert.AreEqual(100, order.Amount);
             Assert.AreEqual("prescription", order.Prescription);
-            Assert.AreEqual(DateTime.Now.Date, order.Deadline);
-            Assert.AreEqual(DateTime.Now.Date, order.StartDate);
+            Assert.AreEqual(DateTime.Today, order.Deadline);
+            Assert.AreEqual(DateTime.Today, order.StartDate);
             Assert.AreEqual("customer", order.Customer);
             Assert.AreEqual("machine", order.Machine);
             Assert.AreEqual("asphaltWork", order.AsphaltWork);

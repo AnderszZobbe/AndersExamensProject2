@@ -28,7 +28,7 @@ namespace UnitTesting
         public void EditNameOfForemanOnAWorkteam()
         {
             string newForeman = "newForeman";
-            workteam1.Foreman = newForeman;
+            controller.UpdateWorkteam(workteam1, newForeman);
 
             Assert.AreEqual(newForeman, workteam1.Foreman);
         }
@@ -37,27 +37,27 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExpectExceptionChangeNameToNull()
         {
-            workteam1.Foreman = null;
+            controller.UpdateWorkteam(workteam1, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToAlreadyExsistingName()
         {
-            workteam1.Foreman = workteam2.Foreman;
+            controller.UpdateWorkteam(workteam1, workteam2.Foreman);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExpectExceptionChangeNameToEmptyString()
         {
-            workteam1.Foreman = "";
+            controller.UpdateWorkteam(workteam1, string.Empty);
         }
 
         [TestMethod]
         public void CangeToSameName()
         {
-            workteam1.Foreman = workteam1.Foreman;
+            controller.UpdateWorkteam(workteam1, workteam1.Foreman);
         }
     }
 }

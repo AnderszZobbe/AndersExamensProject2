@@ -69,7 +69,7 @@ namespace Application_layer
 
         public void UpdateWorkteam(Workteam workteam, string foreman)
         {
-            Connector.UpdateWorkteam(workteam, foreman);
+            workteam.Foreman = foreman;
         }
 
         public bool WorkteamExists(Workteam workteam)
