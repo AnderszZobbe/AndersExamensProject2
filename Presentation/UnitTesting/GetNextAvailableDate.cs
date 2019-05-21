@@ -11,6 +11,7 @@ namespace UnitTesting
     public class GetNextAvailableDate
     {
         Controller controller;
+        Workteam workteam;
 
         [TestInitialize]
         public void TestInitialize()
@@ -18,6 +19,7 @@ namespace UnitTesting
             Controller.Connector = new Manager();
             Manager.DataProvider = new TestDataProvider();
             controller = Controller.Instance;
+            workteam = controller.CreateWorkteam("GetNextAvailableDate");
         }
 
 
@@ -25,7 +27,6 @@ namespace UnitTesting
         [ExpectedException(typeof(NullReferenceException))]
         public void EmptyOrder()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate1");
             Order order = new Order(null, null, null, null, null, null, null, null, null, null, null);
             workteam.GetNextAvailableDate(order);
         }
@@ -34,7 +35,6 @@ namespace UnitTesting
         [ExpectedException(typeof(NullReferenceException))]
         public void AnotherWorkteamsOrder()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate2");
             Workteam workteamTwo = controller.CreateWorkteam("GetNextAvailableDate3");
             Order order = controller.CreateOrder(workteamTwo, null, null, null, null, null, null, null, null, null, null, null);
             controller.UpdateOrderStartDate(order, DateTime.Today);
@@ -43,7 +43,6 @@ namespace UnitTesting
         [TestMethod]
         public void CorrectDateWithOneAssignment()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate4");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
             controller.UpdateOrderStartDate(order, DateTime.Today);
@@ -52,17 +51,15 @@ namespace UnitTesting
         [TestMethod]
         public void CorrectDateWithTwoAssignment()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate5");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.CreateAssignment(order, Workform.Dagsarbejde, 1);
             controller.CreateAssignment(order, Workform.Nattearbejde, 0);
             controller.UpdateOrderStartDate(order, DateTime.Today);
-            Assert.AreEqual(DateTime.Today.AddDays(3), workteam.GetNextAvailableDate(order));
+            Assert.AreEqual(DateTime.Today.AddDays(4), workteam.GetNextAvailableDate(order));
         }
         [TestMethod]
         public void CorrectDateWithNoAssignment()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate6");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.UpdateOrderStartDate(order, DateTime.Today);
             Assert.AreEqual(DateTime.Today.AddDays(0), workteam.GetNextAvailableDate(order));
@@ -72,7 +69,6 @@ namespace UnitTesting
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void InvalidStartDate()
         {
-            Workteam workteam = controller.CreateWorkteam("GetNextAvailableDate7");
             Order order = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
             controller.CreateAssignment(order, Workform.Dagsarbejde, 0);
             order.StartDate = DateTime.MaxValue;

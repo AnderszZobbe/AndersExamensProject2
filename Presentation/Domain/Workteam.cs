@@ -45,7 +45,7 @@ namespace Domain
             bool nextAvailableDateFound = false;
             while (!nextAvailableDateFound)
             {
-                if (!IsAnOffday(dateRoller) && !IsAWorkday(order, dateRoller))
+                if (!IsAnOffday(dateRoller) && !IsAnOccupiedDay(order, dateRoller))
                 {
                     nextAvailableDateFound = true;
                 }
@@ -68,6 +68,48 @@ namespace Domain
             return Offdays.Find(o => o.IsOffday(date));
         }
 
+        public bool IsAnOccupiedDay(Order order, DateTime date)
+        {
+            if (order.StartDate == null) // Return false if there's no startdate
+            {
+                return false;
+            }
+
+            List<Assignment> assignments = order.assignments;
+
+            DateTime dateRoller = order.StartDate.Value;
+
+            foreach (Assignment assignment in assignments)
+            {
+                int duration = assignment.Duration;
+
+                for (int i = 0; i <= duration; i++) // Loop for remaining duration days
+                {
+                    while (IsAnOffday(dateRoller)) // Skip offdays
+                    {
+                        dateRoller = dateRoller.AddDays(1);
+                    }
+
+                    if (dateRoller.Date == date.Date)
+                    {
+                        return true;
+                    }
+
+                    if (i == duration && duration == assignment.Duration && !IsAnOffday(dateRoller.AddDays(1))) // Is the next day of the assignment NOT an offday?
+                    {
+                        if (assignment.Workform == Workform.Nattearbejde)
+                        {
+                            duration++;
+                        }
+                    }
+
+                    dateRoller = dateRoller.AddDays(1);
+                }
+            }
+
+            return false;
+        }
+
         public bool IsAWorkday(Order order, DateTime date)
         {
             if (order.StartDate == null) // Return false if there's no startdate
@@ -81,16 +123,33 @@ namespace Domain
 
             foreach (Assignment assignment in assignments)
             {
-                for (int i = 0; i <= assignment.Duration; i++) // Loop for remaining duration days
+                int duration = assignment.Duration;
+
+                for (int i = 0; i <= duration; i++) // Loop for remaining duration days
                 {
-                    while (IsAnOffday(dateRoller))
+                    while (IsAnOffday(dateRoller)) // Skip offdays
                     {
                         dateRoller = dateRoller.AddDays(1);
                     }
 
                     if (dateRoller.Date == date.Date)
                     {
-                        return true;
+                        if (duration == assignment.Duration)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                    if (i == duration && duration == assignment.Duration && !IsAnOffday(dateRoller.AddDays(1))) // Is the next day of the assignment NOT an offday?
+                    {
+                        if (assignment.Workform == Workform.Nattearbejde)
+                        {
+                            duration++;
+                        }
                     }
 
                     dateRoller = dateRoller.AddDays(1);
@@ -113,7 +172,9 @@ namespace Domain
 
             foreach (Assignment assignment in assignments)
             {
-                for (int i = 0; i <= assignment.Duration; i++) // Loop for remaining duration days
+                int duration = assignment.Duration;
+
+                for (int i = 0; i <= duration; i++) // Loop for remaining duration days
                 {
                     while (IsAnOffday(dateRoller))
                     {
@@ -122,7 +183,18 @@ namespace Domain
 
                     if (dateRoller.Date == date.Date)
                     {
-                        return assignment.Workform;
+                        if (duration == assignment.Duration)
+                        {
+                            return assignment.Workform;
+                        }
+                    }
+
+                    if (i == duration && duration == assignment.Duration && !IsAnOffday(dateRoller.AddDays(1))) // Is the next day of the assignment NOT an offday?
+                    {
+                        if (assignment.Workform == Workform.Nattearbejde)
+                        {
+                            duration++;
+                        }
                     }
 
                     dateRoller = dateRoller.AddDays(1);

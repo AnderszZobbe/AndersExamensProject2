@@ -82,8 +82,6 @@ namespace UnitTesting
             Assert.AreEqual(Workform.Dagsarbejde, assignment.Workform);
             assignment = controller.CreateAssignment(order, Workform.Nattearbejde, 0);
             Assert.AreEqual(Workform.Nattearbejde, assignment.Workform);
-            assignment = controller.CreateAssignment(order, Workform.Flytning, 0);
-            Assert.AreEqual(Workform.Flytning, assignment.Workform);
         }
 
         //IndexOutOfRangeException might not be correct
