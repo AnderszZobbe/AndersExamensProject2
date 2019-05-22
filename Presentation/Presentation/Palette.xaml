@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Palette" Width="200" Topmost="True" SizeToContent="Height">
+        Title="Palette" Width="200" Topmost="True" SizeToContent="Height" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

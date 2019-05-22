@@ -34,6 +34,7 @@ namespace Presentation
         //private DateTime startDate = DateTime.Now.AddDays(0);
         public System.Drawing.Color[] OffdayBrushes = { Settings.Default.Weekend, Settings.Default.FridayFree, Settings.Default.Holiday };
         public System.Drawing.Color[] WorkformBrushes = { Settings.Default.Workday, Settings.Default.Worknight };
+        public Palette palette;
 
         public WorkteamOverview(Workteam workteam)
         {
@@ -662,7 +663,13 @@ namespace Presentation
 
         private void ShowPalette(object sender, RoutedEventArgs e)
         {
+            if (palette != null)
+            {
+                palette.Close();
+            }
+
             Palette p = new Palette();
+            palette = p;
             p.Owner = this;
             p.Show();
         }

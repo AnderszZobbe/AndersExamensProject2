@@ -123,5 +123,13 @@ namespace Presentation
                 wo.UpdateDataGrid();
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Owner is WorkteamOverview wo)
+            {
+                wo.palette = null;
+            }
+        }
     }
 }
