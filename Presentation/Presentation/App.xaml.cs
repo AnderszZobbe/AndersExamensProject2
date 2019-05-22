@@ -19,8 +19,6 @@ namespace Presentation
         public App()
         {
             Controller.Connector = new Manager();
-
-            Controller.Instance.PrintToPDF();
         }
     }
 }

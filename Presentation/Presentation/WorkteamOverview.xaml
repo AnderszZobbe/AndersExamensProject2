@@ -51,5 +51,6 @@
             </Button.Background>
         </Button>
         <Button Click="ShowPalette" Content="Farve Palette" Margin="0,0,329,10" FontSize="16" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="116"/>
+        <Button Click="PrintToPDF" Content="Print til PDF" Margin="0,0,450,10" FontSize="16" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="116"/>
     </Grid>
 </Window>

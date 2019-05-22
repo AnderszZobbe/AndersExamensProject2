@@ -1,5 +1,6 @@
 ﻿using Application_layer;
 using Domain;
+using Microsoft.Win32;
 using Presentation.Properties;
 using System;
 using System.Collections.Generic;
@@ -672,6 +673,17 @@ namespace Presentation
             palette = p;
             p.Owner = this;
             p.Show();
+        }
+
+        private void PrintToPDF(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = $"3 uger plan {DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}.pdf";
+            saveFileDialog.Filter = "Pdf Files|*.pdf";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                controller.PrintToPDF(saveFileDialog.FileName);
+            }
         }
     }
 }
