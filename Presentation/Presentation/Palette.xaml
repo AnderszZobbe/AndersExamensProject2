@@ -28,6 +28,6 @@
         <xctk:ColorPicker x:Name="weekend" Grid.Row="3" SelectedColorChanged="WeekendSelectedColorChanged"/>
         <Label Content="Weekend" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"/>
         <xctk:ColorPicker x:Name="holiday" Grid.Row="4" SelectedColorChanged="HolidaySelectedColorChanged"/>
-        <Label Content="Helidag/helligdag" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <Label Content="Ferie/helligdag" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>

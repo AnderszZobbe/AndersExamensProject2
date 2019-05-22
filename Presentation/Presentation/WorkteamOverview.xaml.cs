@@ -1,11 +1,17 @@
 ﻿using Application_layer;
 using Domain;
 using Microsoft.Win32;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using Presentation.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +23,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Xps;
+using System.Windows.Xps.Packaging;
 
 namespace Presentation
 {
@@ -277,11 +285,10 @@ namespace Presentation
 
             Button btn = new Button
             {
-                Content = "Dokumentér ny order",
+                Content = "Dokumentér ny arbejdsordre",
                 FontSize = 14,
             };
             btn.Click += DocumentNewWorkorder;
-            btn.ToolTip = $"UwU what is this?";
 
             localGrid.Children.Add(btn);
             Grid.SetColumn(btn, 0);
@@ -677,12 +684,122 @@ namespace Presentation
 
         private void PrintToPDF(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = $"3 uger plan {DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}.pdf";
-            saveFileDialog.Filter = "Pdf Files|*.pdf";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                FileName = $"3 uger plan {DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}.pdf",
+                Filter = "Pdf Files|*.pdf"
+            };
             if (saveFileDialog.ShowDialog() == true)
             {
-                controller.PrintToPDF(saveFileDialog.FileName);
+                int weeks = 3;
+                string filePath = saveFileDialog.FileName;
+
+                PdfDocument document = new PdfDocument();
+                PdfPage page = document.AddPage();
+                page.Size = PageSize.A4;
+                page.Orientation = PageOrientation.Landscape;
+
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont defaultFont = new XFont("Verdana", 7);
+                XFont boldFont = new XFont("Verdana", 7, XFontStyle.Bold);
+
+                double rowHeight = 20;
+
+                // Start drawing of the orders
+                List<Order> orders = controller.GetAllOrdersFromWorkteam(workteam);
+                orders = orders.FindAll(o => o.StartDate != null);
+                for (int i = 0; i < orders.Count; i++)
+                {
+                    double x = 0;
+
+                    for (int j = 2; j < startColumn; j++)
+                    {
+                        double width = GridTemplate.ColumnDefinitions[j].Width.Value * 0.62;
+                        XPen pen = new XPen(XColors.LightGray, 1);
+                        XRect rect = new XRect(x, i * rowHeight, width, rowHeight);
+                        gfx.DrawRectangle(pen, rect);
+
+
+
+                        string content = string.Empty;
+
+                        switch (j)
+                        {
+                            case 2:
+                                content = orders[i].OrderNumber.ToString();
+                                break;
+                            case 3:
+                                content = orders[i].Address;
+                                break;
+                            case 4:
+                                content = orders[i].Remark;
+                                break;
+                            case 5:
+                                content = orders[i].Area.ToString();
+                                break;
+                            case 6:
+                                content = orders[i].Amount.ToString();
+                                break;
+                            case 7:
+                                content = orders[i].Prescription;
+                                break;
+                            case 8:
+                                content = orders[i].Customer;
+                                break;
+                            case 9:
+                                content = orders[i].Machine;
+                                break;
+                            case 10:
+                                content = orders[i].AsphaltWork;
+                                break;
+                        }
+
+                        gfx.DrawString(
+                            content,
+                            defaultFont,
+                            XBrushes.Black,
+                            rect,
+                            XStringFormats.Center);
+
+                        x += width;
+                    }
+
+                    double widthLeft = page.Width - x;
+
+                    DateTime dateRoller = DateTime.Today;
+
+                    for (int j = 0; j < weeks * 7; j++)
+                    {
+                        double width = widthLeft / (weeks * 7);
+                        XPen pen = new XPen(XColors.LightGray, 1);
+                        XRect rect = new XRect(x, i * rowHeight, width, rowHeight);
+
+                        if (workteam.IsAWorkday(orders[i], dateRoller))
+                        {
+                            System.Drawing.Color color = WorkformBrushes[(int)workteam.GetWorkform(orders[i], dateRoller)];
+
+                            XBrush brush = new XSolidBrush(XColor.FromArgb(color.A, color.R, color.G, color.B));
+                            gfx.DrawRectangle(pen, brush, rect);
+                        }
+                        else if (workteam.IsAnOffday(dateRoller))
+                        {
+                            System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+
+                            XBrush brush = new XSolidBrush(XColor.FromArgb(color.A, color.R, color.G, color.B));
+                            gfx.DrawRectangle(pen, brush, rect);
+                        }
+                        else
+                        {
+                            gfx.DrawRectangle(pen, rect);
+                        }
+
+                        x += width;
+                        dateRoller = dateRoller.AddDays(1);
+                    }
+                }
+
+                document.Save(filePath);
+                Process.Start(filePath);
             }
         }
     }

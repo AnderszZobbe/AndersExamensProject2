@@ -393,37 +393,5 @@ namespace Persistence
 
             SwapOrdersPriority(workteam, firstOrder, GetAllOrdersFromWorkteam(workteam)[GetAllOrdersFromWorkteam(workteam).IndexOf(firstOrder) + 1]);
         }
-
-        public void PrintToPDF(string filePath)
-        {
-            /*Document document = Documents.CreateDocument();
-            MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "MigraDoc.mdddl");*/
-
-            /*PdfDocument document = new PdfDocument();
-            PdfPage page = document.AddPage();
-            page.Size = PageSize.A4;
-            page.Orientation = PageOrientation.Landscape;
-            XGraphics gfx = XGraphics.FromPdfPage(page);
-            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
-
-            gfx.DrawString(
-                "You just lost the game!",
-                font,
-                XBrushes.Black,
-                new XRect(0, 0, page.Width, page.Height),
-                XStringFormats.Center);
-
-            gfx.DrawString(
-                "Whatcha' doing here?",
-                font,
-                XBrushes.Black,
-                new XRect(0, 0, page.Width, page.Height),
-                XStringFormats.TopLeft);
-
-            //gfx.
-
-            document.Save(filePath);
-            Process.Start(filePath);*/
-        }
     }
 }

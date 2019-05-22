@@ -151,10 +151,5 @@ namespace Application_layer
         {
             Connector.SwapOrdersPriority(workteam, firstOrder, secondOrder);
         }
-
-        public void PrintToPDF(string filePath)
-        {
-            Connector.PrintToPDF(filePath);
-        }
     }
 }

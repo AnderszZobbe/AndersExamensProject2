@@ -34,6 +34,5 @@ namespace Domain
         bool DeleteOffday(Workteam workteam, Offday offday);
         bool DeleteOrder(Workteam workteam, Order order);
         bool DeleteAssignment(Order order, Assignment assignment);
-        void PrintToPDF(string filePath);
     }
 }
