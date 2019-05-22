@@ -1,5 +1,6 @@
 ﻿using Application_layer;
 using Domain;
+using Presentation.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,17 +28,17 @@ namespace Presentation
         private readonly Controller controller = Controller.Instance;
         private int totalWeeks = 7;
         private int startColumn = 0;
-        private int clearRowFrom = 1;
-        private DateTime startDate = DateTime.Now.AddDays(-14);
-        private DayOfWeek startDay = DayOfWeek.Monday;
+        private readonly int clearRowFrom = 1;
+        private DateTime startDate = DateTime.Today.AddDays(-14);
+        private readonly DayOfWeek startDayOfWeek = DayOfWeek.Monday;
         //private DateTime startDate = DateTime.Now.AddDays(0);
-        public Brush[] OffdayBrushes = { Brushes.Red, Brushes.DarkRed, Brushes.DarkRed };
-        public Brush[] WorkformBrushes = { Brushes.Orange, Brushes.DarkCyan, Brushes.LightGray };
+        public System.Drawing.Color[] OffdayBrushes = { Settings.Default.Weekend, Settings.Default.FridayFree, Settings.Default.Holiday };
+        public System.Drawing.Color[] WorkformBrushes = { Settings.Default.Workday, Settings.Default.Worknight };
 
         public WorkteamOverview(Workteam workteam)
         {
             // Setback if day is in the middle of a week
-            while (startDate.DayOfWeek != startDay)
+            while (startDate.DayOfWeek != startDayOfWeek)
             {
                 startDate = startDate.AddDays(-1);
             }
@@ -187,7 +188,9 @@ namespace Presentation
 
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    btn.Background = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+                    System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+
+                    btn.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
                     btn.Click += RemoveOffday;
                 }
                 else
@@ -228,11 +231,15 @@ namespace Presentation
 
                 if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
                 {
-                    btn.Background = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+                    System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+
+                    btn.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
                 }
                 else if (workteam.IsAWorkday(order, dateRoller)) // Is the date a workday?
                 {
-                    btn.Background = WorkformBrushes[(int)workteam.GetWorkform(order, dateRoller)];
+                    System.Drawing.Color color = WorkformBrushes[(int)workteam.GetWorkform(order, dateRoller)];
+
+                    btn.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
                 }
                 else
                 {
@@ -262,7 +269,7 @@ namespace Presentation
             }
         }
 
-        private void InitializeNewOrderButton(Grid grid)
+        private void InitializeNewOrderButton()
         {
             Grid localGrid = InitializeGridRow();
 
@@ -413,8 +420,11 @@ namespace Presentation
             }
         }
 
-        private void UpdateDataGrid()
+        public void UpdateDataGrid()
         {
+            OffdayBrushes = new System.Drawing.Color[] { Settings.Default.Weekend, Settings.Default.FridayFree, Settings.Default.Holiday };
+            WorkformBrushes = new System.Drawing.Color[] { Settings.Default.Workday, Settings.Default.Worknight };
+
             DeleteRows();
 
             Grid grid = InitializeGridRow();
@@ -432,7 +442,7 @@ namespace Presentation
                 InitializeOrderGrid(grid, order, startDate);
             }
 
-            InitializeNewOrderButton(grid);
+            InitializeNewOrderButton();
         }
 
         private void DeleteRows()
@@ -648,6 +658,13 @@ namespace Presentation
         private void SetTitle()
         {
             Title = $"{workteam.Foreman}";
+        }
+
+        private void ShowPalette(object sender, RoutedEventArgs e)
+        {
+            Palette p = new Palette();
+            p.Owner = this;
+            p.Show();
         }
     }
 }

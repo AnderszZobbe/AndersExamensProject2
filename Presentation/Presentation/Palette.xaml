@@ -1,0 +1,33 @@
+﻿<Window x:Class="Presentation.Palette"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Presentation"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Palette" Width="200" Topmost="True" SizeToContent="Height">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <xctk:ColorPicker x:Name="daywork" SelectedColorChanged="DayworkSelectedColorChanged"/>
+        <Label Content="Dagsarbejde" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <xctk:ColorPicker x:Name="nightwork" Grid.Row="1" SelectedColorChanged="NightworkSelectedColorChanged"/>
+        <Label Content="Nattearbejde" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <xctk:ColorPicker x:Name="fridayfree" Grid.Row="2" SelectedColorChanged="FridayfreeSelectedColorChanged"/>
+        <Label Content="Fredagsfri" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <xctk:ColorPicker x:Name="weekend" Grid.Row="3" SelectedColorChanged="WeekendSelectedColorChanged"/>
+        <Label Content="Weekend" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"/>
+        <xctk:ColorPicker x:Name="holiday" Grid.Row="4" SelectedColorChanged="HolidaySelectedColorChanged"/>
+        <Label Content="Helidag/helligdag" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center"/>
+    </Grid>
+</Window>
