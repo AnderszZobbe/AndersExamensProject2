@@ -956,12 +956,12 @@ namespace Presentation
                 try
                 {
                     document.Save(filePath);
+                    Process.Start(filePath);
                 }
                 catch (IOException)
                 {
                     MessageBox.Show("Filen du prøvede og overskrive er åben et andet sted.");
                 }
-                Process.Start(filePath);
             }
         }
     }
