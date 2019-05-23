@@ -983,6 +983,8 @@ namespace Presentation
 
                 endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
 
+                InitializeDaysColumns(totalDays);
+
                 UpdateDataGrid();
             }
         }
@@ -997,6 +999,8 @@ namespace Presentation
                 startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
 
                 endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+
+                InitializeDaysColumns(totalDays);
 
                 UpdateDataGrid();
             }
