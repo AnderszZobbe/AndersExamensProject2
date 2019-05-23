@@ -206,18 +206,18 @@ namespace Persistence
 
         public List<Offday> GetAllOffdaysFromWorkteam(Workteam workteam)
         {
-            Dictionary<Order, int> ordersData = DataProvider.GetAllOrdersByWorkteam(workteams[workteam]);
+            Dictionary<Offday, int> offdaysData = DataProvider.GetAllOffdaysByWorkteam(workteams[workteam]);
 
-            workteam.Orders.Clear();
+            workteam.Offdays.Clear();
 
-            foreach (KeyValuePair<Order, int> orderData in ordersData)
+            foreach (KeyValuePair<Offday, int> offdayData in offdaysData)
             {
-                if (!orders.ContainsValue(orderData.Value)) // Add new ones to the repo
+                if (!offdays.ContainsValue(offdayData.Value)) // Add new ones to the repo
                 {
-                    orders.Add(orderData.Key, orderData.Value);
+                    offdays.Add(offdayData.Key, offdayData.Value);
                 }
 
-                workteam.Orders.Add(orders.First(o => o.Value == orderData.Value).Key);
+                workteam.Offdays.Add(offdays.First(o => o.Value == offdayData.Value).Key);
             }
 
             return workteam.Offdays;

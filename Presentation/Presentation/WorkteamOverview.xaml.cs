@@ -390,7 +390,7 @@ namespace Presentation
             {
                 AddSimpleColumnLabel(grid, null, 0);
                 AddSimpleColumnLabel(grid, null, 1);
-                AddSimpleColumnLabel(grid, "Order nummer", 2);
+                AddSimpleColumnLabel(grid, "Ordrenummer", 2);
                 AddSimpleColumnLabel(grid, "Strækning", 3);
                 AddSimpleColumnLabel(grid, "Bemærkning", 4);
                 AddSimpleColumnLabel(grid, "m2", 5);
@@ -686,18 +686,24 @@ namespace Presentation
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
-                FileName = $"3 uger plan {DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}.pdf",
+                FileName = $"3 ugers plan {DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}.pdf",
                 Filter = "Pdf Files|*.pdf"
             };
             if (saveFileDialog.ShowDialog() == true)
             {
                 int weeks = 3;
+                double sizeMultiplier = 0.62;
                 string filePath = saveFileDialog.FileName;
 
                 PdfDocument document = new PdfDocument();
                 PdfPage page = document.AddPage();
                 page.Size = PageSize.A4;
                 page.Orientation = PageOrientation.Landscape;
+
+                // Size
+                double margin = 20;
+                Point workspace = new Point(page.Width - margin * 2, page.Height - margin * 2);
+                Point workspaceOffset = new Point(margin, margin);
 
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont defaultFont = new XFont("Verdana", 7);
@@ -708,55 +714,98 @@ namespace Presentation
                 // Start drawing of the orders
                 List<Order> orders = controller.GetAllOrdersFromWorkteam(workteam);
                 orders = orders.FindAll(o => o.StartDate != null);
+                orders = orders.FindAll(o => o.StartDate >= DateTime.Today || workteam.IsAWorkday(o, DateTime.Today));
+                orders.Insert(0, null);
+                orders.Insert(0, null);
                 for (int i = 0; i < orders.Count; i++)
                 {
                     double x = 0;
 
                     for (int j = 2; j < startColumn; j++)
                     {
-                        double width = GridTemplate.ColumnDefinitions[j].Width.Value * 0.62;
+                        double width = GridTemplate.ColumnDefinitions[j].Width.Value * sizeMultiplier;
                         XPen pen = new XPen(XColors.LightGray, 1);
-                        XRect rect = new XRect(x, i * rowHeight, width, rowHeight);
-                        gfx.DrawRectangle(pen, rect);
+                        XRect rect = new XRect(x + workspaceOffset.X, i * rowHeight + workspaceOffset.X, width, rowHeight);
 
-
+                        if (i != 0)
+                        {
+                            gfx.DrawRectangle(pen, rect);
+                        }
 
                         string content = string.Empty;
+                        XFont fontToUse = defaultFont;
 
-                        switch (j)
+                        if (i == 1)
                         {
-                            case 2:
-                                content = orders[i].OrderNumber.ToString();
-                                break;
-                            case 3:
-                                content = orders[i].Address;
-                                break;
-                            case 4:
-                                content = orders[i].Remark;
-                                break;
-                            case 5:
-                                content = orders[i].Area.ToString();
-                                break;
-                            case 6:
-                                content = orders[i].Amount.ToString();
-                                break;
-                            case 7:
-                                content = orders[i].Prescription;
-                                break;
-                            case 8:
-                                content = orders[i].Customer;
-                                break;
-                            case 9:
-                                content = orders[i].Machine;
-                                break;
-                            case 10:
-                                content = orders[i].AsphaltWork;
-                                break;
+                            fontToUse = boldFont;
+                            switch (j)
+                            {
+                                case 2:
+                                    content = "Ordrenummer";
+                                    break;
+                                case 3:
+                                    content = "Strækning";
+                                    break;
+                                case 4:
+                                    content = "Bemærkning";
+                                    break;
+                                case 5:
+                                    content = "m2";
+                                    break;
+                                case 6:
+                                    content = "Tons";
+                                    break;
+                                case 7:
+                                    content = "Recept";
+                                    break;
+                                case 8:
+                                    content = "Kunde";
+                                    break;
+                                case 9:
+                                    content = "Maskine";
+                                    break;
+                                case 10:
+                                    content = "Asfaltværk";
+                                    break;
+                            }
+                        }
+                        else if (i != 0)
+                        {
+                            switch (j)
+                            {
+                                case 2:
+                                    content = orders[i].OrderNumber.ToString();
+                                    break;
+                                case 3:
+                                    content = orders[i].Address;
+                                    break;
+                                case 4:
+                                    content = orders[i].Remark;
+                                    break;
+                                case 5:
+                                    content = orders[i].Area.ToString();
+                                    break;
+                                case 6:
+                                    content = orders[i].Amount.ToString();
+                                    break;
+                                case 7:
+                                    content = orders[i].Prescription;
+                                    break;
+                                case 8:
+                                    content = orders[i].Customer;
+                                    break;
+                                case 9:
+                                    content = orders[i].Machine;
+                                    break;
+                                case 10:
+                                    content = orders[i].AsphaltWork;
+                                    break;
+                            }
                         }
 
                         gfx.DrawString(
                             content,
-                            defaultFont,
+                            fontToUse,
                             XBrushes.Black,
                             rect,
                             XStringFormats.Center);
@@ -764,39 +813,133 @@ namespace Presentation
                         x += width;
                     }
 
-                    double widthLeft = page.Width - x;
+                    double widthLeft = workspace.X - x;
 
                     DateTime dateRoller = DateTime.Today;
 
-                    for (int j = 0; j < weeks * 7; j++)
+                    if (i == 0)
                     {
-                        double width = widthLeft / (weeks * 7);
-                        XPen pen = new XPen(XColors.LightGray, 1);
-                        XRect rect = new XRect(x, i * rowHeight, width, rowHeight);
-
-                        if (workteam.IsAWorkday(orders[i], dateRoller))
+                        for (int j = 0; j < weeks * 7; j++)
                         {
-                            System.Drawing.Color color = WorkformBrushes[(int)workteam.GetWorkform(orders[i], dateRoller)];
+                            double width = widthLeft / (weeks * 7);
 
-                            XBrush brush = new XSolidBrush(XColor.FromArgb(color.A, color.R, color.G, color.B));
+                            if (dateRoller.DayOfWeek == startDayOfWeek || j == 0)
+                            {
+                                XPen pen = new XPen(XColors.LightGray, 1);
+                                XRect rect;
+
+                                if (j == 0)
+                                {
+                                    int days = 0;
+                                    while (dateRoller.AddDays(days).DayOfWeek != startDayOfWeek)
+                                    {
+                                        days++;
+                                    }
+                                    rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width * days, rowHeight);
+                                }
+                                else if (weeks * 7 - j < 7)
+                                {
+                                    rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width * (weeks * 7 - j), rowHeight);
+                                }
+                                else
+                                {
+                                    rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width * 7, rowHeight);
+                                }
+
+
+                                gfx.DrawRectangle(pen, rect);
+
+
+                                CultureInfo ci = new CultureInfo("da-DK");
+                                System.Globalization.Calendar cal = ci.Calendar;
+                                CalendarWeekRule cwr = ci.DateTimeFormat.CalendarWeekRule;
+                                DayOfWeek dow = ci.DateTimeFormat.FirstDayOfWeek;
+
+                                gfx.DrawString(
+                                    $"Uge {cal.GetWeekOfYear(dateRoller, cwr, dow)}",
+                                    defaultFont,
+                                    XBrushes.Black,
+                                    rect,
+                                    XStringFormats.Center);
+                            }
+
+
+                            x += width;
+
+                            dateRoller = dateRoller.AddDays(1);
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < weeks * 7; j++)
+                        {
+                            double width = widthLeft / (weeks * 7);
+                            XPen pen = new XPen(XColors.LightGray, 1);
+                            XRect rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width, rowHeight);
+                            XBrush brush = XBrushes.Transparent;
+
+                            if (workteam.IsAnOffday(dateRoller))
+                            {
+                                System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+
+                                brush = new XSolidBrush(XColor.FromArgb(color.A, color.R, color.G, color.B));
+                            }
+                            else if (orders[i] != null && workteam.IsAWorkday(orders[i], dateRoller))
+                            {
+                                System.Drawing.Color color = WorkformBrushes[(int)workteam.GetWorkform(orders[i], dateRoller)];
+
+                                brush = new XSolidBrush(XColor.FromArgb(color.A, color.R, color.G, color.B));
+                            }
+
                             gfx.DrawRectangle(pen, brush, rect);
-                        }
-                        else if (workteam.IsAnOffday(dateRoller))
-                        {
-                            System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
 
-                            XBrush brush = new XSolidBrush(XColor.FromArgb(color.A, color.R, color.G, color.B));
-                            gfx.DrawRectangle(pen, brush, rect);
-                        }
-                        else
-                        {
-                            gfx.DrawRectangle(pen, rect);
-                        }
+                            if (i == 1)
+                            {
+                                string content = string.Empty;
 
-                        x += width;
-                        dateRoller = dateRoller.AddDays(1);
+                                switch (dateRoller.DayOfWeek)
+                                {
+                                    case DayOfWeek.Sunday:
+                                        content = "S";
+                                        break;
+                                    case DayOfWeek.Monday:
+                                        content = "M";
+                                        break;
+                                    case DayOfWeek.Tuesday:
+                                    case DayOfWeek.Thursday:
+                                        content = "T";
+                                        break;
+                                    case DayOfWeek.Wednesday:
+                                        content = "O";
+                                        break;
+                                    case DayOfWeek.Friday:
+                                        content = "F";
+                                        break;
+                                    case DayOfWeek.Saturday:
+                                        content = "L";
+                                        break;
+                                }
+
+                                gfx.DrawString(
+                                    content,
+                                    defaultFont,
+                                    XBrushes.Black,
+                                    rect,
+                                    XStringFormats.Center);
+                            }
+
+                            x += width;
+                            dateRoller = dateRoller.AddDays(1);
+                        }
                     }
                 }
+
+                gfx.DrawString(
+                    $"Genererede d. {DateTime.Now.ToString()}",
+                    defaultFont,
+                    XBrushes.Black,
+                    new XRect(workspaceOffset.X, workspaceOffset.Y, workspace.X, workspace.Y),
+                    XStringFormats.BottomLeft);
 
                 document.Save(filePath);
                 Process.Start(filePath);
