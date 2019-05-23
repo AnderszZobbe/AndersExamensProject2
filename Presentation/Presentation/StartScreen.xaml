@@ -8,7 +8,7 @@
         Title="Team Manager - Loading" Height="200" Width="420" WindowStyle="None" Background="#FF2B2D30" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Wait" ShowInTaskbar="False">
     <Grid>
         <Label Content="Team Manager" Margin="10,10,10,0" VerticalAlignment="Top" Height="85" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="48" FontWeight="Bold"/>
-        <Label x:Name="LoadingLabel" Content="Loading..." Margin="20,0,20,40" Foreground="White" Height="26" VerticalAlignment="Bottom"/>
-        <ProgressBar x:Name="LoadingBar" Value="0" Margin="20" Height="15" VerticalAlignment="Bottom" Foreground="#FF0C84BB" Background="#FF44474B" BorderThickness="0"/>
+        <Label x:Name="LoadingLabel" Content="Loading..." Margin="20,0,20,30" Foreground="White" Height="20" VerticalAlignment="Bottom" Padding="0" VerticalContentAlignment="Bottom"/>
+        <ProgressBar x:Name="LoadingBar" Value="0" Margin="20" Height="5" VerticalAlignment="Bottom" Foreground="#FF0C84BB" Background="#FF44474B" BorderThickness="0"/>
     </Grid>
 </Window>
