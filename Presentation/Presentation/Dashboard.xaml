@@ -12,6 +12,10 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <DockPanel>
+            <DatePicker x:Name="DatePickerEndDate" DockPanel.Dock="Bottom" Margin="10,0,10,10" SelectedDateChanged="DatePickerStartDate_SelectedDateChanged" />
+            <Label Content="Slut dato" DockPanel.Dock="Bottom" Padding="0" Margin="10,0,10,0" />
+            <DatePicker x:Name="DatePickerStartDate" DockPanel.Dock="Bottom" Margin="10,0,10,10" SelectedDateChanged="DatePickerStartDate_SelectedDateChanged" />
+            <Label Content="Start dato" DockPanel.Dock="Bottom" Padding="0" Margin="10,0,10,0" />
             <Button Content="Åben palette" DockPanel.Dock="Bottom" Click="OpenPalette" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" FontSize="16"/>
             <Button Content="Lav nyt arbejdshold" DockPanel.Dock="Bottom" Click="CreateNewWorkteam" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" FontSize="16"/>
             <ListBox Margin="10,10,10,10" x:Name="WorkteamList" SelectionMode="Multiple" SelectionChanged="WorkteamSelectionChanged">

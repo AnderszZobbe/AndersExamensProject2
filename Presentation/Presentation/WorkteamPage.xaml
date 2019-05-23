@@ -9,7 +9,7 @@
       Title="WorkteamPage">
 
     <Grid>
-        <ScrollViewer Margin="10,10,10,45" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer x:Name="ScrollView" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" ScrollChanged="ScrollViewer_ScrollChanged" Margin="0,0,55,0">
             <StackPanel x:Name="OrderStack">
                 <Grid x:Name="GridTemplate">
                     <Grid.ColumnDefinitions>
@@ -29,24 +29,23 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        <Button Content="Fjern arbejdshold" Margin="0,0,10,10" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="147" Click="DeleteCurrentWorkteam" BorderBrush="{x:Null}" Foreground="White" BorderThickness="0" FontSize="16">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                    <GradientStop Color="#FFE67070" Offset="1"/>
-                    <GradientStop Color="#FFEC0E0E"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button Content="Redigér arbejdshold" Margin="0,0,162,10" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="162" Click="EditWorkteamForeman" BorderBrush="{x:Null}" Foreground="White" BorderThickness="0" FontSize="16">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                    <GradientStop Color="#FF70BBE6" Offset="1"/>
-                    <GradientStop Color="#FF0EA5EC"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button Click="PrintToPDF" Content="Print til PDF" Margin="0,0,329,10" FontSize="16" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="116"/>
-        <DatePicker x:Name="startDatePicker" SelectedDateChanged="StartDatePicker_SelectedDateChanged" HorizontalAlignment="Left" Margin="10,0,0,10" Height="30" VerticalAlignment="Bottom" Width="142"/>
-        <DatePicker x:Name="endDatePicker" SelectedDateChanged="EndDatePicker_SelectedDateChanged" HorizontalAlignment="Left" Margin="157,0,0,10" Height="30" VerticalAlignment="Bottom" Width="142"/>
+        <Grid Width="35" Height="35" Margin="0,0,10,100" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Ellipse Fill="#FF0CCB85" />
+            <Button Click="PrintToPDF" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Image Source="Icons/Print.png" Margin="2"/>
+            </Button>
+        </Grid>
+        <Grid Width="35" Height="35" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Ellipse Fill="#FFCB0C0C" />
+            <Button Click="DeleteCurrentWorkteam" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Image Source="Icons/Delete_forever.png" Margin="2"/>
+            </Button>
+        </Grid>
+        <Grid Width="35" Height="35" Margin="0,0,10,55" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Ellipse Fill="#FF0C7DCB" />
+            <Button Click="EditWorkteamForeman" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Image Source="Icons/Edit.png" Margin="2"/>
+            </Button>
+        </Grid>
     </Grid>
 </Page>

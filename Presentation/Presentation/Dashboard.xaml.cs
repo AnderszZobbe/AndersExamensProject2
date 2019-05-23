@@ -22,18 +22,37 @@ namespace Presentation
     /// </summary>
     public partial class Dashboard : Window
     {
+        private bool initializingFinished;
         private Controller controller = Controller.Instance;
-        private ObservableCollection<Workteam> Workteams { get; set; } = new ObservableCollection<Workteam>();
         public Palette PaletteWindow;
+        private int totalDays = 7 * 7;
+        private DateTime startDate = DateTime.Today.AddDays(-14);
+        private readonly DayOfWeek startDayOfWeek = DayOfWeek.Monday;
 
         public Dashboard()
         {
             InitializeComponent();
 
+            // Setback if day is in the middle of a week
+            while (startDate.DayOfWeek != startDayOfWeek)
+            {
+                startDate = startDate.AddDays(-1);
+            }
+
+            DatePickerStartDate.SelectedDate = startDate;
+            DatePickerEndDate.SelectedDate = startDate.AddDays(totalDays - 1);
+
+            DatePickerStartDate.DisplayDateEnd = DatePickerEndDate.SelectedDate;
+
+            DatePickerEndDate.DisplayDateStart = DatePickerStartDate.SelectedDate;
+
+            initializingFinished = true;
+
             UpdateWorkteams();
 
             WorkteamList.ItemsSource = Workteams;
         }
+        private ObservableCollection<Workteam> Workteams { get; set; } = new ObservableCollection<Workteam>();
 
         public void UpdateWorkteams()
         {
@@ -68,7 +87,7 @@ namespace Presentation
                 {
                     Frame frame = new Frame
                     {
-                        Content = new WorkteamPage(workteam)
+                        Content = new WorkteamPage(workteam, startDate, totalDays)
                     };
 
                     Container.Children.Add(frame);
@@ -95,6 +114,41 @@ namespace Presentation
 
             PaletteWindow = p;
             p.Show();
+        }
+
+        private void DatePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (initializingFinished && DatePickerStartDate.SelectedDate.HasValue)
+            {
+                startDate = DatePickerStartDate.SelectedDate.Value;
+
+                if (initializingFinished && DatePickerEndDate.SelectedDate.HasValue)
+                {
+                    DateTime endDate = DatePickerEndDate.SelectedDate.Value;
+                    totalDays = (int)(endDate - startDate).TotalDays + 1;
+                }
+
+                DatePickerStartDate.DisplayDateEnd = DatePickerEndDate.SelectedDate;
+
+                DatePickerEndDate.DisplayDateStart = DatePickerStartDate.SelectedDate;
+
+                UpdateContainer();
+            }
+        }
+
+        private void DatePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (initializingFinished && DatePickerEndDate.SelectedDate.HasValue)
+            {
+                DateTime endDate = DatePickerEndDate.SelectedDate.Value;
+                totalDays = (int)(endDate - startDate).TotalDays + 1;
+
+                DatePickerStartDate.DisplayDateEnd = DatePickerEndDate.SelectedDate;
+
+                DatePickerEndDate.DisplayDateStart = DatePickerStartDate.SelectedDate;
+
+                UpdateContainer();
+            }
         }
     }
 }

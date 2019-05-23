@@ -181,5 +181,14 @@
       <Name>Persistence</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Delete_forever.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Edit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

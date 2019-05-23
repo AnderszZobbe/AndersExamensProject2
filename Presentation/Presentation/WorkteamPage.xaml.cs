@@ -36,17 +36,15 @@ namespace Presentation
         private int totalDays = 7 * 7;
         private DateTime startDate = DateTime.Today.AddDays(-14);
         private readonly DayOfWeek startDayOfWeek = DayOfWeek.Monday;
-        //private DateTime startDate = DateTime.Now.AddDays(0);
         public System.Drawing.Color[] OffdayBrushes = { Settings.Default.Weekend, Settings.Default.FridayFree, Settings.Default.Holiday };
         public System.Drawing.Color[] WorkformBrushes = { Settings.Default.Workday, Settings.Default.Worknight };
+        private delegate void OnScroll(ScrollViewer scrollViewer);
+        private static event OnScroll OnScrollCollection;
 
-        public WorkteamPage(Workteam workteam)
+        public WorkteamPage(Workteam workteam, DateTime startDate, int totalDays)
         {
-            // Setback if day is in the middle of a week
-            while (startDate.DayOfWeek != startDayOfWeek)
-            {
-                startDate = startDate.AddDays(-1);
-            }
+            this.startDate = startDate;
+            this.totalDays = totalDays;
 
             InitializeComponent();
 
@@ -54,14 +52,9 @@ namespace Presentation
 
             InitializeGrid();
 
-            startDatePicker.SelectedDate = startDate;
-            endDatePicker.SelectedDate = startDate.AddDays(totalDays - 1);
-
-            startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
-
-            endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
-
             initializingFinished = true;
+
+            OnScrollCollection += OnScrollEvent;
         }
 
         public void InitializeGrid()
@@ -998,38 +991,19 @@ namespace Presentation
             }
         }
 
-        private void StartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (initializingFinished && startDatePicker.SelectedDate.HasValue)
-            {
-                startDate = startDatePicker.SelectedDate.Value;
-
-                if (initializingFinished && endDatePicker.SelectedDate.HasValue)
-                {
-                    DateTime endDate = endDatePicker.SelectedDate.Value;
-                    totalDays = (int)(endDate - startDate).TotalDays + 1;
-                }
-
-                startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
-
-                endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
-
-                InitializeGrid();
-            }
+            OnScrollCollection(sender as ScrollViewer);
         }
 
-        private void EndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void OnScrollEvent(ScrollViewer scrollViewer)
         {
-            if (initializingFinished && endDatePicker.SelectedDate.HasValue)
+            if (scrollViewer != ScrollView)
             {
-                DateTime endDate = endDatePicker.SelectedDate.Value;
-                totalDays = (int)(endDate - startDate).TotalDays + 1;
-
-                startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
-
-                endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
-
-                InitializeGrid();
+                if (ScrollView.HorizontalOffset != scrollViewer.HorizontalOffset)
+                {
+                    ScrollView.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset);
+                }
             }
         }
     }
