@@ -120,7 +120,7 @@ namespace Presentation
         {
             if (Owner is WorkteamOverview wo)
             {
-                wo.UpdateDataGrid();
+                wo.InitializeGrid();
             }
         }
 

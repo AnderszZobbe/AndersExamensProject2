@@ -37,8 +37,6 @@ namespace Presentation
         private readonly Workteam workteam;
         private readonly Controller controller = Controller.Instance;
         private int totalDays = 7 * 7;
-        private int startColumn = 0;
-        private readonly int clearRowFrom = 1;
         private DateTime startDate = DateTime.Today.AddDays(-14);
         private readonly DayOfWeek startDayOfWeek = DayOfWeek.Monday;
         //private DateTime startDate = DateTime.Now.AddDays(0);
@@ -60,9 +58,7 @@ namespace Presentation
 
             SetTitle();
 
-            InitializeDaysColumns(totalDays);
-
-            UpdateDataGrid();
+            InitializeGrid();
 
             startDatePicker.SelectedDate = startDate;
             endDatePicker.SelectedDate = startDate.AddDays(totalDays - 1);
@@ -74,13 +70,392 @@ namespace Presentation
             initializingFinished = true;
         }
 
-        private void InitializeDaysColumns(int days)
+        public void InitializeGrid()
         {
-            startColumn = GridTemplate.ColumnDefinitions.Count;
-            for (int i = 0; i < days; i++)
+            OffdayBrushes = new System.Drawing.Color[] { Settings.Default.Weekend, Settings.Default.FridayFree, Settings.Default.Holiday };
+            WorkformBrushes = new System.Drawing.Color[] { Settings.Default.Workday, Settings.Default.Worknight };
+
+            ClearRows();
+            InitializeWeekRow();
+            InitializeOffdayAndDescriptionRow();
+            InitializeOrderRows();
+            InitializeNewOrderButton();
+        }
+
+        private void ClearRows()
+        {
+            OrderStack.Children.RemoveRange(1, OrderStack.Children.Count - 1);
+        }
+
+        private void InitializeWeekRow()
+        {
+            Grid gridRow = InitializeNewGridRow();
+
+            // Days
+            Grid gridRowDays = InitializeNewDaysGrid(gridRow);
+
+            /* Calendar stuff -- START */
+            CultureInfo ci = new CultureInfo("da-DK");
+            System.Globalization.Calendar cal = ci.Calendar;
+            CalendarWeekRule cwr = ci.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek dow = ci.DateTimeFormat.FirstDayOfWeek;
+            /* Calendar stuff -- END */
+
+            DateTime dateRoller = startDate;
+
+            Grid weekGrid = null;
+            for (int i = 0; i < totalDays; i++)
             {
-                GridTemplate.ColumnDefinitions.Add(new ColumnDefinition());
+                if (i == 0 || dateRoller.DayOfWeek == dow)
+                {
+                    weekGrid = new Grid();
+                    gridRowDays.Children.Add(weekGrid);
+                    Grid.SetColumn(weekGrid, i);
+
+                    Border weekBorder = new Border
+                    {
+                        BorderThickness = new Thickness(1),
+                        BorderBrush = Brushes.Blue,
+                        Margin = new Thickness(2, 0, 2, 0),
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                    };
+                    weekGrid.Children.Add(weekBorder);
+                }
+                else
+                {
+                    Grid.SetColumnSpan(weekGrid, Grid.GetColumnSpan(weekGrid) + 1);
+                }
+
+                if (weekGrid.Children.Count <= 1 && Grid.GetColumnSpan(weekGrid) > 2)
+                {
+                    Label weekLabel = new Label
+                    {
+                        Padding = new Thickness(0),
+                        VerticalContentAlignment = VerticalAlignment.Center,
+                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                        Content = $"Uge {cal.GetWeekOfYear(dateRoller, cwr, dow)}",
+                    };
+                    weekGrid.Children.Add(weekLabel);
+                }
+
+                dateRoller = dateRoller.AddDays(1);
             }
+        }
+
+        private void InitializeOffdayAndDescriptionRow()
+        {
+            Grid gridRow = InitializeNewGridRow();
+
+            for (int i = 0; i < gridRow.ColumnDefinitions.Count - 1; i++)
+            {
+                switch (i)
+                {
+                    case 2:
+                        AddSimpleLabel(gridRow, "Ordrenummer", i);
+                        break;
+                    case 3:
+                        AddSimpleLabel(gridRow, "Strækning", i);
+                        break;
+                    case 4:
+                        AddSimpleLabel(gridRow, "Bemærkning", i);
+                        break;
+                    case 5:
+                        AddSimpleLabel(gridRow, "m2", i);
+                        break;
+                    case 6:
+                        AddSimpleLabel(gridRow, "Tons", i);
+                        break;
+                    case 7:
+                        AddSimpleLabel(gridRow, "Recept", i);
+                        break;
+                    case 8:
+                        AddSimpleLabel(gridRow, "Kunde", i);
+                        break;
+                    case 9:
+                        AddSimpleLabel(gridRow, "Maskine", i);
+                        break;
+                    case 10:
+                        AddSimpleLabel(gridRow, "Asfaltværk", i);
+                        break;
+                }
+            }
+
+            // Days
+            controller.GetAllOffdaysFromWorkteam(workteam);
+
+            Grid gridRowDays = InitializeNewDaysGrid(gridRow);
+
+            DateTime dateRoller = startDate;
+
+            for (int i = 0; i < gridRowDays.ColumnDefinitions.Count; i++)
+            {
+                string content = "?";
+
+                switch (dateRoller.DayOfWeek)
+                {
+                    case DayOfWeek.Sunday:
+                        content = "S";
+                        break;
+                    case DayOfWeek.Monday:
+                        content = "M";
+                        break;
+                    case DayOfWeek.Tuesday:
+                    case DayOfWeek.Thursday:
+                        content = "T";
+                        break;
+                    case DayOfWeek.Wednesday:
+                        content = "O";
+                        break;
+                    case DayOfWeek.Friday:
+                        content = "F";
+                        break;
+                    case DayOfWeek.Saturday:
+                        content = "L";
+                        break;
+                    default:
+                        break;
+                }
+                Button button = AddSimpleButton(gridRowDays, content, i);
+
+                button.DataContext = dateRoller;
+
+                if (workteam.IsAnOffday(dateRoller))
+                {
+                    System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+
+                    button.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+
+                    button.Click += RemoveOffday;
+                }
+                else
+                {
+                    button.Background = Brushes.Transparent;
+
+                    button.Click += AddOffday;
+                }
+
+                if (DateTime.Today == dateRoller.Date)
+                {
+                    AddLeftLine(gridRowDays, i);
+                }
+
+                dateRoller = dateRoller.AddDays(1);
+            }
+        }
+
+        private void InitializeOrderRows()
+        {
+            foreach (Order order in controller.GetAllOrdersFromWorkteam(workteam))
+            {
+                InitializeOrderRow(order);
+            }
+        }
+
+        private void InitializeOrderRow(Order order)
+        {
+            Grid gridRow = InitializeNewGridRow();
+
+            for (int i = 0; i < gridRow.ColumnDefinitions.Count - 1; i++)
+            {
+                if (i == 0)
+                {
+                    AddSimpleLabel(gridRow, null, i);
+                    CheckBox cb = new CheckBox
+                    {
+                        DataContext = order
+                    };
+                    cb.IsChecked = order.StartDate != null;
+                    cb.Click += ToggleEnable;
+                    Grid.SetColumn(cb, i);
+                    gridRow.Children.Add(cb);
+                }
+                else if (i == 1)
+                {
+                    Grid element = new Grid();
+
+                    for (int j = 0; j < 2; j++)
+                    {
+                        RowDefinition rd = new RowDefinition
+                        {
+                            Height = new GridLength(50, GridUnitType.Star)
+                        };
+                        element.RowDefinitions.Add(rd);
+                    }
+
+                    gridRow.Children.Add(element);
+                    Grid.SetColumn(element, 1);
+
+                    Button up = new Button
+                    {
+                        Content = "▲",
+                        DataContext = order,
+                    };
+                    up.Click += MoveOrderUp;
+                    element.Children.Add(up);
+
+                    Button down = new Button
+                    {
+                        Content = "▼",
+                        DataContext = order,
+                    };
+                    down.Click += MoveOrderDown;
+                    element.Children.Add(down);
+                    Grid.SetRow(down, 1);
+                }
+                else
+                {
+                    string content = string.Empty;
+
+                    switch (i)
+                    {
+                        case 2:
+                            content = order.OrderNumber.ToString();
+                            break;
+                        case 3:
+                            content = order.Address;
+                            break;
+                        case 4:
+                            content = order.Remark;
+                            break;
+                        case 5:
+                            content = order.Area.ToString();
+                            break;
+                        case 6:
+                            content = order.Amount.ToString();
+                            break;
+                        case 7:
+                            content = order.Prescription;
+                            break;
+                        case 8:
+                            content = order.Customer;
+                            break;
+                        case 9:
+                            content = order.Machine;
+                            break;
+                        case 10:
+                            content = order.AsphaltWork;
+                            break;
+                    }
+
+                    Button button = AddSimpleButton(gridRow, content, i);
+                    button.Background = Brushes.Transparent;
+                    button.DataContext = order;
+                    button.Click += EditOrder;
+                }
+            }
+
+
+            // Days
+            controller.GetAllAssignmentsFromOrder(order);
+
+            Grid gridRowDays = InitializeNewDaysGrid(gridRow);
+
+            DateTime dateRoller = startDate;
+
+            for (int i = 0; i < gridRowDays.ColumnDefinitions.Count; i++)
+            {
+                Button button = AddSimpleButton(gridRowDays, null, i);
+                button.DataContext = new KeyValuePair<Order, DateTime>(order, dateRoller);
+                button.Click += Reschedule;
+
+                if (workteam.IsAnOffday(dateRoller))
+                {
+                    System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
+
+                    button.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                }
+                else if (workteam.IsAWorkday(order, dateRoller))
+                {
+                    System.Drawing.Color color = WorkformBrushes[(int)workteam.GetWorkform(order, dateRoller)];
+
+                    button.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
+                }
+                else
+                {
+                    button.Background = Brushes.Transparent;
+                }
+
+                if (order.Deadline != null && order.Deadline == dateRoller)
+                {
+                    Border border = new Border()
+                    {
+                        BorderThickness = new Thickness(2),
+                        BorderBrush = Brushes.Black,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        IsHitTestVisible = false
+                    };
+                    Grid.SetColumn(border, i);
+                    gridRowDays.Children.Add(border);
+                }
+
+                if (DateTime.Today == dateRoller.Date)
+                {
+                    AddLeftLine(gridRowDays, i);
+                }
+
+                dateRoller = dateRoller.AddDays(1);
+            }
+        }
+
+        private void AddLeftLine(Grid grid, int column)
+        {
+            Border border = new Border()
+            {
+                BorderThickness = new Thickness(2),
+                BorderBrush = Brushes.Red,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                IsHitTestVisible = false
+            };
+            Grid.SetColumn(border, column);
+            grid.Children.Add(border);
+        }
+
+        private void InitializeNewOrderButton()
+        {
+            Grid grid = InitializeGridRow();
+            Button button = AddSimpleButton(grid, "Dokumentér ny arbejdsordre", 0);
+            Grid.SetColumnSpan(button, 11);
+            button.Click += DocumentNewWorkorder;
+        }
+
+        private Grid InitializeNewGridRow()
+        {
+            Grid gridRow = new Grid
+            {
+                Height = 30
+            };
+
+            for (int i = 0; i < GridTemplate.ColumnDefinitions.Count; i++)
+            {
+                ColumnDefinition columnDefinition = new ColumnDefinition
+                {
+                    Width = GridTemplate.ColumnDefinitions[i].Width
+                };
+
+                gridRow.ColumnDefinitions.Add(columnDefinition);
+            }
+
+            OrderStack.Children.Add(gridRow);
+            return gridRow;
+        }
+
+        private Grid InitializeNewDaysGrid(Grid grid)
+        {
+            Grid gridRowDays = new Grid();
+
+            for (int i = 0; i < totalDays; i++)
+            {
+                var columnDefinition = new ColumnDefinition
+                {
+                    MinWidth = 20
+                };
+
+                gridRowDays.ColumnDefinitions.Add(columnDefinition);
+            }
+
+            Grid.SetColumn(gridRowDays, grid.ColumnDefinitions.Count - 1);
+            grid.Children.Add(gridRowDays);
+            return gridRowDays;
         }
 
         private Grid InitializeGridRow()
@@ -105,198 +480,6 @@ namespace Presentation
             return grid;
         }
 
-        private void InitializeWeeksGrid(Grid grid, DateTime dateRoller)
-        {
-            // Gets the Calendar instance associated with a CultureInfo.
-            CultureInfo ci = new CultureInfo("da-DK");
-            System.Globalization.Calendar cal = ci.Calendar;
-
-            // Gets the DTFI properties required by GetWeekOfYear.
-            CalendarWeekRule cwr = ci.DateTimeFormat.CalendarWeekRule;
-            DayOfWeek dow = ci.DateTimeFormat.FirstDayOfWeek;
-
-            Grid weekGrid = null;
-
-            for (int i = 0; i < totalDays; i++)
-            {
-                if (weekGrid == null || dateRoller.DayOfWeek == dow)
-                {
-                    weekGrid = new Grid();
-                    grid.Children.Add(weekGrid);
-                    Grid.SetColumn(weekGrid, i + startColumn);
-
-                    Border weekBorder = new Border
-                    {
-                        BorderThickness = new Thickness(1),
-                        BorderBrush = Brushes.Blue,
-                        Margin = new Thickness(2, 0, 2, 0),
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                    };
-                    weekGrid.Children.Add(weekBorder);
-
-                    Label weekLabel = new Label
-                    {
-                        Padding = new Thickness(0),
-                        VerticalContentAlignment = VerticalAlignment.Center,
-                        HorizontalContentAlignment = HorizontalAlignment.Center,
-                        Content = $"Uge {cal.GetWeekOfYear(dateRoller, cwr, dow)}",
-                    };
-                    weekGrid.Children.Add(weekLabel);
-                }
-                else
-                {
-                    Grid.SetColumnSpan(weekGrid, Grid.GetColumnSpan(weekGrid) + 1);
-                }
-
-                // Current day
-                DisplayCurrentDay(grid, dateRoller, startColumn + i);
-
-                dateRoller = dateRoller.AddDays(1);
-            }
-        }
-
-        private void InitializeOffdaysGrid(Grid grid, DateTime dateRoller)
-        {
-            controller.GetAllOffdaysFromWorkteam(workteam);
-            // Data
-            FillGridData(grid);
-
-            for (int i = 0; i < totalDays; i++)
-            {
-                Button btn = new Button
-                {
-                    DataContext = dateRoller,
-                    ToolTip = $"{dateRoller.Day}/{dateRoller.Month}/{dateRoller.Year}"
-                };
-
-                grid.Children.Add(btn);
-                Grid.SetColumn(btn, i + startColumn);
-
-                switch (dateRoller.Date.DayOfWeek)
-                {
-                    case DayOfWeek.Monday:
-                        btn.Content = "M";
-                        break;
-                    case DayOfWeek.Tuesday:
-                    case DayOfWeek.Thursday:
-                        btn.Content = "T";
-                        break;
-                    case DayOfWeek.Wednesday:
-                        btn.Content = "O";
-                        break;
-                    case DayOfWeek.Friday:
-                        btn.Content = "F";
-                        break;
-                    case DayOfWeek.Saturday:
-                        btn.Content = "L";
-                        break;
-                    case DayOfWeek.Sunday:
-                        btn.Content = "S";
-                        break;
-                    default:
-                        btn.Content = "??";
-                        break;
-                }
-
-                if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
-                {
-                    System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
-
-                    btn.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
-                    btn.Click += RemoveOffday;
-                }
-                else
-                {
-                    btn.BorderThickness = new Thickness(1);
-                    btn.BorderBrush = Brushes.LightGray;
-                    btn.Background = Brushes.White;
-
-                    btn.Click += AddOffday;
-                }
-
-                // Current day
-                DisplayCurrentDay(grid, dateRoller, i + startColumn);
-
-                dateRoller = dateRoller.AddDays(1);
-            }
-        }
-
-        private void InitializeOrderGrid(Grid grid, Order order, DateTime dateRoller)
-        {
-            controller.GetAllAssignmentsFromOrder(order);
-
-            // Includes data
-            FillGridData(grid, order);
-
-
-            for (int i = 0; i < totalDays; i++)
-            {
-                Button btn = new Button
-                {
-                    DataContext = new KeyValuePair<Order, DateTime>(order, dateRoller)
-                };
-                btn.Click += Reschedule;
-                btn.ToolTip = $"{dateRoller.Day}/{dateRoller.Month}/{dateRoller.Year}";
-
-                grid.Children.Add(btn);
-                Grid.SetColumn(btn, i + startColumn);
-
-                if (workteam.IsAnOffday(dateRoller)) // Is the date an offday?
-                {
-                    System.Drawing.Color color = OffdayBrushes[(int)workteam.GetOffday(dateRoller).OffdayReason];
-
-                    btn.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
-                }
-                else if (workteam.IsAWorkday(order, dateRoller)) // Is the date a workday?
-                {
-                    System.Drawing.Color color = WorkformBrushes[(int)workteam.GetWorkform(order, dateRoller)];
-
-                    btn.Background = new SolidColorBrush(Color.FromArgb(color.A, color.R, color.G, color.B));
-                }
-                else
-                {
-                    btn.BorderThickness = new Thickness(1);
-                    btn.BorderBrush = Brushes.LightGray;
-                    btn.Background = Brushes.White;
-                }
-
-                // Deadline
-                if (order.Deadline != null && order.Deadline.Value.Date == dateRoller.Date)
-                {
-                    Border deadline = new Border
-                    {
-                        BorderThickness = new Thickness(2),
-                        BorderBrush = Brushes.Black,
-                        HorizontalAlignment = HorizontalAlignment.Right
-                    };
-
-                    grid.Children.Add(deadline);
-                    Grid.SetColumn(deadline, i + startColumn);
-                }
-
-                // Current day
-                DisplayCurrentDay(grid, dateRoller, i + startColumn);
-
-                dateRoller = dateRoller.AddDays(1);
-            }
-        }
-
-        private void InitializeNewOrderButton()
-        {
-            Grid localGrid = InitializeGridRow();
-
-            Button btn = new Button
-            {
-                Content = "Dokumentér ny arbejdsordre",
-                FontSize = 14,
-            };
-            btn.Click += DocumentNewWorkorder;
-
-            localGrid.Children.Add(btn);
-            Grid.SetColumn(btn, 0);
-            Grid.SetColumnSpan(btn, startColumn);
-        }
-
         private void Reschedule(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement frameworkElement)
@@ -308,99 +491,8 @@ namespace Presentation
 
                     controller.Reschedule(workteam, order, rescheduleDate);
 
-                    UpdateDataGrid();
+                    InitializeGrid();
                 }
-            }
-        }
-
-        private void DisplayCurrentDay(Grid grid, DateTime dateRoller, int column)
-        {
-            if (dateRoller.Date == DateTime.Today)
-            {
-                Border deadline = new Border
-                {
-                    BorderThickness = new Thickness(1),
-                    BorderBrush = Brushes.Red,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    IsHitTestVisible = false
-                };
-
-                grid.Children.Add(deadline);
-                Grid.SetColumn(deadline, column);
-            }
-        }
-
-        private void FillGridData(Grid grid, Order order = null)
-        {
-            if (order != null)
-            {
-                // enable button
-                CheckBox cb = new CheckBox
-                {
-                    DataContext = order
-                };
-                cb.IsChecked = order.StartDate != null;
-                cb.Click += ToggleEnable;
-                grid.Children.Add(cb);
-                Grid.SetColumn(cb, 0);
-
-                // Priority buttons
-                Grid element = new Grid();
-
-                for (int i = 0; i < 2; i++)
-                {
-                    RowDefinition rd = new RowDefinition
-                    {
-                        Height = new GridLength(50, GridUnitType.Star)
-                    };
-                    element.RowDefinitions.Add(rd);
-                }
-
-                grid.Children.Add(element);
-                Grid.SetColumn(element, 1);
-
-                Button up = new Button
-                {
-                    Content = "▲",
-                    DataContext = order,
-                };
-                up.Click += MoveOrderUp;
-                element.Children.Add(up);
-
-                Button down = new Button
-                {
-                    Content = "▼",
-                    DataContext = order,
-                };
-                down.Click += MoveOrderDown;
-                element.Children.Add(down);
-                Grid.SetRow(down, 1);
-
-                // Simple stuff
-                AddSimpleColumnLabel(grid, null, 0);
-                AddSimpleColumnButton(grid, order.OrderNumber, 2, order);
-                AddSimpleColumnButton(grid, order.Address, 3, order);
-                AddSimpleColumnButton(grid, order.Remark, 4, order);
-                AddSimpleColumnButton(grid, order.Area, 5, order);
-                AddSimpleColumnButton(grid, order.Amount, 6, order);
-                AddSimpleColumnButton(grid, order.Prescription, 7, order);
-                AddSimpleColumnButton(grid, order.Customer, 8, order);
-                AddSimpleColumnButton(grid, order.Machine, 9, order);
-                AddSimpleColumnButton(grid, order.AsphaltWork, 10, order);
-            }
-            else
-            {
-                AddSimpleColumnLabel(grid, null, 0);
-                AddSimpleColumnLabel(grid, null, 1);
-                AddSimpleColumnLabel(grid, "Ordrenummer", 2);
-                AddSimpleColumnLabel(grid, "Strækning", 3);
-                AddSimpleColumnLabel(grid, "Bemærkning", 4);
-                AddSimpleColumnLabel(grid, "m2", 5);
-                AddSimpleColumnLabel(grid, "tons", 6);
-                AddSimpleColumnLabel(grid, "Recept", 7);
-                AddSimpleColumnLabel(grid, "Kunde", 8);
-                AddSimpleColumnLabel(grid, "Maskine", 9);
-                AddSimpleColumnLabel(grid, "Asfaltværk", 10);
             }
         }
 
@@ -426,42 +518,26 @@ namespace Presentation
                         //    controller.SetStartDateOnOrder(order, DateTime.Today);
                         //}
                     }
-                    UpdateDataGrid();
+                    InitializeGrid();
                 }
             }
         }
 
-        public void UpdateDataGrid()
+        private Button AddSimpleButton(Grid grid, object content, int columnIndex)
         {
-            OffdayBrushes = new System.Drawing.Color[] { Settings.Default.Weekend, Settings.Default.FridayFree, Settings.Default.Holiday };
-            WorkformBrushes = new System.Drawing.Color[] { Settings.Default.Workday, Settings.Default.Worknight };
-
-            DeleteRows();
-
-            Grid grid = InitializeGridRow();
-
-            InitializeWeeksGrid(grid, startDate);
-
-            grid = InitializeGridRow();
-
-            InitializeOffdaysGrid(grid, startDate);
-
-            foreach (Order order in controller.GetAllOrdersFromWorkteam(workteam))
+            // Border
+            Button button = new Button()
             {
-                grid = InitializeGridRow();
+                Content = content,
+                BorderBrush = Brushes.LightGray
+            };
+            grid.Children.Add(button);
+            Grid.SetColumn(button, columnIndex);
 
-                InitializeOrderGrid(grid, order, startDate);
-            }
-
-            InitializeNewOrderButton();
+            return button;
         }
 
-        private void DeleteRows()
-        {
-            OrderStack.Children.RemoveRange(clearRowFrom, OrderStack.Children.Count - clearRowFrom);
-        }
-
-        private void AddSimpleColumnLabel(Grid grid, object content, int columnIndex)
+        private void AddSimpleLabel(Grid grid, object content, int columnIndex)
         {
             // Border
             Border border = new Border()
@@ -485,30 +561,6 @@ namespace Presentation
             Grid.SetColumn(label, columnIndex);
         }
 
-        private void AddSimpleColumnButton(Grid grid, object content, int columnIndex, Order order)
-        {
-            // Border
-            Border border = new Border()
-            {
-                BorderThickness = new Thickness(1),
-                BorderBrush = Brushes.LightGray,
-            };
-            grid.Children.Add(border);
-            Grid.SetColumn(border, columnIndex);
-
-            Button btn = new Button()
-            {
-                Content = content,
-                DataContext = order,
-                Padding = new Thickness(0),
-                VerticalContentAlignment = VerticalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-            };
-            btn.Click += EditOrder;
-            grid.Children.Add(btn);
-            Grid.SetColumn(btn, columnIndex);
-        }
-
         private void EditOrder(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement frameworkElement)
@@ -520,7 +572,7 @@ namespace Presentation
                         Owner = this
                     };
                     dnw.ShowDialog();
-                    UpdateDataGrid();
+                    InitializeGrid();
                 }
             }
         }
@@ -539,7 +591,7 @@ namespace Presentation
             };
             dnw.ShowDialog();
 
-            UpdateDataGrid();
+            InitializeGrid();
         }
 
         private void AddOffday(object sender, RoutedEventArgs e)
@@ -579,7 +631,7 @@ namespace Presentation
                     }
 
                     ao.ShowDialog();
-                    UpdateDataGrid();
+                    InitializeGrid();
                 }
             }
         }
@@ -595,7 +647,7 @@ namespace Presentation
                     {
                         case MessageBoxResult.Yes:
                             controller.DeleteOffdayByDate(workteam, datePicked);
-                            UpdateDataGrid();
+                            InitializeGrid();
                             break;
                         case MessageBoxResult.No:
                             break;
@@ -642,7 +694,7 @@ namespace Presentation
                     {
 
                     }
-                    UpdateDataGrid();
+                    InitializeGrid();
                 }
             }
         }
@@ -661,7 +713,7 @@ namespace Presentation
                     {
 
                     }
-                    UpdateDataGrid();
+                    InitializeGrid();
                 }
             }
         }
@@ -691,6 +743,7 @@ namespace Presentation
                 FileName = $"3 ugers plan {DateTime.Now.Day}_{DateTime.Now.Month}_{DateTime.Now.Year}.pdf",
                 Filter = "Pdf Files|*.pdf"
             };
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 int weeks = 3;
@@ -733,7 +786,7 @@ namespace Presentation
                 {
                     double x = margin;
 
-                    for (int j = 2; j < startColumn; j++)
+                    for (int j = 2; j < GridTemplate.ColumnDefinitions.Count - 1; j++)
                     {
                         double width = GridTemplate.ColumnDefinitions[j].Width.Value * sizeMultiplier;
                         XPen pen = new XPen(XColors.LightGray, 1);
@@ -983,9 +1036,7 @@ namespace Presentation
 
                 endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
 
-                InitializeDaysColumns(totalDays);
-
-                UpdateDataGrid();
+                InitializeGrid();
             }
         }
 
@@ -1000,9 +1051,7 @@ namespace Presentation
 
                 endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
 
-                InitializeDaysColumns(totalDays);
-
-                UpdateDataGrid();
+                InitializeGrid();
             }
         }
     }
