@@ -23,22 +23,78 @@ namespace Presentation
     public partial class Dashboard : Window
     {
         private Controller controller = Controller.Instance;
-        private ObservableCollection<Workteam> workteams { get; set; } = new ObservableCollection<Workteam>();
+        private ObservableCollection<Workteam> Workteams { get; set; } = new ObservableCollection<Workteam>();
+        public Palette PaletteWindow;
 
         public Dashboard()
         {
             InitializeComponent();
+
+            UpdateWorkteams();
+
+            WorkteamList.ItemsSource = Workteams;
         }
 
-        private void UpdateWorkteams()
+        public void UpdateWorkteams()
         {
+            Workteams.Clear();
 
             foreach (Workteam workteam in controller.GetAllWorkteams())
             {
-                workteams.Add(workteam);
+                Workteams.Add(workteam);
+            }
+        }
+
+        private void CreateNewWorkteam(object sender, RoutedEventArgs e)
+        {
+            CreateNewWorkteam cnw = new CreateNewWorkteam
+            {
+                Owner = this
+            };
+            cnw.ShowDialog();
+            UpdateWorkteams();
+        }
+
+        public void UpdateContainer()
+        {
+            // TODO: Fix it not having to clear all the time
+            Container.Children.Clear();
+
+            System.Collections.IList selectedItems = WorkteamList.SelectedItems;
+
+            foreach (object item in selectedItems)
+            {
+                if (item is Workteam workteam)
+                {
+                    Frame frame = new Frame
+                    {
+                        Content = new WorkteamPage(workteam)
+                    };
+
+                    Container.Children.Add(frame);
+                }
+            }
+        }
+
+        private void WorkteamSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateContainer();
+        }
+
+        private void OpenPalette(object sender, RoutedEventArgs e)
+        {
+            if (PaletteWindow != null)
+            {
+                PaletteWindow.Close();
             }
 
-            WorkteamList.ItemsSource = workteams;
+            Palette p = new Palette
+            {
+                Owner = this
+            };
+
+            PaletteWindow = p;
+            p.Show();
         }
     }
 }

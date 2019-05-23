@@ -5,18 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="Dashboard" Height="450" Width="800">
+        Title="Dashboard" Height="450" Width="800" WindowState="Maximized">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="375*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <DockPanel>
-            <Button Content="Lav nyt arbejdshold" DockPanel.Dock="Bottom" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" FontSize="16"/>
-            <ListBox Margin="10,10,10,10" x:Name="WorkteamList">
+            <Button Content="Åben palette" DockPanel.Dock="Bottom" Click="OpenPalette" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" FontSize="16"/>
+            <Button Content="Lav nyt arbejdshold" DockPanel.Dock="Bottom" Click="CreateNewWorkteam" Margin="10,0,10,10" Height="30" VerticalAlignment="Bottom" FontSize="16"/>
+            <ListBox Margin="10,10,10,10" x:Name="WorkteamList" SelectionMode="Multiple" SelectionChanged="WorkteamSelectionChanged">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
@@ -26,7 +24,6 @@
                 </ItemsControl.ItemTemplate>
             </ListBox>
         </DockPanel>
-        <Frame Grid.Column="1"/>
-
+        <UniformGrid x:Name="Container" Grid.Column="1" Columns="1" />
     </Grid>
 </Window>

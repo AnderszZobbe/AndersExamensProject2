@@ -94,8 +94,14 @@
     <Compile Include="Palette.xaml.cs">
       <DependentUpon>Palette.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StartScreen.xaml.cs">
+      <DependentUpon>StartScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorkteamOverview.xaml.cs">
       <DependentUpon>WorkteamOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkteamPage.xaml.cs">
+      <DependentUpon>WorkteamPage.xaml</DependentUpon>
     </Compile>
     <Page Include="AddOffday.xaml">
       <SubType>Designer</SubType>
@@ -136,7 +142,15 @@
       <DependentUpon>ShowWorkteam.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StartScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkteamOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkteamPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

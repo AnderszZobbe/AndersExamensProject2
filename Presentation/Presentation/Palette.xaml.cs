@@ -118,17 +118,17 @@ namespace Presentation
 
         private void Update()
         {
-            if (Owner is WorkteamOverview wo)
+            if (Owner is Dashboard wo)
             {
-                wo.InitializeGrid();
+                wo.UpdateContainer();
             }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (Owner is WorkteamOverview wo)
+            if (Owner is Dashboard wo)
             {
-                wo.palette = null;
+                wo.PaletteWindow = null;
             }
         }
     }
