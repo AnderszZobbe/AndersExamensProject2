@@ -708,6 +708,16 @@ namespace Presentation
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont defaultFont = new XFont("Verdana", 7);
                 XFont boldFont = new XFont("Verdana", 7, XFontStyle.Bold);
+                XFont workteamFont = new XFont("Verdana", 18, XFontStyle.Bold);
+
+                gfx.DrawString(
+                    $"{workteam.Foreman}s hold",
+                    workteamFont,
+                    XBrushes.Black,
+                    new XRect(margin, margin, workspace.X, workspace.Y),
+                    XStringFormats.TopCenter);
+
+                double y = margin + 30;
 
                 double rowHeight = 20;
 
@@ -719,13 +729,13 @@ namespace Presentation
                 orders.Insert(0, null);
                 for (int i = 0; i < orders.Count; i++)
                 {
-                    double x = 0;
+                    double x = margin;
 
                     for (int j = 2; j < startColumn; j++)
                     {
                         double width = GridTemplate.ColumnDefinitions[j].Width.Value * sizeMultiplier;
                         XPen pen = new XPen(XColors.LightGray, 1);
-                        XRect rect = new XRect(x + workspaceOffset.X, i * rowHeight + workspaceOffset.X, width, rowHeight);
+                        XRect rect = new XRect(x, y, width, rowHeight);
 
                         if (i != 0)
                         {
@@ -835,15 +845,15 @@ namespace Presentation
                                     {
                                         days++;
                                     }
-                                    rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width * days, rowHeight);
+                                    rect = new XRect(x, y, width * days, rowHeight);
                                 }
                                 else if (weeks * 7 - j < 7)
                                 {
-                                    rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width * (weeks * 7 - j), rowHeight);
+                                    rect = new XRect(x, y, width * (weeks * 7 - j), rowHeight);
                                 }
                                 else
                                 {
-                                    rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width * 7, rowHeight);
+                                    rect = new XRect(x, y, width * 7, rowHeight);
                                 }
 
 
@@ -875,7 +885,7 @@ namespace Presentation
                         {
                             double width = widthLeft / (weeks * 7);
                             XPen pen = new XPen(XColors.LightGray, 1);
-                            XRect rect = new XRect(x + workspaceOffset.Y, i * rowHeight + workspaceOffset.Y, width, rowHeight);
+                            XRect rect = new XRect(x, y, width, rowHeight);
                             XBrush brush = XBrushes.Transparent;
 
                             if (workteam.IsAnOffday(dateRoller))
@@ -932,6 +942,8 @@ namespace Presentation
                             dateRoller = dateRoller.AddDays(1);
                         }
                     }
+
+                    y += rowHeight;
                 }
 
                 gfx.DrawString(
@@ -941,7 +953,14 @@ namespace Presentation
                     new XRect(workspaceOffset.X, workspaceOffset.Y, workspace.X, workspace.Y),
                     XStringFormats.BottomLeft);
 
-                document.Save(filePath);
+                try
+                {
+                    document.Save(filePath);
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("Filen du prøvede og overskrive er åben et andet sted.");
+                }
                 Process.Start(filePath);
             }
         }
