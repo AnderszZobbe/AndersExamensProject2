@@ -33,9 +33,10 @@ namespace Presentation
     /// </summary>
     public partial class WorkteamOverview : Window
     {
+        private bool initializingFinished;
         private readonly Workteam workteam;
         private readonly Controller controller = Controller.Instance;
-        private int totalWeeks = 7;
+        private int totalDays = 7 * 7;
         private int startColumn = 0;
         private readonly int clearRowFrom = 1;
         private DateTime startDate = DateTime.Today.AddDays(-14);
@@ -59,17 +60,18 @@ namespace Presentation
 
             SetTitle();
 
-            InitializeDaysColumns(TotalDays);
+            InitializeDaysColumns(totalDays);
 
             UpdateDataGrid();
-        }
 
-        private int TotalDays
-        {
-            get
-            {
-                return totalWeeks * 7;
-            }
+            startDatePicker.SelectedDate = startDate;
+            endDatePicker.SelectedDate = startDate.AddDays(totalDays - 1);
+
+            startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
+
+            endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+
+            initializingFinished = true;
         }
 
         private void InitializeDaysColumns(int days)
@@ -115,7 +117,7 @@ namespace Presentation
 
             Grid weekGrid = null;
 
-            for (int i = 0; i < TotalDays; i++)
+            for (int i = 0; i < totalDays; i++)
             {
                 if (weekGrid == null || dateRoller.DayOfWeek == dow)
                 {
@@ -159,7 +161,7 @@ namespace Presentation
             // Data
             FillGridData(grid);
 
-            for (int i = 0; i < TotalDays; i++)
+            for (int i = 0; i < totalDays; i++)
             {
                 Button btn = new Button
                 {
@@ -227,7 +229,7 @@ namespace Presentation
             FillGridData(grid, order);
 
 
-            for (int i = 0; i < TotalDays; i++)
+            for (int i = 0; i < totalDays; i++)
             {
                 Button btn = new Button
                 {
@@ -962,6 +964,41 @@ namespace Presentation
                 {
                     MessageBox.Show("Filen du prøvede og overskrive er åben et andet sted.");
                 }
+            }
+        }
+
+        private void StartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (initializingFinished && startDatePicker.SelectedDate.HasValue)
+            {
+                startDate = startDatePicker.SelectedDate.Value;
+
+                if (initializingFinished && endDatePicker.SelectedDate.HasValue)
+                {
+                    DateTime endDate = endDatePicker.SelectedDate.Value;
+                    totalDays = (int)(endDate - startDate).TotalDays + 1;
+                }
+
+                startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
+
+                endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+
+                UpdateDataGrid();
+            }
+        }
+
+        private void EndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (initializingFinished && endDatePicker.SelectedDate.HasValue)
+            {
+                DateTime endDate = endDatePicker.SelectedDate.Value;
+                totalDays = (int)(endDate - startDate).TotalDays + 1;
+
+                startDatePicker.DisplayDateEnd = endDatePicker.SelectedDate;
+
+                endDatePicker.DisplayDateStart = startDatePicker.SelectedDate;
+
+                UpdateDataGrid();
             }
         }
     }

@@ -52,5 +52,7 @@
         </Button>
         <Button Click="ShowPalette" Content="Farve Palette" Margin="0,0,329,10" FontSize="16" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="116"/>
         <Button Click="PrintToPDF" Content="Print til PDF" Margin="0,0,450,10" FontSize="16" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="116"/>
+        <DatePicker x:Name="startDatePicker" SelectedDateChanged="StartDatePicker_SelectedDateChanged" HorizontalAlignment="Left" Margin="240,0,0,10" Height="30" VerticalAlignment="Bottom" Width="142"/>
+        <DatePicker x:Name="endDatePicker" SelectedDateChanged="EndDatePicker_SelectedDateChanged" HorizontalAlignment="Left" Margin="387,0,0,10" Height="30" VerticalAlignment="Bottom" Width="142"/>
     </Grid>
 </Window>
