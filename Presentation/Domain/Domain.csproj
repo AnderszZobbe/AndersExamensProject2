@@ -47,7 +47,6 @@
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\OffdayNotFoundException.cs" />
     <Compile Include="Exceptions\OverlapException.cs" />
-    <Compile Include="IConnector.cs" />
     <Compile Include="Offday.cs" />
     <Compile Include="OffdayReason.cs" />
     <Compile Include="Order.cs" />

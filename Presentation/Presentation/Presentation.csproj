@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Presentation.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PdfSharp-wpf, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-wpf.1.50.5147\lib\net30\PdfSharp-wpf.dll</HintPath>
