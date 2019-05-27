@@ -12,12 +12,17 @@ namespace Persistence
 {
     public class Manager : IConnector
     {
-        public static IDataProvider DataProvider = new DataProvider();
+        private readonly IDataProvider dataProvider;
 
         private readonly Dictionary<Order, int> orders = new Dictionary<Order, int>();
         private readonly Dictionary<Workteam, int> workteams = new Dictionary<Workteam, int>();
         private readonly Dictionary<Assignment, int> assignments = new Dictionary<Assignment, int>();
         private readonly Dictionary<Offday, int> offdays = new Dictionary<Offday, int>();
+
+        public Manager(IDataProvider dataProvider)
+        {
+            this.dataProvider = dataProvider;
+        }
 
         public bool AssignmentExists(Assignment assignment)
         {
@@ -31,7 +36,7 @@ namespace Persistence
                 throw new ArgumentNullException("The order does not exists");
             }
 
-            KeyValuePair<Assignment, int> assignmentData = DataProvider.CreateAssignment(orders[order], workform, duration);
+            KeyValuePair<Assignment, int> assignmentData = dataProvider.CreateAssignment(orders[order], workform, duration);
 
             assignments.Add(assignmentData.Key, assignmentData.Value);
 
@@ -57,7 +62,7 @@ namespace Persistence
                 dateRoller = dateRoller.AddDays(1);
             }
 
-            KeyValuePair<Offday, int> offdayData = DataProvider.CreateOffday(workteams[workteam], reason, startDate, duration);
+            KeyValuePair<Offday, int> offdayData = dataProvider.CreateOffday(workteams[workteam], reason, startDate, duration);
 
             offdays.Add(offdayData.Key, offdayData.Value);
 
@@ -90,7 +95,7 @@ namespace Persistence
                 throw new DuplicateObjectException("There already exists an order with that order number");
             }
 
-            KeyValuePair<Order, int> orderData = DataProvider.CreateOrder(workteams[workteam], orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
+            KeyValuePair<Order, int> orderData = dataProvider.CreateOrder(workteams[workteam], orderNumber, address, remark, area, amount, prescription, deadline, startDate, customer, machine, asphaltWork);
 
             orders.Add(orderData.Key, orderData.Value);
 
@@ -116,7 +121,7 @@ namespace Persistence
                 throw new ArgumentException("There already exsits a workteam with a foreman by that name");
             }
 
-            KeyValuePair<Workteam, int> WorkteamData = DataProvider.CreateWorkteam(foreman);
+            KeyValuePair<Workteam, int> WorkteamData = dataProvider.CreateWorkteam(foreman);
 
             workteams.Add(WorkteamData.Key, WorkteamData.Value);
 
@@ -130,7 +135,7 @@ namespace Persistence
                 return false;
             }
 
-            DataProvider.DeleteAssignment(assignments[assignment]);
+            dataProvider.DeleteAssignment(assignments[assignment]);
 
             order.assignments.Remove(assignment);
 
@@ -144,7 +149,7 @@ namespace Persistence
                 return false;
             }
 
-            DataProvider.DeleteOffday(offdays[offday]);
+            dataProvider.DeleteOffday(offdays[offday]);
 
             workteam.Offdays.Remove(offday);
 
@@ -158,7 +163,7 @@ namespace Persistence
                 return false;
             }
 
-            DataProvider.DeleteOrder(orders[order]);
+            dataProvider.DeleteOrder(orders[order]);
 
             order.assignments.ForEach(o => assignments.Remove(o));
 
@@ -174,7 +179,7 @@ namespace Persistence
                 return false;
             }
 
-            DataProvider.DeleteWorkteam(workteams[workteam]);
+            dataProvider.DeleteWorkteam(workteams[workteam]);
 
             workteam.Orders.ForEach(o => o.assignments.ForEach(p => assignments.Remove(p)));
 
@@ -187,7 +192,7 @@ namespace Persistence
 
         public List<Assignment> GetAllAssignmentsFromOrder(Order order)
         {
-            Dictionary<Assignment, int> assignmentsData = DataProvider.GetAllAssignmentsByOrder(orders[order]);
+            Dictionary<Assignment, int> assignmentsData = dataProvider.GetAllAssignmentsByOrder(orders[order]);
 
             order.assignments.Clear();
 
@@ -206,7 +211,7 @@ namespace Persistence
 
         public List<Offday> GetAllOffdaysFromWorkteam(Workteam workteam)
         {
-            Dictionary<Offday, int> offdaysData = DataProvider.GetAllOffdaysByWorkteam(workteams[workteam]);
+            Dictionary<Offday, int> offdaysData = dataProvider.GetAllOffdaysByWorkteam(workteams[workteam]);
 
             workteam.Offdays.Clear();
 
@@ -225,7 +230,7 @@ namespace Persistence
 
         public List<Order> GetAllOrdersFromWorkteam(Workteam workteam)
         {
-            Dictionary<Order, int> ordersData = DataProvider.GetAllOrdersByWorkteam(workteams[workteam]);
+            Dictionary<Order, int> ordersData = dataProvider.GetAllOrdersByWorkteam(workteams[workteam]);
 
             workteam.Orders.Clear();
 
@@ -244,7 +249,7 @@ namespace Persistence
 
         public List<Workteam> GetAllWorkteams()
         {
-            Dictionary<Workteam, int> workteamsData = DataProvider.GetAllWorkteams();
+            Dictionary<Workteam, int> workteamsData = dataProvider.GetAllWorkteams();
 
             foreach (KeyValuePair<Workteam, int> workteamData in workteamsData)
             {
@@ -272,7 +277,7 @@ namespace Persistence
 
         public void SwapOrdersPriority(Workteam workteam, Order firstOrder, Order secondOrder)
         {
-            DataProvider.SwapOrderPriorities(orders[firstOrder], orders[secondOrder]);
+            dataProvider.SwapOrderPriorities(orders[firstOrder], orders[secondOrder]);
 
             GetAllOrdersFromWorkteam(workteam);
         }
@@ -288,17 +293,17 @@ namespace Persistence
 
             int orderID = orders[order];
 
-            DataProvider.UpdateOrderOrderNumber(orderID, orderNumber);
-            DataProvider.UpdateOrderAddress(orderID, address);
-            DataProvider.UpdateOrderRemark(orderID, remark);
-            DataProvider.UpdateOrderArea(orderID, area);
-            DataProvider.UpdateOrderAmount(orderID, amount);
-            DataProvider.UpdateOrderPrescription(orderID, prescription);
-            DataProvider.UpdateOrderDeadline(orderID, deadline);
-            DataProvider.UpdateOrderStartDate(orderID, startDate);
-            DataProvider.UpdateOrderCustomer(orderID, customer);
-            DataProvider.UpdateOrderMachine(orderID, machine);
-            DataProvider.UpdateOrderAsphaltWork(orderID, asphaltWork);
+            dataProvider.UpdateOrderOrderNumber(orderID, orderNumber);
+            dataProvider.UpdateOrderAddress(orderID, address);
+            dataProvider.UpdateOrderRemark(orderID, remark);
+            dataProvider.UpdateOrderArea(orderID, area);
+            dataProvider.UpdateOrderAmount(orderID, amount);
+            dataProvider.UpdateOrderPrescription(orderID, prescription);
+            dataProvider.UpdateOrderDeadline(orderID, deadline);
+            dataProvider.UpdateOrderStartDate(orderID, startDate);
+            dataProvider.UpdateOrderCustomer(orderID, customer);
+            dataProvider.UpdateOrderMachine(orderID, machine);
+            dataProvider.UpdateOrderAsphaltWork(orderID, asphaltWork);
 
             order.OrderNumber = orderNumber;
             order.Address = address;
@@ -315,7 +320,7 @@ namespace Persistence
 
         public void UpdateOrderStartDate(Order order, DateTime? startDate)
         {
-            DataProvider.UpdateOrderStartDate(orders[order], startDate);
+            dataProvider.UpdateOrderStartDate(orders[order], startDate);
             order.StartDate = startDate;
         }
 
@@ -328,7 +333,7 @@ namespace Persistence
 
             workteam.Foreman = foreman;
 
-            DataProvider.UpdateWorkteamForeman(workteams[workteam], foreman);
+            dataProvider.UpdateWorkteamForeman(workteams[workteam], foreman);
         }
 
         public bool WorkteamExists(Workteam workteam)

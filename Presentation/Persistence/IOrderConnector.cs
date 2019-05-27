@@ -10,9 +10,7 @@ namespace Persistence
     public interface IOrderConnector
     {
         KeyValuePair<Order, int> CreateOrder(int workteam, int? orderNumber, string address, string remark, int? area, int? amount, string prescription, DateTime? deadline, DateTime? startDate, string customer, string machine, string asphaltWork);
-
         Dictionary<Order, int> GetAllOrdersByWorkteam(int workteam);
-
         void SwapOrderPriorities(int firstOrder, int secondOrder);
         void UpdateOrderOrderNumber(int order, int? orderNumber);
         void UpdateOrderAddress(int order, string address);
@@ -25,7 +23,6 @@ namespace Persistence
         void UpdateOrderCustomer(int order, string customer);
         void UpdateOrderMachine(int order, string machine);
         void UpdateOrderAsphaltWork(int order, string asphaltWork);
-
         void DeleteOrder(int order);
     }
 }

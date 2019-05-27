@@ -10,11 +10,7 @@ namespace Persistence
     public interface IOffdayConnector
     {
         KeyValuePair<Offday, int> CreateOffday(int workteam, OffdayReason reason, DateTime startDate, int duration);
-
         Dictionary<Offday, int> GetAllOffdaysByWorkteam(int workteam);
-
-
-
         void DeleteOffday(int offday);
     }
 }

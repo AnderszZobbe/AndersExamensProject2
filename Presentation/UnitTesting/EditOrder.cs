@@ -12,18 +12,15 @@ namespace UnitTesting
     {
         Controller controller;
         Workteam workteam;
-        Order order1, order2, order3;
+        Order order1;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new Manager();
-            Manager.DataProvider = new TestDataProvider();
+            Controller.Connector = new Manager(new TestDataProvider());
             controller = Controller.Instance;
             workteam = controller.CreateWorkteam("EditOrder");
             order1 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            order2 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
-            order3 = controller.CreateOrder(workteam, null, null, null, null, null, null, null, null, null, null, null);
         }
 
         [TestCleanup]

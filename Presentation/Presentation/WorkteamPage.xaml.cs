@@ -30,7 +30,6 @@ namespace Presentation
     /// </summary>
     public partial class WorkteamPage : Page
     {
-        private bool initializingFinished;
         private readonly Workteam workteam;
         private readonly Controller controller = Controller.Instance;
         private int totalDays = 7 * 7;
@@ -51,8 +50,6 @@ namespace Presentation
             this.workteam = workteam;
 
             InitializeGrid();
-
-            initializingFinished = true;
 
             OnScrollCollection += OnScrollEvent;
         }

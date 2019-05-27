@@ -18,7 +18,7 @@ namespace Presentation
     {
         public App()
         {
-            Controller.Connector = new Manager();
+            Controller.Connector = new Manager(new DataProvider());
         }
     }
 }

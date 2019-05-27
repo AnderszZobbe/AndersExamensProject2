@@ -15,8 +15,7 @@ namespace UnitTesting
         [TestInitialize]
         public void TestInitialize()
         {
-            Controller.Connector = new Manager();
-            Manager.DataProvider = new TestDataProvider();
+            Controller.Connector = new Manager(new TestDataProvider());
             controller = Controller.Instance;
             workteam = controller.CreateWorkteam("Test");
         }

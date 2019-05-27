@@ -10,11 +10,8 @@ namespace Persistence
     public interface IWorkteamConnector
     {
         KeyValuePair<Workteam, int> CreateWorkteam(string foreman);
-
         Dictionary<Workteam, int> GetAllWorkteams();
-
         void UpdateWorkteamForeman(int workteam, string foreman);
-
         void DeleteWorkteam(int workteam);
     }
 }
