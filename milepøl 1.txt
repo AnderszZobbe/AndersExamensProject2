@@ -1,0 +1,8 @@
+1.	Upzip til desktop
+2.	Tilføj "assets" mappen til wwwroot/
+3.	Tilføj "main.css" til wwwroot/css/
+4.	Erstat indholdet fra "Views/Home/Index.cshtml" med den unzippede "index.html"'s indhold
+5.	I "Views/Shared/_Layout.cshtml" tilføj "<link rel='stylesheet' href='~/css/main.css'>" til sidst i <head> tag og fjern "<link rel='stylesheet' href='~/css/site.css'>"
+6.	I "Views/Shared/_Layout.cshtml" erstat indholdet i <body> (undtagen den sidste linje) med "@RenderBody()"
+7.	I "wwwroot/css/main.css" erstat alle "assets/" med "../assets/" (Der forventes 15 styks)
+8.	Hvis det ikke virker, Ctrl+F5
