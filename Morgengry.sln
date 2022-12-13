@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Morgengry", "Morgengry\Morgengry.csproj", "{DFA1598B-7452-4344-949D-CFBC4ACE51A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{B91F8801-AE0C-4D12-B1AD-FA0EA3C20BC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFA1598B-7452-4344-949D-CFBC4ACE51A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA1598B-7452-4344-949D-CFBC4ACE51A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA1598B-7452-4344-949D-CFBC4ACE51A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA1598B-7452-4344-949D-CFBC4ACE51A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91F8801-AE0C-4D12-B1AD-FA0EA3C20BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91F8801-AE0C-4D12-B1AD-FA0EA3C20BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91F8801-AE0C-4D12-B1AD-FA0EA3C20BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91F8801-AE0C-4D12-B1AD-FA0EA3C20BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC3ACD47-38CF-424E-8FD2-8BB05692F41B}
+	EndGlobalSection
+EndGlobal
